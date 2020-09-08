@@ -15,6 +15,12 @@
 |----------|-------------------------|---------------------|
 | `Folder` | [bookstore](bookstore)  | Main project folder |
 
+### Recommendations
+
+| **Software**  | **Version** |          **Description**          |
+|---------------|-------------|-----------------------------------|
+| Apache Tomcat |           9 | Web Server WAR package deployment |
+
 ## LICENSE
 
 N/A (TBA)
