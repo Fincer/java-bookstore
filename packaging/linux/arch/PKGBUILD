@@ -1,0 +1,53 @@
+# Maintainer: Pekka Helenius <fincer89@hotmail.com>
+
+pkgname=bookstore-project
+packagetype=war
+
+packagename=Bookstore.${packagetype}
+tomcat_ver=9
+java_ver=8
+
+pkgver=7.2af07c8
+pkgrel=1
+pkgdesc='Bookstore Java server example project'
+arch=('any')
+url='https://github.com/Fincer/java-bookstore'
+license=('GPL')
+depends=(
+    "tomcat${tomcat_ver}"
+    "mariadb"
+    "java-runtime>=${java_ver}"
+)
+makedepends=('maven' 'git')
+source=(
+  "$pkgname::git+${url}.git"
+  "bookstore-tomcat.xml"
+)
+sha256sums=('SKIP'
+            '6a115dc9132cd04f5b740575612d6aeb744db8620e8249776dad8222ca917cbf')
+
+pkgver() {
+  cd $pkgname
+
+  if [[ $(git describe) ]]; then
+    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+  else
+    echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  fi
+
+}
+
+#prepare() {
+#  cd $pkgname
+#}
+
+build() {
+  cd $pkgname/bookstore
+  mvn package
+}
+
+package() {
+  cd $pkgname/bookstore
+  install -Dm0644 -t ${pkgdir}/opt/bookstore/ target/${packagename}
+  install -Dm0644 ../../bookstore-tomcat.xml ${pkgdir}/etc/tomcat${tomcat_ver}/Catalina/localhost/bookstore.xml
+}

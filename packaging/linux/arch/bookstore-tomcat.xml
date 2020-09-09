@@ -1,0 +1,4 @@
+<Context docBase="/opt/bookstore/Bookstore.war"
+         antiResourceLocking="false"
+         swallowOutput="true"
+/>

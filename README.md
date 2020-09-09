@@ -11,9 +11,10 @@
 ## Repository structure
 
 
-| **Type** |        **Name**         |   **Description**   |
-|----------|-------------------------|---------------------|
-| `Folder` | [bookstore](bookstore)  | Main project folder |
+| **Type** |        **Name**         |       **Description**     |
+|----------|-------------------------|---------------------------|
+| `Folder` | [bookstore](bookstore)  |    Main project folder    |
+| `Folder` | [packaging](packaging)  | OS-specific build scripts |
 
 ### Recommendations
 
