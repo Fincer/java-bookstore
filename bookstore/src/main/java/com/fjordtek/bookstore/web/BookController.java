@@ -4,6 +4,7 @@ package com.fjordtek.bookstore.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class BookController {
 	
 	protected static final String landingPageURL      = "index";
 	protected static final String bookListPageURL     = "booklist";
+	protected static final String bookAddPageURL      = "bookadd";
+	protected static final String bookDeletePageURL   = "bookdelete";
+	protected static final String bookSavePageURL     = "booksave";
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 	private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
@@ -34,9 +38,9 @@ public class BookController {
 
  @RequestMapping(
          value    = { bookListPageURL },
-         method   = RequestMethod.GET
+         method   = { RequestMethod.GET, RequestMethod.POST }
  )
- public String DefaultWebFormGet(Model dataModel, HttpServletRequest requestData) {
+ public String defaultWebFormGet(Model dataModel, HttpServletRequest requestData) {
 
      httpServerLogger.logMessageNormal(
              requestData,
@@ -49,6 +53,58 @@ public class BookController {
 
  }
 
+ @RequestMapping(
+		 value    = bookAddPageURL,
+		 method   = { RequestMethod.GET, RequestMethod.PUT }
+ )
+ public String webFormAddBook(Model dataModel, HttpServletRequest requestData) {
+	 
+     httpServerLogger.logMessageNormal(
+             requestData,
+             "HTTPOK"
+     );
+	 
+	 dataModel.addAttribute("book", new Book());
+	 
+     return bookAddPageURL;
+ }
+ 
+ @RequestMapping(
+		 value = bookSavePageURL,
+		 method = RequestMethod.POST
+ )
+ public String webFormSaveBook(Book book, HttpServletRequest requestData) {
+
+     httpServerLogger.logMessageNormal(
+             requestData,
+             "HTTPOK"
+     );
+
+     bookRepository.save(book);
+     
+     return "redirect:" + bookListPageURL;
+ }
+ 
+ @RequestMapping(
+		 value  = bookDeletePageURL + "/{id}",
+		 method = RequestMethod.GET
+ )
+ public String webFormDeleteBook(
+		 @PathVariable("id") long bookId,
+		 Model dataModel, HttpServletRequest requestData
+	) {
+	 
+     httpServerLogger.logMessageNormal(
+             requestData,
+             "HTTPOK"
+     );
+	 
+ 	bookRepository.deleteById(bookId);
+ 	
+    return "redirect:../" + bookListPageURL;
+ }
+ 
+ 
  // Redirect
  @RequestMapping(
          value  = { "/", landingPageURL },
@@ -64,7 +120,7 @@ public class BookController {
         value  = "*",
         method = { RequestMethod.GET, RequestMethod.POST }
 )
- public String ErrorWebForm(HttpServletRequest requestData) {
+ public String errorWebForm(HttpServletRequest requestData) {
     return httpExceptionHandler.notFoundErrorHandler(requestData);
  }
  
