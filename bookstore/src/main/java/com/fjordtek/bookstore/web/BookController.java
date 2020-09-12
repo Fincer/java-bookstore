@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -165,5 +166,18 @@ public class BookController {
  public String errorWebForm(HttpServletRequest requestData) {
     return httpExceptionHandler.notFoundErrorHandler(requestData);
  }
+
+@RequestMapping(
+		value  = "favicon.ico",
+		method = RequestMethod.GET
+)
+  @ResponseBody
+  public void faviconRequest() {
+	/* 
+	 * We do not offer favicon for this website.
+	 * Avoid HTTP status 404, and return nothing
+	 * in server response when client requests the icon file.
+	 */
+  }
  
 }

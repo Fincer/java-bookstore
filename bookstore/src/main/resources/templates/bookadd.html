@@ -2,36 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <title>Add new book</title>
 </head>
 <body>
+<div class="col-md-4 mb-3">
     <h1>Add new book</h1>
-    <div>
     
     	<form th:object="${book}" th:action="@{bookadd}" action="#" method="post">
 
-    		<div>
+    		<div class="form-group">
     			<label for="fname">Author</label>
-    			<input type="text" th:field="*{author}" />
+    			<input class="form-control" type="text" th:field="*{author}" placeholder="Book author"/>
+    			<small class="form-text text-muted">Set book author name</small>
     		</div>
-    		<div>
+    		<div class="form-group">
     			<label for="fname">Title</label>
-    			<input type="text" th:field="*{title}" />
+    			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
+    			<small class="form-text text-muted">Set book primary title</small>
     		</div>
-    		<div>
+    		<div class="form-group">
     			<label for="fname">ISBN</label>
-    			<input type="text" th:field="*{isbn}" />
+    			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
+    			<small class="form-text text-muted">Set book ISBN code</small>
     		</div>
-    		<div>
+    		<div class="form-group">
     			<label for="fname">Year</label>
-    			<input type="text" th:field="*{year}" />
+    			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
+    			<small class="form-text text-muted">Set book publication year</small>
     		</div>
-    		<div>
+    		<div class="form-group">
     			<label for="fname">Price</label>
-    			<input type="text" th:field="*{price}" />
+    			<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
+    			<small class="form-text text-muted">Set book price</small>
     		</div>
-    		
-    		<input type="submit" value="Save book"></input>
+
+    		<button class="btn btn-primary" type="submit">Add book</button>
+    	</form>
+    	
+    	<br>
+    	<form action="#" th:action="@{/booklist}" method="get">
+    		<button class="btn btn-success" type="submit">Return to book list page</button>
     	</form>
     
     </div>

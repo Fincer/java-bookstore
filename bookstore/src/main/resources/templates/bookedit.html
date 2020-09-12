@@ -2,36 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <title>Update existing book</title>
 </head>
 <body>
-    <h1>Update existing book</h1>
-    <div>
+    <div class="col-md-4 mb-3">
+    	<h1>Update existing book</h1>
 
     	<form th:object="${book}" th:action="@{/bookedit/{id}(id=${book.id})}" action="#" method="post">
 
-    		<div>
-    			<label for="fname">Author</label>
-    			<input type="text" th:field="*{author}" />
+    		<div class="form-group">
+    			<label for="BookAuthor">Author</label><br>
+    			<input class="form-control" type="text" th:field="*{author}" placeholder="Book author"/>
+    			<small class="form-text text-muted">Set book author name</small>
     		</div>
-    		<div>
-    			<label for="fname">Title</label>
-    			<input type="text" th:field="*{title}" />
+    		<div class="form-group">
+    			<label for="BookName">Title</label><br>
+    			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
+    			<small class="form-text text-muted">Set book primary title</small>
     		</div>
-    		<div>
-    			<label for="fname">ISBN</label>
-    			<input type="text" th:field="*{isbn}" />
+    		<div class="form-group">
+    			<label for="BookISBN">ISBN</label><br>
+    			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
+    			<small class="form-text text-muted">Set book ISBN code</small>
     		</div>
-    		<div>
-    			<label for="fname">Year</label>
-    			<input type="text" th:field="*{year}" />
+    		<div class="form-group">
+    			<label for="BookYear">Year</label><br>
+    			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
+    			<small class="form-text text-muted">Set book publication year</small>
     		</div>
-    		<div>
-    			<label for="fname">Price</label>
-    			<input type="text" th:field="*{price}" />
+    		<div class="form-group">
+    			<label for="BookPrice">Price</label><br>
+    			<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
+    			<small class="form-text text-muted">Set book price</small>
     		</div>
     		
-    		<input type="submit" value="Update book"></input>
+    		<button class="btn btn-primary" type="submit">Update book</button>
+    	</form>
+    	<br>
+    	<form action="#" th:action="@{/booklist}" method="get">
+    		<button class="btn btn-success" type="submit">Return to book list page</button>
     	</form>
 
     </div>
