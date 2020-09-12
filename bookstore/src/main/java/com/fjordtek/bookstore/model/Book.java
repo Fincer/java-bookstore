@@ -24,7 +24,7 @@ public class Book {
 	// Primary key value in database
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private long          id;
 	
 	////////////////////

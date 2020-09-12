@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Bookstore page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bookstore page</title>
 </head>
 <body>
-    N/A // To-be-added
+	<h1>Books</h1>
+
+	<table>
+		<tr>
+			<th>Author</th>
+			<th>Title</th>
+			<th>ISBN</th>
+			<th>Year</th>
+		</tr>
+		<tr th:each="book : ${books}">
+			<td th:text="${book.author}"></td>
+			<td th:text="${book.title}"></td>
+			<td th:text="${book.isbn}"></td>
+			<td th:text="${book.year}"></td>
+		</tr>
+	</table>
+
 </body>
 </html>
