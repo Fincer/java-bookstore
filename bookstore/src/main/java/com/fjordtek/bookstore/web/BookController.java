@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.time.Year;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.fjordtek.bookstore.model.*;
@@ -63,7 +65,13 @@ public class BookController {
              bookAddPageURL + ": " + "HTTPOK"
      );
 	 
-	 dataModel.addAttribute("book", new Book());
+     Book newBook = new Book();
+     
+	 dataModel.addAttribute("book", newBook);
+	 
+	 if (newBook.getYear() == 0) {
+		 newBook.setYear(Year.now().getValue());
+	 }
 	 
      return bookAddPageURL;
  }
