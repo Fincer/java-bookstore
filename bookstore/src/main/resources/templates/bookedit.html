@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Add new book</title>
+    <title>Update existing book</title>
 </head>
 <body>
-    <h1>Add new book</h1>
+    <h1>Update existing book</h1>
     <div>
-    
-    	<form th:object="${book}" th:action="@{bookadd}" action="#" method="post">
+
+    	<form th:object="${book}" th:action="@{/bookedit/{id}(id=${book.id})}" action="#" method="post">
 
     		<div>
     			<label for="fname">Author</label>
@@ -31,9 +31,9 @@
     			<input type="text" th:field="*{price}" />
     		</div>
     		
-    		<input type="submit" value="Save book"></input>
+    		<input type="submit" value="Update book"></input>
     	</form>
-    
+
     </div>
 </body>
 </html>

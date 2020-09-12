@@ -66,7 +66,10 @@ public class Book {
 	
 	// TODO consider accessibility restrictions?
 	
-	// Id generated automatically
+	// NOTE: in default scenario, this is automatically generated
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public void setTitle(String title) {
 		this.title = title;
@@ -93,7 +96,9 @@ public class Book {
 	
 	// TODO consider accessibility restrictions?
 	
-	// Id generated automatically
+	public long getId() {
+		return id;
+	}
 	
 	public String getTitle() {
 		return title;

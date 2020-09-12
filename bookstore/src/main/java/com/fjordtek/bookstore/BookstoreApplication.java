@@ -25,14 +25,15 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	public CommandLineRunner bookDatabaseRunner(BookRepository repository) {
 		
 		return (args) -> {
-			commonLogger.info("Add new books to a database");
+			commonLogger.info("Add new sample books to database");
 		
 			repository.save(new Book("Book 1 title", "Book 1 author", 2020, "aaa-b2b-c3c-444", 40.00));
 			repository.save(new Book("Book 2 title", "Book 2 author", 2005, "111-2b2-3c3-ddd", 20.17));
 
-			commonLogger.info("New books in the database");
-			for (Book student : repository.findAll()) {
-				commonLogger.info(student.toString());
+			commonLogger.info("------------------------------");
+			commonLogger.info("Sample books in the database");
+			for (Book book : repository.findAll()) {
+				commonLogger.info(book.toString());
 			}
 
 		};
