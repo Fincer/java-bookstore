@@ -36,8 +36,13 @@
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Invalid year</div>
     		</div>
     		<div class="form-group">
-    			<label for="BookPrice">Price</label><br>
-    			<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
+    			<label for="fname">Price</label>
+    			<div class="input-group mb-2">
+    				 <div class="input-group-prepend">
+    				 	<div class="input-group-text">€</div>
+    				 </div>
+    				<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
+    			</div>
     			<small class="form-text text-muted">Set book price</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</div>
     		</div>
