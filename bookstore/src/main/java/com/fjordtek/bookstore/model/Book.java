@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fjordtek.bookstore.validation.CurrentYear;
 
+import org.springframework.format.annotation.NumberFormat;
+
 //import java.sql.Timestamp;
 //import javax.validation.constraints.PastOrPresent; 
 
@@ -112,6 +114,7 @@ public class Book {
 			)
 	private String isbn;
 	
+	@NumberFormat(pattern = "#,###,###,###.##")
 	@Digits(
 			integer = 3, fraction = 2,
 			message = "Invalid price, possibly too many decimals" 
