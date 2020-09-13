@@ -1,6 +1,6 @@
 //Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
 
-package com.fjordtek.bookstore.validation;
+package com.fjordtek.bookstore.annotation;
 
 import java.time.Year;
 
