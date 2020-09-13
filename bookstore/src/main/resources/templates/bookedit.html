@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
     <title>Update existing book</title>
 </head>
 <body>
     <div class="col-md-4 mb-3">
     	<h1>Update existing book</h1>
 
-    	<form th:object="${book}" action="#" th:action="@{/bookedit/{id}(id=${book.id})}" method="post">
+    	<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
 
     		<div class="form-group">
     			<label for="BookAuthor">Author</label><br>
@@ -46,11 +46,11 @@
     			<small class="form-text text-muted">Set book price</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</div>
     		</div>
-    		
+
     		<button class="btn btn-primary" type="submit">Update book</button>
     	</form>
     	<br>
-    	<form action="#" th:action="@{/booklist}" method="get">
+    	<form action="#" th:action="@{../booklist}" method="get">
     		<button class="btn btn-success" type="submit">Return to book list page</button>
     	</form>
 

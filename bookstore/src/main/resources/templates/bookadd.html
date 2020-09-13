@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
     <title>Add new book</title>
 </head>
 <body>
 <div class="col-md-4 mb-3">
     <h1>Add new book</h1>
-    
+
     	<form th:object="${book}" action="#" th:action="@{bookadd}" method="post">
 
     		<div class="form-group">
@@ -49,12 +49,12 @@
 
     		<button class="btn btn-primary" type="submit">Add book</button>
     	</form>
-    	
+
     	<br>
-    	<form action="#" th:action="@{/booklist}" method="get">
+    	<form action="#" th:action="@{booklist}" method="get">
     		<button class="btn btn-success" type="submit">Return to book list page</button>
     	</form>
-    
+
     </div>
 </body>
 </html>
