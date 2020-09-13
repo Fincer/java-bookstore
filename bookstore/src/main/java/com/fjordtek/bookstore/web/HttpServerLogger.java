@@ -3,6 +3,7 @@
 package com.fjordtek.bookstore.web;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.time.LocalDateTime;
 
 public class HttpServerLogger {
@@ -18,7 +19,7 @@ public class HttpServerLogger {
     }
 
     public void logMessageNormal(
-            HttpServletRequest request,
+    		HttpServletRequest request,
             String HttpRawStatusType
     ) {
 
@@ -33,7 +34,7 @@ public class HttpServerLogger {
     }
 
     public void logMessageError(
-            HttpServletRequest request,
+    		HttpServletRequest request,
             String HttpRawStatusType
     ) {
 

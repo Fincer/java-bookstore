@@ -4,13 +4,17 @@ package com.fjordtek.bookstore.model;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.NotEmpty;
+
+import com.fjordtek.bookstore.validation.CurrentYear;
 
 //import java.sql.Timestamp;
-//import javax.validation.constraints.PastOrPresent;
+//import javax.validation.constraints.PastOrPresent; 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,47 +23,107 @@ import javax.persistence.Id;
 
 @Entity
 public class Book {
+
+	private static final int strMin         = 2;
+	private static final int strMax         = 100;
+	// We format length check in Size annotation, not here
+	private static final String regexCommon = "^[a-zA-Z0-9\\-\\s]*$";
+	
+	private static final int strIsbnFirstPartMin = 7;
+	private static final int strIsbnFirstPartMax = 7;
+	private static final int strIsbnLastPartMin  = 1;
+	private static final int strIsbnLastPartMax  = 3;
+	private static final int strIsbnMin = strIsbnFirstPartMin + strIsbnLastPartMin + 1;
+	private static final int strIsbnMax = strIsbnFirstPartMax + strIsbnLastPartMax + 1;
+	
+	// We format length and syntax here for ISBN input string
+	// 1231234-1 <--> 1231234-123
+	private static final String regexIsbn   = "^[0-9]{" + strIsbnFirstPartMin + 
+			"," + strIsbnFirstPartMax + "}\\-[0-9]{" + strIsbnLastPartMin + "," + strIsbnLastPartMax + "}$";
+	
+	private static final int yearMin     = 1800;
+	private static final String minPrice = "0.01";
+	private static final String maxPrice = "999.99";
 	
 	////////////////////
 	// Primary key value in database
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private long          id;
+	@GeneratedValue(
+			strategy = GenerationType.AUTO
+			)
+    private long id;
 	
 	////////////////////
 	// Attributes with hard-coded constraints
 	
-	@NotNull
-	@NotEmpty(message = "Please provide a title")
-	@Pattern(regexp="^[a-zA-Z0-9-_ ]+$")
-	@Size(min = 2, max = 100, message = "Invalid title length")
-	private String        title;
+	@Size(
+			min = strMin, max = strMax,
+			message = "Title length must be " + strMin + "-" + strMax + " characters"
+			)
+	@NotBlank(
+			message = "Fill the book title form"
+			)
+	@Pattern(
+			regexp  = regexCommon,
+			message = "Invalid characters"
+			)
+	private String title;
 	
-	@NotNull
-	@NotEmpty(message = "Please provide an author name")
-	@Pattern(regexp="^[a-zA-Z ]+$")
-	@Size(min = 2, max = 100, message = "Invalid author name length")
-	private String        author;
+	@Size(
+			min = strMin, max = strMax,
+			message = "Author length must be " + strMin + "-" + strMax + " characters"
+			)
+	@NotBlank(
+			message = "Fill the book author form"
+			)
+	@Pattern(
+			regexp  = regexCommon,
+			message = "Invalid characters"
+			)
+	private String author;
 	
-	@NotNull
-	//@PastOrPresent
-	//@DateTimeFormat(pattern = "yyyy")
 	// TODO: Prefer Timestamp data type
+	// @DateTimeFormat(pattern = "yyyy")
 	// private Timestamp     year;
-	private int           year;
+	// ...
 	
 	@NotNull
-	@NotEmpty(message = "Please provide an ISBN code for the book")
-	@Pattern(regexp="^[a-zA-Z0-9-_ ]+$")
-	@Size(min = 15, max = 15)
-	private String        isbn;
+	@Min(
+			value   = yearMin,
+			message = "Minimum allowed year: " + yearMin
+			)
+	@CurrentYear
+	private int year;
+
+	@NotBlank(
+			message = "Fill the ISBN code form"
+			)
+	@Pattern(
+			regexp  = regexIsbn,
+			message = "Please use syntax: <" + 
+			strIsbnFirstPartMin + " integers>-<" +
+			strIsbnLastPartMin + "-" +
+			strIsbnLastPartMax + " integers>"
+			)
+	@Size(
+			min     = strIsbnMin, max = strIsbnMax,
+			message = "Length must be " + strIsbnMin + "-" + strIsbnMax + " characters"
+			)
+	private String isbn;
 	
-	@NotNull
-	@DecimalMin(value = "0.01",   message = "Too low price value" )
-	@DecimalMax(value = "999.99", message = "Too high price value")
+	@Digits(
+			integer = 3, fraction = 2,
+			message = "Invalid price, possibly too many decimals" 
+			)
+	@DecimalMin(
+			value   = minPrice, message = "Too low price value. Minimum allowed: " + minPrice
+			)
+	@DecimalMax(
+			value   = maxPrice, message = "Too high price value. Maximum allowed: " + maxPrice
+			)
 	// TODO: Use BigDecimal to keep exact precision?
-	private double        price;
+	private double price;
 
 	////////////////////
 	// Attribute setters
@@ -139,7 +203,12 @@ public class Book {
 	
 	@Override
 	public String toString() {
-		return this.id + ", " + this.title + ", " + this.author + ", " + this.year + ", " + this.isbn + ", " + this.price;
+		return "id: "     + this.id     + ", " +
+			   "title: "  + this.title  + ", " +
+			   "author: " + this.author + ", " +
+			   "year: "   + this.year   + ", " +
+			   "isbn: "   + this.isbn   + ", " +
+			   "price: "  + this.price;
 	}
 	
 	// ...

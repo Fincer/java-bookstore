@@ -27,8 +27,8 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 		return (args) -> {
 			commonLogger.info("Add new sample books to database");
 		
-			repository.save(new Book("Book 1 title", "Book 1 author", 2020, "aaa-b2b-c3c-444", 40.00));
-			repository.save(new Book("Book 2 title", "Book 2 author", 2005, "111-2b2-3c3-ddd", 20.17));
+			repository.save(new Book("Book 1 title", "Book 1 author", 2020, "1231231-12", 40.00));
+			repository.save(new Book("Book 2 title", "Book 2 author", 2005, "3213221-3",  20.17));
 
 			commonLogger.info("------------------------------");
 			commonLogger.info("Sample books in the database");

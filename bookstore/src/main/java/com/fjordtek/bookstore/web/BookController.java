@@ -4,6 +4,7 @@ package com.fjordtek.bookstore.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.Year;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import com.fjordtek.bookstore.model.*;
 
 @Controller
 public class BookController {
-
+/*
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+	*/
 	protected static final String landingPageURL      = "index";
 	protected static final String bookListPageURL     = "booklist";
 	protected static final String bookAddPageURL      = "bookadd";
@@ -38,7 +45,7 @@ public class BookController {
          value    = bookListPageURL,
          method   = { RequestMethod.GET, RequestMethod.POST }
  )
- public String defaultWebFormGet(Model dataModel, HttpServletRequest requestData) {
+ public String defaultWebFormGet(HttpServletRequest requestData, Model dataModel) {
 
      httpServerLogger.logMessageNormal(
              requestData,
@@ -58,7 +65,10 @@ public class BookController {
 		 value    = bookAddPageURL,
 		 method   = { RequestMethod.GET, RequestMethod.PUT }
  )
- public String webFormAddBook(Model dataModel, HttpServletRequest requestData) {
+ public String webFormAddBook(
+		 HttpServletRequest requestData,
+		 Model dataModel
+		 ) {
 	 
      httpServerLogger.logMessageNormal(
              requestData,
@@ -66,7 +76,6 @@ public class BookController {
      );
 	 
      Book newBook = new Book();
-     
 	 dataModel.addAttribute("book", newBook);
 	 
 	 if (newBook.getYear() == 0) {
@@ -80,11 +89,20 @@ public class BookController {
 		 value = bookAddPageURL,
 		 method = RequestMethod.POST
  )
- public String webFormSaveNewBook(Book book, HttpServletRequest requestData) {
+ public String webFormSaveNewBook(
+		 @Valid @ModelAttribute("book") Book book,
+		 BindingResult bindingResult,
+		 HttpServletRequest requestData
+		 ) {
 
+     if (bindingResult.hasErrors()) {
+    	httpServerLogger.commonError("Book add: error [" + book.toString() + "]", requestData);
+      	return bookAddPageURL;
+     }
+	 
      httpServerLogger.logMessageNormal(
              requestData,
-             bookEditPageURL + ": " + "HTTPOK"
+             bookAddPageURL + ": " + "HTTPOK"
      );
 
      bookRepository.save(book);
@@ -102,7 +120,7 @@ public class BookController {
  public String webFormDeleteBook(
 		 @PathVariable("id") long bookId,
 		 HttpServletRequest requestData
- ) {
+		 ) {
 	 
      httpServerLogger.logMessageNormal(
              requestData,
@@ -123,9 +141,10 @@ public class BookController {
  )
  public String webFormEditBook(
 		 @PathVariable("id") long bookId,
-		 Model dataModel, HttpServletRequest requestData
- ) {
-	 
+		 Model dataModel,
+		 HttpServletRequest requestData
+		 ) {
+
      httpServerLogger.logMessageNormal(
              requestData,
              bookEditPageURL + ": " + "HTTPOK"
@@ -141,8 +160,17 @@ public class BookController {
 		 value = bookEditPageURL + "/{id}",
 		 method = RequestMethod.POST
  )
- public String webFormUpdateBook(@ModelAttribute("book") Book book, HttpServletRequest requestData) {
+ public String webFormUpdateBook(
+		 @Valid @ModelAttribute("book") Book book,
+		 BindingResult bindingResult,
+		 HttpServletRequest requestData
+		 ) {
 
+     if (bindingResult.hasErrors()) {
+    	httpServerLogger.commonError("Book edit: error [" + book.toString() + "]", requestData);
+      	return bookAddPageURL;
+     }
+	 
      httpServerLogger.logMessageNormal(
              requestData,
              bookEditPageURL + ": " + "HTTPOK"
