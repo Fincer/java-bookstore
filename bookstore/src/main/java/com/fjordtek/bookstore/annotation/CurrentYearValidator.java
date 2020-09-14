@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CurrentYearValidator implements ConstraintValidator<CurrentYear, Integer> {
-	
+
 	private static final int yearNow = Year.now().getValue();
-	
+
 	@Override
-    public void initialize(CurrentYear year) {
-    }
-	
+	public void initialize(CurrentYear yearAnnotation) {
+	}
+
 	@Override
 	public boolean isValid(Integer year, ConstraintValidatorContext constraintValidatorContext) {
 		return year <= yearNow;
