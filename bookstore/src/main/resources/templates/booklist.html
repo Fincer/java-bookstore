@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
     <title>Bookstore page</title>
 </head>
 <body>
@@ -26,7 +26,7 @@
 				<td th:text="${book.year}"></td>
 				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}"></td>
 				<td><a class="btn btn-danger"
-				th:attr="onclick='return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
+				th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
 					th:href="@{bookdelete/{id}(id=${book.id})}">Delete</a></td>
 				<td><a class="btn btn-warning"
 					th:href="@{bookedit/{id}(id=${book.id})}">Edit</a></td>
