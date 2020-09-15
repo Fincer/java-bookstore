@@ -12,31 +12,31 @@
     	<form th:object="${book}" action="#" th:action="@{bookadd}" method="post">
 
     		<div class="form-group">
-    			<label for="fname">Author</label>
+    			<label for="BookAuthor">Author</label>
     			<input class="form-control" type="text" th:field="*{author}"  placeholder="Book author"/>
     			<small class="form-text text-muted">Set book author name</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Invalid author name</div>
     		</div>
     		<div class="form-group">
-    			<label for="fname">Title</label>
+    			<label for="BookTitle">Title</label>
     			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
     			<small class="form-text text-muted">Set book primary title</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid title</div>
     		</div>
     		<div class="form-group">
-    			<label for="fname">ISBN</label>
+    			<label for="BookISBN">ISBN</label>
     			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
     			<small class="form-text text-muted">Set book ISBN code</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Invalid ISBN code</div>
     		</div>
     		<div class="form-group">
-    			<label for="fname">Year</label>
+    			<label for="BookYear">Year</label>
     			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
     			<small class="form-text text-muted">Set book publication year</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Invalid year</div>
     		</div>
     		<div class="form-group">
-    			<label for="fname">Price</label>
+    			<label for="BookPrice">Price</label>
     			<div class="input-group mb-2">
     				 <div class="input-group-prepend">
     				 	<div class="input-group-text">€</div>
@@ -45,6 +45,17 @@
     			</div>
     			<small class="form-text text-muted">Set book price</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</div>
+    		</div>
+    		<div class="form-group">
+    			<label for="BookCategory">Category</label>
+    			<select class="form-control" th:field="*{category}">
+    				<option
+    				th:each="category : ${categories}"
+    				th:value="${category.getId()}"
+    				th:text="${category.getName()}"
+    				></option>
+    			</select>
+    			<small class="form-text text-muted">Select appropriate category</small>
     		</div>
 
     		<button class="btn btn-primary" type="submit">Add book</button>

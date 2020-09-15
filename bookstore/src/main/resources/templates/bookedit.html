@@ -46,6 +46,18 @@
     			<small class="form-text text-muted">Set book price</small>
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</div>
     		</div>
+    		
+    		<div class="form-group">
+    			<label for="BookCategory">Category</label>
+    			<select class="form-control" th:field="*{category}" th:selected="${book.category}">
+    				<option
+    				th:each="category : ${categories}"
+    				th:value="${category.getId()}"
+    				th:text="${category.getName()}"
+    				></option>
+    			</select>
+    			<small class="form-text text-muted">Select appropriate category</small>
+    		</div>
 
     		<button class="btn btn-primary" type="submit">Update book</button>
     	</form>

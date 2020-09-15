@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookRepository;
+import com.fjordtek.bookstore.model.CategoryRepository;
 
 @Controller
 public class BookController {
@@ -36,6 +37,9 @@ public class BookController {
 
 	@Autowired
 	private BookRepository       bookRepository;
+
+	@Autowired
+	private CategoryRepository   categoryRepository;
 
 	//////////////////////////////
 	// LIST PAGE
@@ -74,7 +78,9 @@ public class BookController {
 				);
 
 		Book newBook = new Book();
+
 		dataModel.addAttribute("book", newBook);
+		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		if (newBook.getYear() == 0) {
 			newBook.setYear(Year.now().getValue());
@@ -150,6 +156,7 @@ public class BookController {
 
 		Book book = bookRepository.findById(bookId).get();
 		dataModel.addAttribute("book", book);
+		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		return bookEditPageURL;
 	}

@@ -2,6 +2,8 @@
 
 package com.fjordtek.bookstore.model;
 
+import javax.persistence.Column;
+
 //import java.sql.Timestamp;
 //import javax.validation.constraints.PastOrPresent;
 
@@ -9,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -110,6 +114,9 @@ public class Book {
 	private int year;
 
 	//////////
+	@Column(
+			unique  = true
+			)
 	@NotBlank(
 			message = "Fill the ISBN code form"
 			)
@@ -141,6 +148,16 @@ public class Book {
 	// TODO: Use BigDecimal to keep exact precision?
 	private double price;
 
+	@ManyToOne(
+			//fetch    = FetchType.LAZY,
+			optional = false
+			)
+    @JoinColumn(
+    		name     = "category_id",
+    		nullable = false
+    		)
+	private Category category;
+
 	////////////////////
 	// Attribute setters
 
@@ -169,6 +186,10 @@ public class Book {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	////////////////////
@@ -200,6 +221,10 @@ public class Book {
 		return price;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
 	////////////////////
 	// Class constructors
 
@@ -207,11 +232,21 @@ public class Book {
 
 	public Book(String title, String author, int year, String isbn, double price) {
 		// super();
-	    this.title  = title;
-	    this.author = author;
-	    this.year   = year;
-	    this.isbn   = isbn;
-	    this.price  = price;
+	    this.title    = title;
+	    this.author   = author;
+	    this.year     = year;
+	    this.isbn     = isbn;
+	    this.price    = price;
+	}
+
+	public Book(String title, String author, int year, String isbn, double price, Category category) {
+		// super();
+	    this.title    = title;
+	    this.author   = author;
+	    this.year     = year;
+	    this.isbn     = isbn;
+	    this.price    = price;
+	    this.category = category;
 	}
 
 	////////////////////
@@ -224,7 +259,8 @@ public class Book {
 			   "author: " + this.author + ", " +
 			   "year: "   + this.year   + ", " +
 			   "isbn: "   + this.isbn   + ", " +
-			   "price: "  + this.price + "]";
+			   "price: "  + this.price  + ", " +
+			   "category: " + this.category + "]";
 	}
 
 }
