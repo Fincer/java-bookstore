@@ -77,7 +77,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "[" + "id: " + this.id +
+		return "[" + "id: " + this.id + ", " +
 				"name: " + this.name + "]";
 	}
 
