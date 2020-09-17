@@ -3,6 +3,8 @@
 package com.fjordtek.bookstore.web;
 
 import java.time.Year;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -32,6 +34,20 @@ public class BookController {
 	private static final String bookDeletePageView    = "bookdelete";
 	private static final String bookEditPageView      = "bookedit";
 
+	private static String currency_symbol 			  = "€";
+
+	private Map<String,String> globalModelMap = new HashMap<String,String>() {
+		private static final long serialVersionUID = 1L;
+	{
+		put("indexpage",  landingPageView);
+		put("listpage",   bookListPageView);
+		put("addpage",    bookAddPageView);
+		put("deletepage", bookDeletePageView);
+		put("editpage",   bookEditPageView);
+
+		put("currency_symbol", currency_symbol);
+	}};
+
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 	//private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
 
@@ -40,6 +56,13 @@ public class BookController {
 
 	@Autowired
 	private CategoryRepository   categoryRepository;
+
+	@ModelAttribute
+	public void globalAttributes(Model dataModel) {
+
+		// Security implications of adding these all?
+		dataModel.addAllAttributes(globalModelMap);
+	}
 
 	//////////////////////////////
 	// LIST PAGE
@@ -50,10 +73,6 @@ public class BookController {
 	public String defaultWebFormGet(HttpServletRequest requestData, Model dataModel) {
 
 		dataModel.addAttribute("books", bookRepository.findAll());
-
-		dataModel.addAttribute("deletepage", bookDeletePageView);
-		dataModel.addAttribute("editpage",   bookEditPageView);
-		dataModel.addAttribute("addpage",    bookAddPageView);
 
 		httpServerLogger.logMessageNormal(
 				requestData,
@@ -79,9 +98,6 @@ public class BookController {
 		Book newBook = new Book();
 		dataModel.addAttribute("book", new Book());
 		dataModel.addAttribute("categories", categoryRepository.findAll());
-
-		dataModel.addAttribute("addpage",    bookAddPageView);
-		dataModel.addAttribute("listpage",   bookListPageView);
 
 		if (newBook.getYear() == 0) {
 			newBook.setYear(Year.now().getValue());
@@ -159,8 +175,6 @@ public class BookController {
 		Book book = bookRepository.findById(bookId).get();
 		dataModel.addAttribute("book", book);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
-
-		dataModel.addAttribute("listpage",   bookListPageView);
 
 		httpServerLogger.logMessageNormal(
 				requestData,

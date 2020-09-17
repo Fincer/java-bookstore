@@ -26,7 +26,7 @@
 				<td th:text="${book.isbn}"></td>
 				<td th:text="${book.year}"></td>
 				<td th:text="${book.category.getName()}"></td>
-				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}"></td>
+				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}+ ' ' + ${currency_symbol}"></td>
 				<td><a class="btn btn-danger"
 				th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
 					th:href="@{__${deletepage}__/{id}(id=${book.id})}">Delete</a></td>
@@ -35,7 +35,7 @@
 			</tr>
 		</table>
 		<div>
-			<a class="btn btn-success" href="@{__${addpage}__}">Add Book</a>
+			<a class="btn btn-success" th:href="@{__${addpage}__}">Add Book</a>
 		</div>
 	</div>
 </body>

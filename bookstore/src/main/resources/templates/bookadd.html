@@ -39,7 +39,7 @@
     			<label for="BookPrice">Price</label>
     			<div class="input-group mb-2">
     				 <div class="input-group-prepend">
-    				 	<div class="input-group-text">€</div>
+    				 	<div class="input-group-text" th:text="${currency_symbol}"></div>
     				 </div>
     				<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
     			</div>
