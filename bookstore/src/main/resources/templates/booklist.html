@@ -29,13 +29,13 @@
 				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}"></td>
 				<td><a class="btn btn-danger"
 				th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
-					th:href="@{bookdelete/{id}(id=${book.id})}">Delete</a></td>
+					th:href="@{__${deletepage}__/{id}(id=${book.id})}">Delete</a></td>
 				<td><a class="btn btn-warning"
-					th:href="@{bookedit/{id}(id=${book.id})}">Edit</a></td>
+					th:href="@{__${editpage}__/{id}(id=${book.id})}">Edit</a></td>
 			</tr>
 		</table>
 		<div>
-			<a class="btn btn-success" href="bookadd">Add Book</a>
+			<a class="btn btn-success" href="@{__${addpage}__}">Add Book</a>
 		</div>
 	</div>
 </body>
