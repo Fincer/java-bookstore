@@ -33,7 +33,7 @@ public class Book {
 	private static final int strMin         = 2;
 	private static final int strMax         = 100;
 	// We format length check in Size annotation, not here
-	private static final String regexCommon = "^[a-zA-Z0-9\\-\\s]*$";
+	private static final String regexCommon = "^[a-zA-Z0-9\\-:\\s]*$";
 
 	private static final int strIsbnFirstPartMin = 7;
 	private static final int strIsbnFirstPartMax = 7;
