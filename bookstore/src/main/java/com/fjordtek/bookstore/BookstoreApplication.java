@@ -30,15 +30,28 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 			commonLogger.info("Add new categories to database");
 
-			Category horror  = new Category("Horror");
-			Category fantasy = new Category("Fantasy");
-			categoryRepository.save(horror);
-			categoryRepository.save(fantasy);
+			categoryRepository.save(new Category("Horror"));
+			categoryRepository.save(new Category("Fantasy"));
+			categoryRepository.save(new Category("Sci-Fi"));
 
 			commonLogger.info("Add new sample books to database");
 
-			bookRepository.save(new Book("Book 1 title", "Book 1 author", 2020, "1231231-12", 40.00, horror));
-			bookRepository.save(new Book("Book 2 title", "Book 2 author", 2005, "3213221-3",  20.17, fantasy));
+			bookRepository.save(new Book(
+					"Bloody Chamber",
+					"Angela Carter",
+					1979,
+					"1231231-12",
+					18.00,
+					categoryRepository.findByName("Horror").get(0)
+					));
+			bookRepository.save(new Book(
+					"The Witcher: The Lady of the Lake",
+					"Andrzej Sapkowski",
+					1999,
+					"3213221-3",
+					19.99,
+					categoryRepository.findByName("Fantasy").get(0)
+					));
 
 			commonLogger.info("------------------------------");
 			commonLogger.info("Sample categories in the database");

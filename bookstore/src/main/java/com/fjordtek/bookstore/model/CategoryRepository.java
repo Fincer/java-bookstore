@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 
-	// Handles both INSERT and UPDATE queries
-	List<Category> findById(String name);
+	List<Category> findByName(String name);
 
 }
