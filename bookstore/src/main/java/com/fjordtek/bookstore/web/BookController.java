@@ -27,15 +27,14 @@ import com.fjordtek.bookstore.model.CategoryRepository;
 @Controller
 public class BookController {
 
-	protected static final String landingPageURL      = "index";
-	protected static final String bookListPageURL     = "booklist";
-	protected static final String bookAddPageURL      = "bookadd";
-	protected static final String bookDeletePageURL   = "bookdelete";
-	protected static final String bookEditPageURL     = "bookedit";
-	protected static final String bookSavePageURL     = "booksave";
+	private static final String landingPageView       = "index";
+	private static final String bookListPageView      = "booklist";
+	private static final String bookAddPageView       = "bookadd";
+	private static final String bookDeletePageView    = "bookdelete";
+	private static final String bookEditPageView      = "bookedit";
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
-	private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
+	//private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
 
 	@Autowired
 	private BookRepository       bookRepository;
@@ -46,19 +45,23 @@ public class BookController {
 	//////////////////////////////
 	// LIST PAGE
 	@RequestMapping(
-			value    = bookListPageURL,
+			value    = bookListPageView,
 			method   = { RequestMethod.GET, RequestMethod.POST }
 			)
 	public String defaultWebFormGet(HttpServletRequest requestData, Model dataModel) {
 
 		dataModel.addAttribute("books", bookRepository.findAll());
 
+		dataModel.addAttribute("deletepage", bookDeletePageView);
+		dataModel.addAttribute("editpage",   bookEditPageView);
+		dataModel.addAttribute("addpage",    bookAddPageView);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookListPageURL + ": " + "HTTPOK"
+				bookListPageView + ": " + "HTTPOK"
 				);
 
-		return bookListPageURL;
+		return bookListPageView;
 
 	}
 
@@ -66,7 +69,7 @@ public class BookController {
 	// ADD BOOK
 
 	@RequestMapping(
-			value    = bookAddPageURL,
+			value    = bookAddPageView,
 			method   = { RequestMethod.GET, RequestMethod.PUT }
 			)
 	public String webFormAddBook(
@@ -78,20 +81,23 @@ public class BookController {
 		dataModel.addAttribute("book", newBook);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
+		dataModel.addAttribute("addpage",    bookAddPageView);
+		dataModel.addAttribute("listpage",   bookListPageView);
+
 		if (newBook.getYear() == 0) {
 			newBook.setYear(Year.now().getValue());
 		}
 
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookAddPageURL + ": " + "HTTPOK"
+				bookAddPageView + ": " + "HTTPOK"
 				);
 
-		return bookAddPageURL;
+		return bookAddPageView;
 	}
 
 	@RequestMapping(
-			value = bookAddPageURL,
+			value = bookAddPageView,
 			method = RequestMethod.POST
 			)
 	public String webFormSaveNewBook(
@@ -103,24 +109,24 @@ public class BookController {
 
 		if (bindingResult.hasErrors()) {
 			httpServerLogger.commonError("Book add: error " + book.toString(), requestData);
-			return bookAddPageURL;
+			return bookAddPageView;
 		}
 
 		bookRepository.save(book);
 
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookAddPageURL + ": " + "HTTPOK"
+				bookAddPageView + ": " + "HTTPOK"
 				);
 
-		return "redirect:" + bookListPageURL;
+		return "redirect:" + bookListPageView;
 	}
 
 	//////////////////////////////
 	// DELETE BOOK
 
 	@RequestMapping(
-			value  = bookDeletePageURL + "/{id}",
+			value  = bookDeletePageView + "/{id}",
 			method = RequestMethod.GET
 			)
 	public String webFormDeleteBook(
@@ -132,17 +138,17 @@ public class BookController {
 
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookDeletePageURL + ": " + "HTTPOK"
+				bookDeletePageView + ": " + "HTTPOK"
 				);
 
-		return "redirect:../" + bookListPageURL;
+		return "redirect:../" + bookListPageView;
 	}
 
 	//////////////////////////////
 	// UPDATE BOOK
 
 	@RequestMapping(
-			value  = bookEditPageURL + "/{id}",
+			value  = bookEditPageView + "/{id}",
 			method = { RequestMethod.GET }
 			)
 	public String webFormEditBook(
@@ -156,12 +162,14 @@ public class BookController {
 		dataModel.addAttribute("book", book);
 		dataModel.addAttribute("categories", categories);
 
+		dataModel.addAttribute("listpage",   bookListPageView);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookEditPageURL + ": " + "HTTPOK"
+				bookEditPageView + ": " + "HTTPOK"
 				);
 
-		return bookEditPageURL;
+		return bookEditPageView;
 	}
 
 	/* NOTE: We keep Id here for the sake of proper URL formatting.
@@ -171,43 +179,46 @@ public class BookController {
 	 * but just as an URL end point.
 	*/
 	@RequestMapping(
-			value  = bookEditPageURL + "/{id}",
+			value  = bookEditPageView + "/{id}",
 			method = RequestMethod.POST
 			)
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
+			Model dataModel,
 			@PathVariable("id") Long bookId,
 			HttpServletRequest requestData
 			) {
 
 		bookId = book.getId();
+		Iterable<Category> categories = categoryRepository.findAll();
+		dataModel.addAttribute("categories", categories);
 
 		if (bindingResult.hasErrors()) {
 			httpServerLogger.commonError("Book edit: error " + book.toString(), requestData);
-			return bookEditPageURL;
+			return bookEditPageView;
 		}
 
 		bookRepository.save(book);
 
 		httpServerLogger.logMessageNormal(
 				requestData,
-				bookEditPageURL + ": " + "HTTPOK"
+				bookEditPageView + ": " + "HTTPOK"
 				);
 
-		return "redirect:../" + bookListPageURL;
+		return "redirect:../" + bookListPageView;
 	}
 
 	//////////////////////////////
 	// REDIRECTS
 
 	@RequestMapping(
-			value  = { "/", landingPageURL },
+			value  = { "/", landingPageView },
 			method =  RequestMethod.GET
 			)
 	@ResponseStatus(HttpStatus.FOUND)
 	public String redirectToDefaultWebForm() {
-		return "redirect:" + bookListPageURL;
+		return "redirect:" + bookListPageView;
 	}
 
 	// Other URL requests
@@ -216,7 +227,7 @@ public class BookController {
 			)
 	public String errorWebForm(HttpServletRequest requestData) {
 		//return httpExceptionHandler.notFoundErrorHandler(requestData);
-		return "redirect:" + bookListPageURL;
+		return "redirect:" + bookListPageView;
 	}
 
 	@RequestMapping(
