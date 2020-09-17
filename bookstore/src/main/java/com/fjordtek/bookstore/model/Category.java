@@ -25,7 +25,7 @@ public class Category {
 			name         = "categoryIdGenerator",
 			sequenceName = "categoryIdSequence"
 			)
-    private long id;
+    private Long id;
 
 	////////////////////
 	// Attributes with hard-coded constraints
@@ -41,7 +41,7 @@ public class Category {
 	////////////////////
 	// Attribute setters
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -56,7 +56,7 @@ public class Category {
 	////////////////////
 	// Attribute getters
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

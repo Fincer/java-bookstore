@@ -124,7 +124,7 @@ public class BookController {
 			method = RequestMethod.GET
 			)
 	public String webFormDeleteBook(
-			@PathVariable("id") long bookId,
+			@PathVariable("id") Long bookId,
 			HttpServletRequest requestData
 			) {
 
@@ -146,7 +146,7 @@ public class BookController {
 			method = { RequestMethod.GET }
 			)
 	public String webFormEditBook(
-			@PathVariable("id") long bookId,
+			@PathVariable("id") Long bookId,
 			Model dataModel,
 			HttpServletRequest requestData
 			) {
@@ -177,7 +177,7 @@ public class BookController {
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
-			@PathVariable("id") long bookId,
+			@PathVariable("id") Long bookId,
 			HttpServletRequest requestData
 			) {
 

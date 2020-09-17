@@ -73,7 +73,7 @@ public class Book {
 			name         = "bookIdGenerator",
 			sequenceName = "bookIdSequence"
 			)
-    private long id;
+    private Long id;
 
 	////////////////////
 	// Attributes with hard-coded constraints
@@ -170,7 +170,7 @@ public class Book {
 	// TODO consider accessibility restrictions?
 
 	// NOTE: in default scenario, this is automatically generated
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -203,7 +203,7 @@ public class Book {
 
 	// TODO consider accessibility restrictions?
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
