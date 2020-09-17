@@ -212,11 +212,11 @@ public class BookController {
 
 	// Other URL requests
 	@RequestMapping(
-			value  = "*",
-			method = { RequestMethod.GET, RequestMethod.POST }
+			value  = "*"
 			)
 	public String errorWebForm(HttpServletRequest requestData) {
-		return httpExceptionHandler.notFoundErrorHandler(requestData);
+		//return httpExceptionHandler.notFoundErrorHandler(requestData);
+		return "redirect:" + bookListPageURL;
 	}
 
 	@RequestMapping(
