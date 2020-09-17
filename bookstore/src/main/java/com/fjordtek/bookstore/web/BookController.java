@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookRepository;
+import com.fjordtek.bookstore.model.Category;
 import com.fjordtek.bookstore.model.CategoryRepository;
 
 @Controller
@@ -31,6 +32,7 @@ public class BookController {
 	protected static final String bookAddPageURL      = "bookadd";
 	protected static final String bookDeletePageURL   = "bookdelete";
 	protected static final String bookEditPageURL     = "bookedit";
+	protected static final String bookSavePageURL     = "booksave";
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 	private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
@@ -49,12 +51,12 @@ public class BookController {
 			)
 	public String defaultWebFormGet(HttpServletRequest requestData, Model dataModel) {
 
+		dataModel.addAttribute("books", bookRepository.findAll());
+
 		httpServerLogger.logMessageNormal(
 				requestData,
 				bookListPageURL + ": " + "HTTPOK"
 				);
-
-		dataModel.addAttribute("books", bookRepository.findAll());
 
 		return bookListPageURL;
 
@@ -72,19 +74,18 @@ public class BookController {
 			Model dataModel
 			) {
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookAddPageURL + ": " + "HTTPOK"
-				);
-
 		Book newBook = new Book();
-
 		dataModel.addAttribute("book", newBook);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		if (newBook.getYear() == 0) {
 			newBook.setYear(Year.now().getValue());
 		}
+
+		httpServerLogger.logMessageNormal(
+				requestData,
+				bookAddPageURL + ": " + "HTTPOK"
+				);
 
 		return bookAddPageURL;
 	}
@@ -96,6 +97,7 @@ public class BookController {
 	public String webFormSaveNewBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
+			Model dataModel,
 			HttpServletRequest requestData
 			) {
 
@@ -104,12 +106,12 @@ public class BookController {
 			return bookAddPageURL;
 		}
 
+		bookRepository.save(book);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
 				bookAddPageURL + ": " + "HTTPOK"
 				);
-
-		bookRepository.save(book);
 
 		return "redirect:" + bookListPageURL;
 	}
@@ -126,12 +128,12 @@ public class BookController {
 			HttpServletRequest requestData
 			) {
 
+		bookRepository.deleteById(bookId);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
 				bookDeletePageURL + ": " + "HTTPOK"
 				);
-
-		bookRepository.deleteById(bookId);
 
 		return "redirect:../" + bookListPageURL;
 	}
@@ -141,7 +143,7 @@ public class BookController {
 
 	@RequestMapping(
 			value  = bookEditPageURL + "/{id}",
-			method = RequestMethod.GET
+			method = { RequestMethod.GET }
 			)
 	public String webFormEditBook(
 			@PathVariable("id") long bookId,
@@ -149,39 +151,49 @@ public class BookController {
 			HttpServletRequest requestData
 			) {
 
+		Book book = bookRepository.findById(bookId).get();
+		Iterable<Category> categories = categoryRepository.findAll();
+		dataModel.addAttribute("book", book);
+		dataModel.addAttribute("categories", categories);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
 				bookEditPageURL + ": " + "HTTPOK"
 				);
 
-		Book book = bookRepository.findById(bookId).get();
-		dataModel.addAttribute("book", book);
-		dataModel.addAttribute("categories", categoryRepository.findAll());
-
 		return bookEditPageURL;
 	}
 
+	/* NOTE: We keep Id here for the sake of proper URL formatting.
+	 * Keep URL even if the POST request has invalid data.
+	 * Do actual modifications by the book *object*, though.
+	 * Internally, we never use URL id as a reference for user modifications,
+	 * but just as an URL end point.
+	*/
 	@RequestMapping(
-			value = bookEditPageURL + "/{id}",
+			value  = bookEditPageURL + "/{id}",
 			method = RequestMethod.POST
 			)
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
+			@PathVariable("id") long bookId,
 			HttpServletRequest requestData
 			) {
+
+		bookId = book.getId();
 
 		if (bindingResult.hasErrors()) {
 			httpServerLogger.commonError("Book edit: error " + book.toString(), requestData);
 			return bookEditPageURL;
 		}
 
+		bookRepository.save(book);
+
 		httpServerLogger.logMessageNormal(
 				requestData,
 				bookEditPageURL + ": " + "HTTPOK"
 				);
-
-		bookRepository.save(book);
 
 		return "redirect:../" + bookListPageURL;
 	}
