@@ -1,5 +1,7 @@
 # Java Bookstore Project
 
+![](sample_0.png)
+
 - This repository contains school-related Java server-side project work for an imaginary book store with required/necessary back-end features & course requirement description.
 
 - This repository is linked to work of repository [java-server-programming - GitHub/Fincer](https://github.com/Fincer/java-server-programming).
