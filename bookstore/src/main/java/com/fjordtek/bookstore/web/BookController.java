@@ -96,12 +96,9 @@ public class BookController {
 			) {
 
 		Book newBook = new Book();
-		dataModel.addAttribute("book", new Book());
+		newBook.setYear(Year.now().getValue());
+		dataModel.addAttribute("book", newBook);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
-
-		if (newBook.getYear() == 0) {
-			newBook.setYear(Year.now().getValue());
-		}
 
 		httpServerLogger.logMessageNormal(
 				requestData,
