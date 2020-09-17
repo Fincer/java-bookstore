@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -65,7 +66,12 @@ public class Book {
 
 	@Id
 	@GeneratedValue(
-			strategy = GenerationType.AUTO
+			strategy     = GenerationType.AUTO,
+			generator    = "bookIdGenerator"
+			)
+	@SequenceGenerator(
+			name         = "bookIdGenerator",
+			sequenceName = "bookIdSequence"
 			)
     private long id;
 

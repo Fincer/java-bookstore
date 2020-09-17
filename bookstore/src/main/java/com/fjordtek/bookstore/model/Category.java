@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Category {
@@ -17,7 +18,12 @@ public class Category {
 	// Primary key value in database
 	@Id
 	@GeneratedValue(
-			strategy = GenerationType.AUTO
+			strategy     = GenerationType.AUTO,
+			generator    = "categoryIdGenerator"
+			)
+	@SequenceGenerator(
+			name         = "categoryIdGenerator",
+			sequenceName = "categoryIdSequence"
 			)
     private long id;
 
