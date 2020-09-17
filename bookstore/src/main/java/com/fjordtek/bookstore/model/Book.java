@@ -251,12 +251,12 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "[" + "id: "     + this.id     + ", " +
-			   "title: "  + this.title  + ", " +
-			   "author: " + this.author + ", " +
-			   "year: "   + this.year   + ", " +
-			   "isbn: "   + this.isbn   + ", " +
-			   "price: "  + this.price  + ", " +
+		return "[" + "id: " + this.id       + ", " +
+			   "title: "    + this.title    + ", " +
+			   "author: "   + this.author   + ", " +
+			   "year: "     + this.year     + ", " +
+			   "isbn: "     + this.isbn     + ", " +
+			   "price: "    + this.price    + ", " +
 			   "category: " + this.category + "]";
 	}
 

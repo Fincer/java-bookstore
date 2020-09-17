@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookRepository;
-import com.fjordtek.bookstore.model.Category;
 import com.fjordtek.bookstore.model.CategoryRepository;
 
 @Controller
@@ -78,7 +77,7 @@ public class BookController {
 			) {
 
 		Book newBook = new Book();
-		dataModel.addAttribute("book", newBook);
+		dataModel.addAttribute("book", new Book());
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		dataModel.addAttribute("addpage",    bookAddPageView);
@@ -97,8 +96,8 @@ public class BookController {
 	}
 
 	@RequestMapping(
-			value = bookAddPageView,
-			method = RequestMethod.POST
+			value    = bookAddPageView,
+			method   = RequestMethod.POST
 			)
 	public String webFormSaveNewBook(
 			@Valid @ModelAttribute("book") Book book,
@@ -126,8 +125,8 @@ public class BookController {
 	// DELETE BOOK
 
 	@RequestMapping(
-			value  = bookDeletePageView + "/{id}",
-			method = RequestMethod.GET
+			value    = bookDeletePageView + "/{id}",
+			method   = RequestMethod.GET
 			)
 	public String webFormDeleteBook(
 			@PathVariable("id") Long bookId,
@@ -148,8 +147,8 @@ public class BookController {
 	// UPDATE BOOK
 
 	@RequestMapping(
-			value  = bookEditPageView + "/{id}",
-			method = { RequestMethod.GET }
+			value    = bookEditPageView + "/{id}",
+			method   = RequestMethod.GET
 			)
 	public String webFormEditBook(
 			@PathVariable("id") Long bookId,
@@ -158,9 +157,8 @@ public class BookController {
 			) {
 
 		Book book = bookRepository.findById(bookId).get();
-		Iterable<Category> categories = categoryRepository.findAll();
 		dataModel.addAttribute("book", book);
-		dataModel.addAttribute("categories", categories);
+		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		dataModel.addAttribute("listpage",   bookListPageView);
 
@@ -179,8 +177,8 @@ public class BookController {
 	 * but just as an URL end point.
 	*/
 	@RequestMapping(
-			value  = bookEditPageView + "/{id}",
-			method = RequestMethod.POST
+			value    = bookEditPageView + "/{id}",
+			method   = RequestMethod.POST
 			)
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
@@ -191,8 +189,7 @@ public class BookController {
 			) {
 
 		bookId = book.getId();
-		Iterable<Category> categories = categoryRepository.findAll();
-		dataModel.addAttribute("categories", categories);
+		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		if (bindingResult.hasErrors()) {
 			httpServerLogger.commonError("Book edit: error " + book.toString(), requestData);
@@ -213,8 +210,8 @@ public class BookController {
 	// REDIRECTS
 
 	@RequestMapping(
-			value  = { "/", landingPageView },
-			method =  RequestMethod.GET
+			value    = { "/", landingPageView },
+			method   = RequestMethod.GET
 			)
 	@ResponseStatus(HttpStatus.FOUND)
 	public String redirectToDefaultWebForm() {
@@ -223,7 +220,7 @@ public class BookController {
 
 	// Other URL requests
 	@RequestMapping(
-			value  = "*"
+			value    = "*"
 			)
 	public String errorWebForm(HttpServletRequest requestData) {
 		//return httpExceptionHandler.notFoundErrorHandler(requestData);
@@ -231,8 +228,8 @@ public class BookController {
 	}
 
 	@RequestMapping(
-			value  = "favicon.ico",
-			method = RequestMethod.GET
+			value    = "favicon.ico",
+			method   = RequestMethod.GET
 			)
 	@ResponseBody
 	public void faviconRequest() {

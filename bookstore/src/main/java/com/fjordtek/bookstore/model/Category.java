@@ -32,9 +32,9 @@ public class Category {
 	private String name;
 
 	@OneToMany(
-			mappedBy = "category"
-			//fetch    = FetchType.LAZY,
-			//cascade  = CascadeType.ALL
+			mappedBy     = "category"
+			//fetch      = FetchType.LAZY,
+			//cascade    = CascadeType.ALL
 			)
 	private List<Book> books;
 
@@ -83,8 +83,8 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "[" + "id: " + this.id + ", " +
-				"name: " + this.name + "]";
+		return "[" + "id: " + this.id       + ", " +
+			   "name: "     + this.name     + "]";
 	}
 
 }
