@@ -127,6 +127,8 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
+		bookRepository.save(book);
+
 		return "redirect:" + bookListPageView;
 	}
 
