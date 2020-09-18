@@ -118,12 +118,15 @@ public class BookController {
 			HttpServletRequest requestData
 			) {
 
+		// TODO consider better solution. Add custom Hibernate annotation for Book class?
+		if (bookRepository.existsByIsbn(book.getIsbn())) {
+			bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+		}
+
 		if (bindingResult.hasErrors()) {
 			httpServerLogger.commonError("Book add: error " + book.toString(), requestData);
 			return bookAddPageView;
 		}
-
-		bookRepository.save(book);
 
 		httpServerLogger.logMessageNormal(
 				requestData,

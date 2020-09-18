@@ -120,9 +120,7 @@ public class Book {
 	private int year;
 
 	//////////
-	@Column(
-			unique  = true
-			)
+	@Column(unique  = true)
 	@NotBlank(
 			message = "Fill the ISBN code form"
 			)
