@@ -29,6 +29,12 @@ import com.fjordtek.bookstore.model.CategoryRepository;
 @Controller
 public class BookController {
 
+	@Autowired
+	private BookRepository       bookRepository;
+
+	@Autowired
+	private CategoryRepository   categoryRepository;
+
 	private static final String landingPageView       = "index";
 	private static final String bookListPageView      = "booklist";
 	private static final String bookAddPageView       = "bookadd";
@@ -47,17 +53,12 @@ public class BookController {
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 
-	@Autowired
-	private BookRepository       bookRepository;
-
-	@Autowired
-	private CategoryRepository   categoryRepository;
-
 	@ModelAttribute
 	public void globalAttributes(Model dataModel) {
 
 		// Security implications of adding these all controller-wide?
 		dataModel.addAllAttributes(globalModelMap);
+		dataModel.addAttribute("categories", categoryRepository.findAll());
 	}
 
 	//////////////////////////////
@@ -96,7 +97,6 @@ public class BookController {
 		Book newBook = new Book();
 		newBook.setYear(Year.now().getValue());
 		dataModel.addAttribute("book", newBook);
-		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		httpServerLogger.log(requestData, responseData);
 
@@ -166,7 +166,6 @@ public class BookController {
 
 		Book book = bookRepository.findById(bookId).get();
 		dataModel.addAttribute("book", book);
-		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		httpServerLogger.log(requestData, responseData);
 
@@ -193,7 +192,6 @@ public class BookController {
 			) {
 
 		bookId = book.getId();
-		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		if (bindingResult.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
