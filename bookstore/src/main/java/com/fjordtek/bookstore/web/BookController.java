@@ -60,7 +60,7 @@ public class BookController {
 	@ModelAttribute
 	public void globalAttributes(Model dataModel) {
 
-		// Security implications of adding these all?
+		// Security implications of adding these all controller-wide?
 		dataModel.addAllAttributes(globalModelMap);
 	}
 
@@ -115,7 +115,6 @@ public class BookController {
 	public String webFormSaveNewBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
-			Model dataModel,
 			HttpServletRequest requestData
 			) {
 
