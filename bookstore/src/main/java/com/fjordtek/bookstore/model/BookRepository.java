@@ -8,7 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface BookRepository extends CrudRepository<Book, Long> {
 
-	// Handles both INSERT and UPDATE queries
-	List<Book> findById(String title);
+	public List<Book> findById(String title);
+
+	public boolean existsByIsbn(String isbn);
 
 }
