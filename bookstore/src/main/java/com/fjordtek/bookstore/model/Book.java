@@ -81,6 +81,7 @@ public class Book {
 	// Attributes with hard-coded constraints
 
 	//////////
+	@Column(nullable = false)
 	@Size(
 			min = strMin, max = strMax,
 			message = "Title length must be " + strMin + "-" + strMax + " characters"
@@ -95,6 +96,7 @@ public class Book {
 	private String title;
 
 	//////////
+	@Column(nullable = false)
 	@Size(
 			min = strMin, max = strMax,
 			message = "Author length must be " + strMin + "-" + strMax + " characters"
@@ -113,7 +115,8 @@ public class Book {
 	// @DateTimeFormat(pattern = "yyyy")
 	// private Timestamp     year;
 	// ...
-
+	// TODO: Consider allowing 0 value if year is not known
+	@Column(nullable = true)
 	@Min(
 			value   = yearMin,
 			message = "Minimum allowed year: " + yearMin
@@ -122,7 +125,7 @@ public class Book {
 	private int year;
 
 	//////////
-	@Column(unique  = true)
+	@Column(unique  = true, nullable = false)
 	@NotBlank(
 			message = "Fill the ISBN code form"
 			)
@@ -141,6 +144,7 @@ public class Book {
 
 	//////////
 	@NumberFormat(style = Style.NUMBER, pattern = "#,###.###")
+	@Column(nullable = false)
 	@Digits(
 			integer = 3, fraction = 2,
 			message = "Invalid price, possibly too many decimals"
