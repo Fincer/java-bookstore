@@ -3,21 +3,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
-    <title>Bookstore page</title>
+    <title th:text="#{page.title.browser.list}"></title>
 </head>
 <body>
 	<div>
-		<h1>Books</h1>
+		<h1 th:text="#{page.title.webform.list}"></h1>
 
 		<table class="table table-striped">
 			<tr>
-				<th>Author</th>
-				<th>Title</th>
-				<th>ISBN</th>
-				<th>Year</th>
-				<th>Category</th>
-				<th>Price</th>
-				<th>Actions</th>
+				<th th:text="#{book.author}"></th>
+				<th th:text="#{book.title}"></th>
+				<th th:text="#{book.isbn}"></th>
+				<th th:text="#{book.year}"></th>
+				<th th:text="#{book.category}"></th>
+				<th th:text="#{book.price}"></th>
+				<th th:text="#{page.text.list.actions}"></th>
 				<th></th>
 			</tr>
 			<tr th:each="book : ${books}">
@@ -26,16 +26,16 @@
 				<td th:text="${book.isbn}"></td>
 				<td th:text="${book.year}"></td>
 				<td th:text="${book.category.getName()}"></td>
-				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}+ ' ' + ${currency_symbol}"></td>
+				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}+ ' ' + #{page.symbols.currency}"></td>
 				<td><a class="btn btn-danger"
 				th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
-					th:href="@{__${deletepage}__/{id}(id=${book.id})}">Delete</a></td>
+					th:href="@{__${deletepage}__/{id}(id=${book.id})}" th:text="#{page.text.list.delete}"></a></td>
 				<td><a class="btn btn-warning"
-					th:href="@{__${editpage}__/{id}(id=${book.id})}">Edit</a></td>
+					th:href="@{__${editpage}__/{id}(id=${book.id})}" th:text="#{page.text.list.edit}"></a></td>
 			</tr>
 		</table>
 		<div>
-			<a class="btn btn-success" th:href="@{__${addpage}__}">Add Book</a>
+			<a class="btn btn-success" th:href="@{__${addpage}__}" th:text="#{button.book.add}"></a>
 		</div>
 	</div>
 </body>

@@ -35,8 +35,6 @@ public class BookController {
 	private static final String bookDeletePageView    = "bookdelete";
 	private static final String bookEditPageView      = "bookedit";
 
-	private static String currency_symbol 			  = "€";
-
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
 		private static final long serialVersionUID = 1L;
 	{
@@ -45,8 +43,6 @@ public class BookController {
 		put("addpage",    bookAddPageView);
 		put("deletepage", bookDeletePageView);
 		put("editpage",   bookEditPageView);
-
-		put("currency_symbol", currency_symbol);
 	}};
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
