@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{../css/bookstore.css}" />
     <link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}" />
     <title th:text="#{page.title.browser.edit}"></title>
 </head>
@@ -11,39 +12,55 @@
 
     	<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
 
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="BookAuthor" th:text="#{book.author}"></label><br>
     			<input class="form-control" type="text" th:field="*{author}" placeholder="Book author"/>
     			<small class="form-text text-muted" th:text="#{book.desc.set.author}"></small>
+    			
+    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
+    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.author}"></small>
+
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author')}"
     			th:errors="*{author}">Invalid author name</div>
     		</div>
 
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="BookName" th:text="#{book.title}"></label><br>
     			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
     			<small class="form-text text-muted" th:text="#{book.desc.set.title}"></small>
+
+    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
+    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.title}"></small>
+
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
     			th:errors="*{title}">Invalid title</div>
     		</div>
 
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="BookISBN" th:text="#{book.isbn}"></label><br>
     			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
     			<small class="form-text text-muted" th:text="#{book.desc.set.isbn}"></small>
+
+    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
+    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.isbn}"></small>
+
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
     			th:errors="*{isbn}">Invalid ISBN code</div>
     		</div>
 
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="BookYear" th:text="#{book.year}"></label><br>
     			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
     			<small class="form-text text-muted" th:text="#{book.desc.set.year}"></small>
+
+    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
+    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.year}"></small>
+
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
     			th:errors="*{year}">Invalid year</div>
     		</div>
 
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="fname" th:text="#{book.price}"></label>
     			<div class="input-group mb-2">
     				 <div class="input-group-prepend">
@@ -52,11 +69,15 @@
     				<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
     			</div>
     			<small class="form-text text-muted" th:text="#{book.desc.set.price}"></small>
+
+    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
+    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.price}"></small>
+
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
     			th:errors="*{price}">Invalid price</div>
     		</div>
     		
-    		<div class="form-group">
+    		<div class="form-group bookform-section">
     			<label for="BookCategory">Category</label>
     			<select class="form-control" th:field="*{category}" th:selected="${book.category}">
     				<option
