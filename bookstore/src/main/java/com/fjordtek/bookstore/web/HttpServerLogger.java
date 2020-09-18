@@ -2,58 +2,83 @@
 
 package com.fjordtek.bookstore.web;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HttpServerLogger {
 
-	private LocalDateTime logTimeStamp;
+	private static final Logger serverLogger = LoggerFactory.getLogger(HttpServerLogger.class);
 
-	private void setLogTimeStamp() {
-		this.logTimeStamp = LocalDateTime.now();
+	private static boolean httpStatusRange(int comparable, int lowLimit, int upLimit) {
+		return lowLimit <= comparable && comparable <= upLimit;
 	}
 
-	private LocalDateTime getLogTimeStamp() {
-		return this.logTimeStamp;
-	}
-
-	public void logMessageNormal(
+	public void log(
 			HttpServletRequest request,
-			String HttpRawStatusType
+			HttpServletResponse response
 			) {
 
-		setLogTimeStamp();
-		System.out.printf(
-				"%s: HTTP request to '%s' from client %s (%s)\n",
-				getLogTimeStamp(),
-				request.getRequestURL(),
-				request.getRemoteAddr(),
-				HttpRawStatusType
-				);
+		int status = response.getStatus();
+
+		List<String> requestParams            = new ArrayList<String>();
+		Enumeration<String> requestParamNames = request.getParameterNames();
+
+		if (requestParamNames != null) {
+			while (requestParamNames.hasMoreElements()) {
+
+				String paramName     = requestParamNames.nextElement().toString();
+				String[] paramValues = request.getParameterValues(paramName);
+
+				requestParams.add(
+						paramName + " = " +
+						String.join(", ", paramValues)
+						);
+			}
+		}
+
+		if (httpStatusRange(status, 0, 399)) {
+			serverLogger.info(
+					"HTTP request to '{}' from client '{}' [status: {}, attributes: {}]",
+					request.getRequestURL(),
+					request.getRemoteAddr(),
+					response.getStatus(),
+					requestParams
+					);
+		} else {
+			serverLogger.error(
+					"Invalid HTTP request to '{}' from client '{}' [status: {}, attributes: {}]",
+					request.getRequestURL(),
+					request.getRemoteAddr(),
+					response.getStatus(),
+					requestParams
+					);
+		}
+
 	}
 
-	public void logMessageError(
+	public void commonError(
+			String errorMsg,
 			HttpServletRequest request,
-			String HttpRawStatusType
-			) {
+			HttpServletResponse response,
+			String ...strings) {
 
-		setLogTimeStamp();
-		System.err.printf(
-				"%s: Invalid HTTP request to '%s' from client %s (%s)\n",
-				getLogTimeStamp(),
-				request.getRequestURL(),
+		String[] dataString = strings;
+
+		serverLogger.error(
+				"{} - {} [status: {}]",
 				request.getRemoteAddr(),
-				HttpRawStatusType
+				errorMsg,
+				response.getStatus()
 				);
-	}
-
-	public void commonError(String errorMsg, HttpServletRequest request, String ...strings) {
-
-		// Splitting log streams for proper server error logging
-		System.err.printf("%s: %s - %s\n", getLogTimeStamp(), request.getRemoteAddr(), errorMsg);
-		for (String dataString : strings) {
-			System.err.printf("%s\n", dataString);
+		if (dataString != null) {
+			serverLogger.error("{}", String.join(", ", dataString));
 		}
 	}
 

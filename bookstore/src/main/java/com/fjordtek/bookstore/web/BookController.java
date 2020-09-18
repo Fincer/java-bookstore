@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,6 @@ public class BookController {
 	}};
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
-	//private HttpExceptionHandler httpExceptionHandler = new HttpExceptionHandler();
 
 	@Autowired
 	private BookRepository       bookRepository;
@@ -70,14 +70,15 @@ public class BookController {
 			value    = bookListPageView,
 			method   = { RequestMethod.GET, RequestMethod.POST }
 			)
-	public String defaultWebFormGet(HttpServletRequest requestData, Model dataModel) {
+	public String defaultWebFormGet(
+			HttpServletRequest requestData,
+			HttpServletResponse responseData,
+			Model dataModel
+			) {
 
 		dataModel.addAttribute("books", bookRepository.findAll());
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookListPageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return bookListPageView;
 
@@ -92,6 +93,7 @@ public class BookController {
 			)
 	public String webFormAddBook(
 			HttpServletRequest requestData,
+			HttpServletResponse responseData,
 			Model dataModel
 			) {
 
@@ -100,10 +102,7 @@ public class BookController {
 		dataModel.addAttribute("book", newBook);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookAddPageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return bookAddPageView;
 	}
@@ -115,7 +114,8 @@ public class BookController {
 	public String webFormSaveNewBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
-			HttpServletRequest requestData
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
 			) {
 
 		// TODO consider better solution. Add custom Hibernate annotation for Book class?
@@ -124,14 +124,12 @@ public class BookController {
 		}
 
 		if (bindingResult.hasErrors()) {
-			httpServerLogger.commonError("Book add: error " + book.toString(), requestData);
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServerLogger.log(requestData, responseData);
 			return bookAddPageView;
 		}
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookAddPageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return "redirect:" + bookListPageView;
 	}
@@ -145,15 +143,13 @@ public class BookController {
 			)
 	public String webFormDeleteBook(
 			@PathVariable("id") Long bookId,
-			HttpServletRequest requestData
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
 			) {
 
 		bookRepository.deleteById(bookId);
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookDeletePageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return "redirect:../" + bookListPageView;
 	}
@@ -168,17 +164,15 @@ public class BookController {
 	public String webFormEditBook(
 			@PathVariable("id") Long bookId,
 			Model dataModel,
-			HttpServletRequest requestData
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
 			) {
 
 		Book book = bookRepository.findById(bookId).get();
 		dataModel.addAttribute("book", book);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookEditPageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return bookEditPageView;
 	}
@@ -198,23 +192,22 @@ public class BookController {
 			BindingResult bindingResult,
 			Model dataModel,
 			@PathVariable("id") Long bookId,
-			HttpServletRequest requestData
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
 			) {
 
 		bookId = book.getId();
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 
 		if (bindingResult.hasErrors()) {
-			httpServerLogger.commonError("Book edit: error " + book.toString(), requestData);
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServerLogger.log(requestData, responseData);
 			return bookEditPageView;
 		}
 
 		bookRepository.save(book);
 
-		httpServerLogger.logMessageNormal(
-				requestData,
-				bookEditPageView + ": " + "HTTPOK"
-				);
+		httpServerLogger.log(requestData, responseData);
 
 		return "redirect:../" + bookListPageView;
 	}
@@ -223,20 +216,15 @@ public class BookController {
 	// REDIRECTS
 
 	@RequestMapping(
-			value    = { "/", landingPageView },
-			method   = RequestMethod.GET
+			value    = { "*" }
 			)
 	@ResponseStatus(HttpStatus.FOUND)
-	public String redirectToDefaultWebForm() {
-		return "redirect:" + bookListPageView;
-	}
-
-	// Other URL requests
-	@RequestMapping(
-			value    = "*"
+	public String redirectToDefaultWebForm(
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
 			)
-	public String errorWebForm(HttpServletRequest requestData) {
-		//return httpExceptionHandler.notFoundErrorHandler(requestData);
+	{
+		httpServerLogger.log(requestData, responseData);
 		return "redirect:" + bookListPageView;
 	}
 
