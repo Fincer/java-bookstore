@@ -2,6 +2,8 @@
 
 package com.fjordtek.bookstore.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 
 //import java.sql.Timestamp;
@@ -149,8 +151,7 @@ public class Book {
 	@DecimalMax(
 			value   = maxPrice, message = "Too high price value. Maximum allowed: " + maxPrice
 			)
-	// TODO: Use BigDecimal to keep exact precision?
-	private double price;
+	private BigDecimal price;
 
 	@ManyToOne(
 			//fetch    = FetchType.LAZY,
@@ -188,7 +189,7 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -221,7 +222,7 @@ public class Book {
 		return isbn;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
@@ -234,7 +235,7 @@ public class Book {
 
 	public Book() {}
 
-	public Book(String title, String author, int year, String isbn, double price, Category category) {
+	public Book(String title, String author, int year, String isbn, BigDecimal price, Category category) {
 		// super();
 	    this.title    = title;
 	    this.author   = author;

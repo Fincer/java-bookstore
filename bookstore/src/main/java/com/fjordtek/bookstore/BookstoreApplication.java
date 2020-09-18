@@ -2,6 +2,8 @@
 
 package com.fjordtek.bookstore;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -41,7 +43,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"Angela Carter",
 					1979,
 					"1231231-12",
-					18.00,
+					new BigDecimal("18.00"),
 					categoryRepository.findByName("Horror").get(0)
 					));
 			bookRepository.save(new Book(
@@ -49,7 +51,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"Andrzej Sapkowski",
 					1999,
 					"3213221-3",
-					19.99,
+					new BigDecimal("19.99"),
 					categoryRepository.findByName("Fantasy").get(0)
 					));
 
