@@ -2,41 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" th:href="@{../css/bookstore.css}" />
-    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
-    <title th:text="#{page.title.browser.list}"></title>
+
+    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+
+    <title th:text="${#messages.msgOrNull('page.title.browser.list')} ?: 'page.title.browser.list'">
+    page.title.browser.list
+    </title>
+
 </head>
 <body>
 	<div>
-		<h1 th:text="#{page.title.webform.list}"></h1>
+
+		<h1 th:text="${#messages.msgOrNull('page.title.webform.list')} ?: 'page.title.webform.list'">
+		page.title.webform.list
+		</h1>
 
 		<table class="table table-striped">
+
 			<tr>
-				<th th:text="#{book.author}"></th>
-				<th th:text="#{book.title}"></th>
-				<th th:text="#{book.isbn}"></th>
-				<th th:text="#{book.year}"></th>
-				<th th:text="#{book.category}"></th>
-				<th th:text="#{book.price}"></th>
-				<th th:text="#{page.text.list.actions}"></th>
+				<th th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">book.author</th>
+				<th th:text="${#messages.msgOrNull('book.title')} ?: 'book.title'">book.title</th>
+				<th th:text="${#messages.msgOrNull('book.isbn')} ?: 'book.isbn'">book.isbn</th>
+				<th th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">book.year</th>
+				<th th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">book.category</th>
+				<th th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">book.price</th>
+				<th th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'">page.text.list.actions</th>
 				<th></th>
 			</tr>
+
 			<tr th:each="book : ${books}">
-				<td th:text="${book.author}"></td>
-				<td th:text="${book.title}"></td>
-				<td th:text="${book.isbn}"></td>
-				<td th:text="${book.year}"></td>
-				<td th:text="${book.category.getName()}"></td>
-				<td th:text="${#numbers.formatDecimal(book.price, 1, 2)}+ ' ' + #{page.symbols.currency}"></td>
-				<td><a class="btn btn-danger"
-				th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
-					th:href="@{__${deletepage}__/{id}(id=${book.id})}" th:text="#{page.text.list.delete}"></a></td>
-				<td><a class="btn btn-warning"
-					th:href="@{__${editpage}__/{id}(id=${book.id})}" th:text="#{page.text.list.edit}"></a></td>
+				<td th:text="${book.author}">(obj) book.author</td>
+				<td th:text="${book.title}">(obj) book.title</td>
+				<td th:text="${book.isbn}">(obj) book.isbn</td>
+				<td th:text="${book.year}">(obj) book.year</td>
+				<td th:text="${book.category.name}">(obj) book.category.name</td>
+				<td th:text="(${#numbers.formatDecimal(book.price, 1, 2)} ?: '0.00') + ' ' + (${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency')">
+				0.00 page.symbols.currency
+				</td>
+
+				<td>
+					<a class="btn btn-danger"
+					th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
+					th:href="@{__${deletepage}__/{id}(id=${book.id})}"
+					th:text="${#messages.msgOrNull('page.text.list.delete')} ?: 'page.text.list.delete'">
+					page.text.list.delete
+					</a>
+				</td>
+
+				<td>
+					<a class="btn btn-warning"
+					th:href="@{__${editpage}__/{id}(id=${book.id})}"
+					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
+					page.text.list.edit
+					</a>
+				</td>
+
 			</tr>
 		</table>
 		<div>
-			<a class="btn btn-success" th:href="@{__${addpage}__}" th:text="#{button.book.add}"></a>
+			<a class="btn btn-success" th:href="@{__${addpage}__}"
+			th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
+			button.book.add
+			</a>
 		</div>
 	</div>
 </body>

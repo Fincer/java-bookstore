@@ -2,99 +2,193 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" th:href="@{../css/bookstore.css}" />
-    <link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}" />
-    <title th:text="#{page.title.browser.add}"></title>
+
+    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+ 
+    <title th:text="${#messages.msgOrNull('page.title.browser.add')} ?: 'page.title.browser.add'">
+    page.title.browser.add
+    </title>
+
 </head>
 <body>
 <div class="col-md-4 mb-3">
-    <h1 th:text="#{page.title.webform.add}"></h1>
+
+    <h1 th:text="${#messages.msgOrNull('page.title.webform.add')} ?: 'page.title.webform.add'">
+    page.title.webform.add
+    </h1>
 
     	<form th:object="${book}" action="#" th:action="@{__${addpage}__}" method="post">
 
     		<div class="form-group bookform-section">
-    			<label for="BookAuthor" th:text="#{book.author}"></label>
+    			<label for="BookAuthor"
+    			th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
+    			book.author
+    			</label>
     			<input class="form-control" type="text" th:field="*{author}"  placeholder="Book author"/>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.author}"></small>
 
-    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
-    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.author}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.author')} ?: 'book.desc.set.author'">
+    			book.desc.set.author
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-info"
+    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    			book.desc.example.headertext
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.example.author')} ?: 'book.desc.example.author'">
+    			book.desc.example.author
+    			</small>
 
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author')}"
-    			th:errors="*{author}">Invalid author name</div>
+    			th:errors="*{author}">Invalid author value</div>
     		</div>
 
     		<div class="form-group bookform-section">
-    			<label for="BookTitle" th:text="#{book.title}"></label>
+    			<label for="BookTitle"
+    			th:text="${#messages.msgOrNull('book.title')} ?: 'book.title'">
+    			book.title
+    			</label>
     			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.title}"></small>
 
-    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
-    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.title}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.title')} ?: 'book.desc.set.title'">
+    			book.desc.set.title
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-info"
+    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    			book.desc.example.headertext:
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.example.title')} ?: 'book.desc.example.title'">
+    			book.desc.example.title
+    			</small>
 
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
-    			th:errors="*{title}">Invalid title</div>
+    			th:errors="*{title}">Invalid title value</div>
     		</div>
 
     		<div class="form-group bookform-section">
-    			<label for="BookISBN" th:text="#{book.isbn}"></label>
+    			<label for="BookISBN"
+    			th:text="${#messages.msgOrNull('book.isbn')} ?: 'book.isbn'">
+    			book.isbn
+    			</label>
     			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.isbn}"></small>
 
-    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
-    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.isbn}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.isbn')} ?: 'book.desc.set.isbn'">
+    			book.desc.set.isbn
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-info"
+    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    			book.desc.example.headertext:
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.example.isbn')} ?: 'book.desc.example.isbn'">
+    			book.desc.example.isbn
+    			</small>
 
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
     			th:errors="*{isbn}">Invalid ISBN code</div>
     		</div>
 
     		<div class="form-group bookform-section">
-    			<label for="BookYear" th:text="#{book.year}"></label>
+    			<label for="BookYear"
+    			th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">
+    			book.year
+    			</label>
     			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.year}"></small>
 
-    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
-    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.year}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.year')} ?: 'book.desc.set.year'">
+    			book.desc.set.year
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-info"
+    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+				book.desc.example.headertext:
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.example.year')} ?: 'book.desc.example.year'">
+    			book.desc.example.year
+    			</small>
 
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
-    			th:errors="*{year}">Invalid year</div>
+    			th:errors="*{year}">Invalid year value</div>
     		</div>
 
     		<div class="form-group bookform-section">
-    			<label for="BookPrice" th:text="#{book.price}"></label>
+    			<label for="BookPrice"
+    			th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">
+    			book.price
+    			</label>
+
     			<div class="input-group mb-2">
     				 <div class="input-group-prepend">
-    				 	<div class="input-group-text" th:text="#{page.symbols.currency}"></div>
+    				 	<div class="input-group-text"
+    				 	th:text="${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency'">
+    				 	page.symbols.currency
+    				 	</div>
     				 </div>
     				<input class="form-control" type="text" th:field="*{price}" placeholder="0.00"/>
     			</div>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.price}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.price')} ?: 'book.desc.set.price'">
+    			book.desc.set.price
+    			</small>
 
-    			<small style="display: inline-block;" class="form-text text-info" th:text="#{book.desc.example.headertext} + ': '"></small>
-    			<small style="display: inline-block;" class="form-text text-muted" th:text="#{book.desc.example.price}"></small>
+    			<small style="display: inline-block;" class="form-text text-info"
+    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    			book.desc.example.headertext:
+    			</small>
+
+    			<small style="display: inline-block;" class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.example.price')} ?: 'book.desc.example.price'">
+    			book.desc.example.price
+    			</small>
 
     			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
-    			th:errors="*{price}">Invalid price</div>
+    			th:errors="*{price}">Invalid price value</div>
     		</div>
 
     		<div class="form-group bookform-section">
-    			<label for="BookCategory" th:text="#{book.category}"></label>
+    			<label for="BookCategory"
+    			th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">
+    			book.category
+    			</label>
     			<select class="form-control" th:field="*{category}">
     				<option
     				th:each="category : ${categories}"
-    				th:value="${category.getId()}"
-    				th:text="${category.getName()}"
-    				></option>
+    				th:value="${category.id}"
+    				th:text="${category.name}"
+    				>(obj) category.name</option>
     			</select>
-    			<small class="form-text text-muted" th:text="#{book.desc.set.category}"></small>
+    			<small class="form-text text-muted"
+    			th:text="${#messages.msgOrNull('book.desc.set.category')} ?: 'book.desc.set.category'">
+    			book.desc.set.category
+    			</small>
     		</div>
 
-    		<button class="btn btn-primary" type="submit" th:text="#{button.book.add}"></button>
+    		<button class="btn btn-primary" type="submit"
+    		th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
+    		button.book.add
+    		</button>
     	</form>
 
     	<br>
+
     	<form action="#" th:action="@{__${listpage}__}" method="get">
-    		<button class="btn btn-success" type="submit" th:text="#{button.page.list.return}"></button>
+    		<button class="btn btn-success" type="submit"
+    		th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
+    		button.page.list.return
+    		</button>
     	</form>
 
     </div>
