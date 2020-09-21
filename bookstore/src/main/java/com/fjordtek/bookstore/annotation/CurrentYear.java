@@ -11,6 +11,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ * The annotated element must be a year number equal or less than the current year.
+ *
+ * @author Pekka Helenius
+ */
 @Documented
 @Constraint(validatedBy = CurrentYearValidator.class)
 @Target(
