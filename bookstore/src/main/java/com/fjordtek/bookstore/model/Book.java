@@ -24,9 +24,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
-
 import com.fjordtek.bookstore.annotation.CurrentYear;
 
 @Entity
@@ -143,11 +140,10 @@ public class Book {
 	private String isbn;
 
 	//////////
-	@NumberFormat(style = Style.NUMBER, pattern = "#,###.###")
 	@Column(nullable = false)
 	@Digits(
 			integer = 3, fraction = 2,
-			message = "Invalid price, possibly too many decimals"
+			message = "Invalid price value"
 			)
 	@DecimalMin(
 			value   = minPrice, message = "Too low price value. Minimum allowed: " + minPrice

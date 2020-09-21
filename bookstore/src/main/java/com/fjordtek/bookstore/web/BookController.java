@@ -2,6 +2,7 @@
 
 package com.fjordtek.bookstore.web;
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,14 @@ import com.fjordtek.bookstore.model.CategoryRepository;
 
 @Controller
 public class BookController {
+
+	/* We allow both comma and dot decimal separators
+	 * for BigDecimal data types used in Book class.
+	 */
+	@InitBinder("book")
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(BigDecimal.class, new BigDecimalPropertyEditor());
+	}
 
 	@Autowired
 	private BookRepository       bookRepository;
