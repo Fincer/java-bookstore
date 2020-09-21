@@ -209,6 +209,14 @@ public class BookController {
 			bindingResult.rejectValue("name", "error.user", "Wrong book");
 		}
 
+		// TODO consider better solution. Add custom Hibernate annotation for Book class?
+		Book bookI = bookRepository.findByIsbn(book.getIsbn());
+
+		// If existing ISBN value is not attached to the current book...
+		if (bookI.getId() != book.getId()) {
+			bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+		}
+
 		if (bindingResult.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
