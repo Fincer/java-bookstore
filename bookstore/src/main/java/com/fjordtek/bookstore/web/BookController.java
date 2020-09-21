@@ -204,7 +204,10 @@ public class BookController {
 			HttpServletResponse responseData
 			) {
 
-		bookId = book.getId();
+		// NOTE: We have a unique and non-nullable ISBN value for each book.
+		if (bookId != book.getId()) {
+			bindingResult.rejectValue("name", "error.user", "Wrong book");
+		}
 
 		if (bindingResult.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
