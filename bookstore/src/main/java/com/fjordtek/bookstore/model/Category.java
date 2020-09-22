@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Category {
 
@@ -31,6 +33,7 @@ public class Category {
 	// Attributes with hard-coded constraints
 	private String name;
 
+	@JsonBackReference
 	@OneToMany(
 			mappedBy     = "category"
 			//fetch      = FetchType.LAZY,

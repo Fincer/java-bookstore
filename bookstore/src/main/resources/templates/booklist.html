@@ -29,6 +29,7 @@
 				<th th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">book.price</th>
 				<th th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'">page.text.list.actions</th>
 				<th></th>
+				<th th:text="${#messages.msgOrNull('book.json')} ?: 'book.json'">book.json</th>
 			</tr>
 
 			<tr th:each="book : ${books}">
@@ -57,15 +58,40 @@
 					page.text.list.edit
 					</a>
 				</td>
+				
+				<td>
+					<a class="btn btn-info"
+					th:href="@{__${restpage}__/book/{id}(id=${book.id})}"
+					th:text="${#messages.msgOrNull('page.text.list.json')} ?: 'page.text.list.json'">
+					page.text.list.json
+					</a>
+				</td>
 
 			</tr>
+
+			<tr>
+				<td>
+					<a class="btn btn-success" th:href="@{__${addpage}__}"
+					th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
+					button.book.add
+					</a>
+				</td>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<td>
+					<a class="btn btn-dark" th:href="@{__${restpage}__} + '/' + @{__${listpage}__}"
+					th:text="${#messages.msgOrNull('button.page.list.json')} ?: 'button.page.list.json'">
+					button.page.list.json
+					</a>
+				</td>
+			</tr>
+
 		</table>
-		<div>
-			<a class="btn btn-success" th:href="@{__${addpage}__}"
-			th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
-			button.book.add
-			</a>
-		</div>
 	</div>
 </body>
 </html>

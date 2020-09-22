@@ -24,6 +24,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fjordtek.bookstore.annotation.CurrentYear;
 
 @Entity
@@ -153,6 +154,7 @@ public class Book {
 			)
 	private BigDecimal price;
 
+	@JsonManagedReference
 	@ManyToOne(
 			//fetch    = FetchType.LAZY,
 			optional = false

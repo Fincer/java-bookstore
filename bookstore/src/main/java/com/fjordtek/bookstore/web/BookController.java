@@ -46,6 +46,8 @@ public class BookController {
 	@Autowired
 	private CategoryRepository   categoryRepository;
 
+	private static final String RestJSONPageView      = "json";
+
 	private static final String landingPageView       = "index";
 	private static final String bookListPageView      = "booklist";
 	private static final String bookAddPageView       = "bookadd";
@@ -55,6 +57,8 @@ public class BookController {
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
 		private static final long serialVersionUID = 1L;
 	{
+		put("restpage",   RestJSONPageView);
+
 		put("indexpage",  landingPageView);
 		put("listpage",   bookListPageView);
 		put("addpage",    bookAddPageView);
