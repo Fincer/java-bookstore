@@ -24,6 +24,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fjordtek.bookstore.annotation.CurrentYear;
 
@@ -73,6 +74,7 @@ public class Book {
 			name         = "bookIdGenerator",
 			sequenceName = "bookIdSequence"
 			)
+	@JsonIgnore
     private Long id;
 
 	////////////////////

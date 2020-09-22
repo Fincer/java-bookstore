@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Category {
@@ -27,6 +28,7 @@ public class Category {
 			name         = "categoryIdGenerator",
 			sequenceName = "categoryIdSequence"
 			)
+	@JsonIgnore
     private Long id;
 
 	////////////////////
