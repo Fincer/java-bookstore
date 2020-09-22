@@ -213,8 +213,10 @@ public class BookController {
 		Book bookI = bookRepository.findByIsbn(book.getIsbn());
 
 		// If existing ISBN value is not attached to the current book...
-		if (bookI.getId() != book.getId()) {
-			bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+		if (bookI != null) {
+			if (bookI.getId() != book.getId()) {
+				bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+			}
 		}
 
 		if (bindingResult.hasErrors()) {
