@@ -18,7 +18,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public interface BookRepository extends CrudRepository<Book, Long> {
 
 	@Override
-	@RestResource(exported = false)
+	//@RestResource(exported = false)
 	public Optional<Book> findById(Long id);
 
 	@RestResource(path = "title", rel = "title")
