@@ -188,12 +188,10 @@
 
     	<br>
 
-    	<form action="#" th:action="@{../__${listpage}__}" method="get">
-    		<button class="btn btn-success" type="submit"
-    		th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
-    		button.page.list.return
-    		</button>
-    	</form>
+    	<a class="btn btn-success" th:href="@{../__${listpage}__}"
+		th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
+		button.page.list.return
+		</a>
 
     </div>
 </body>
