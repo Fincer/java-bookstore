@@ -30,7 +30,7 @@ public class Category {
 			sequenceName = "categoryIdSequence"
 			)
 	@JsonIgnore
-    private Long id;
+	private Long id;
 
 	////////////////////
 	// Attributes with hard-coded constraints
