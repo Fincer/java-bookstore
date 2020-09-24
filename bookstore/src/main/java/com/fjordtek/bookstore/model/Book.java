@@ -10,6 +10,7 @@ import javax.persistence.Column;
 //import javax.validation.constraints.PastOrPresent;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fjordtek.bookstore.annotation.CurrentYear;
 
 @Entity
@@ -67,7 +69,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(
-			strategy     = GenerationType.AUTO,
+			strategy     = GenerationType.IDENTITY,
 			generator    = "bookIdGenerator"
 			)
 	@SequenceGenerator(
@@ -156,14 +158,29 @@ public class Book {
 			)
 	private BigDecimal price;
 
-	@JsonManagedReference
+	/*
+	 * "@JsonManagedReference only works on one-to-many cases, and not many-to-many.
+	 * For general-purpose handling of (possibly) cyclic dependencies, @JsonIdentityInfo may be used."
+	 *
+	 * Ref: https://github.com/FasterXML/jackson-databind/issues/2191#issuecomment-618087892
+	 */
+	//@JsonManagedReference(value = "category")
+
+	// If category is null, we do not print it in JSON output.
+	@JsonUnwrapped
+
+	/*
+	 * There are many ways to filter which category fields we want to JSON output.
+	 * Using a custom JSON serializer is one of them.
+	 */
+	@JsonSerialize(using = CategoryJsonSerializer.class)
 	@ManyToOne(
-			//fetch    = FetchType.LAZY,
-			optional = false
+			fetch    = FetchType.EAGER,
+			optional = true
 			)
     @JoinColumn(
     		name     = "category_id",
-    		nullable = false
+    		nullable = true
     		)
 	private Category category;
 
