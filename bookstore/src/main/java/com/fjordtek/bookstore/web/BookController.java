@@ -47,6 +47,7 @@ public class BookController {
 	private CategoryRepository   categoryRepository;
 
 	private static final String RestJSONPageView      = "json";
+	private static final String RestAPIRefPageView    = "apiref";
 
 	private static final String landingPageView       = "index";
 	private static final String bookListPageView      = "booklist";
@@ -58,6 +59,7 @@ public class BookController {
 		private static final long serialVersionUID = 1L;
 	{
 		put("restpage",   RestJSONPageView);
+		put("apirefpage", RestAPIRefPageView);
 
 		put("indexpage",  landingPageView);
 		put("listpage",   bookListPageView);
@@ -234,6 +236,20 @@ public class BookController {
 		httpServerLogger.log(requestData, responseData);
 
 		return "redirect:../" + bookListPageView;
+	}
+
+	//////////////////////////////
+	// API REFERENCE HELP PAGE
+	@RequestMapping(
+			value    = RestAPIRefPageView,
+			method   = { RequestMethod.GET }
+			)
+	public String webFormRestApiRef(
+			HttpServletRequest requestData,
+			HttpServletResponse responseData
+			) {
+		httpServerLogger.log(requestData, responseData);
+		return RestAPIRefPageView;
 	}
 
 	//////////////////////////////

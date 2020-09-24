@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+ 
+    <title th:text="${#messages.msgOrNull('page.title.browser.apiref')} ?: 'page.title.browser.apiref'">
+    page.title.browser.apiref
+    </title>
+
+</head>
+<body th:with="baseUrl=(@{__${#httpServletRequest.scheme}__} + '://' + @{__${#httpServletRequest.serverName}__} + ':' + @{__${#httpServletRequest.serverPort}__} + '/')">
+
+    <h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
+    page.title.webform.apiref
+    </h1>
+
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<th><h3 th:text="${#messages.msgOrNull('page.text.apiref.endpoints')} ?: 'page.text.apiref.endpoints'">
+				page.text.apiref.endpoints
+				</h3></th>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="${baseUrl} + 'api/booklist/'">placeholder</code>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="${baseUrl} + 'api/categories/'">placeholder</code>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<th><h3 th:text="${#messages.msgOrNull('page.text.apiref.examples')} ?: 'page.text.apiref.examples'">
+				page.text.apiref.examples
+				</h3></th>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber'">placeholder</code>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="${baseUrl} + 'api/categories/search/category?name=Fantasy'">placeholder</code>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<th><h3 th:text="${#messages.msgOrNull('page.text.apiref.add')} ?: 'page.text.apiref.add'">
+				page.text.apiref.add
+				</h3></th>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;author&quot;:&quot;Andrzej Sapkowski&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist'"></code>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+    <form action="#" th:action="@{__${listpage}__}" method="get">
+    	<button class="btn btn-success" type="submit"
+    	th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
+    	button.page.list.return
+    	</button>
+    </form>
+
+</body>
+</html>
