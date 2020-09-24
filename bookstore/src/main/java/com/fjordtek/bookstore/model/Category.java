@@ -4,14 +4,15 @@ package com.fjordtek.bookstore.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -21,7 +22,7 @@ public class Category {
 	// Primary key value in database
 	@Id
 	@GeneratedValue(
-			strategy     = GenerationType.AUTO,
+			strategy     = GenerationType.IDENTITY,
 			generator    = "categoryIdGenerator"
 			)
 	@SequenceGenerator(
@@ -35,11 +36,15 @@ public class Category {
 	// Attributes with hard-coded constraints
 	private String name;
 
-	@JsonBackReference
+	// Omit from Jackson JSON serialization
+	//@JsonBackReference(value = "books")
+
+	@JsonIgnore
 	@OneToMany(
-			mappedBy     = "category"
-			//fetch      = FetchType.LAZY,
-			//cascade    = CascadeType.ALL
+			mappedBy     = "category",
+			fetch        = FetchType.LAZY,
+			cascade      = CascadeType.ALL
+			//targetEntity = Book.class
 			)
 	private List<Book> books;
 
