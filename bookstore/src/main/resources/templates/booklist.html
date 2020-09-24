@@ -37,7 +37,7 @@
 				<td th:text="${book.title}">(obj) book.title</td>
 				<td th:text="${book.isbn}">(obj) book.isbn</td>
 				<td th:text="${book.year}">(obj) book.year</td>
-				<td th:text="${book.category.name}">(obj) book.category.name</td>
+				<td th:text="${book.category != null} ? ${book.category.name} : 'None'">(obj) book.category.name</td>
 				<td th:text="(${#numbers.formatDecimal(book.price, 1, 2)} ?: '0.00') + ' ' + (${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency')">
 				0.00 page.symbols.currency
 				</td>
