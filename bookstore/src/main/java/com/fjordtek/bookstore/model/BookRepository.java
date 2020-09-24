@@ -8,14 +8,21 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
-@RepositoryRestResource
+@RepositoryRestResource(
+		path            = "booklist",
+		itemResourceRel = "booklist",
+		exported        = true
+		)
 public interface BookRepository extends CrudRepository<Book, Long> {
 
 	@Override
+	@RestResource(exported = false)
 	public Optional<Book> findById(Long id);
 
-	public List<Book> findByTitle(@Param("title") String title);
+	@RestResource(path = "title", rel = "title")
+	public List<Book> findByTitle(@Param("name") String title);
 
 	/* Assume a single book with a single ISBN, or multiple books with possibly duplicate ISBNs?
 	 * For meanwhile, we have a UNIQUE constraint for ISBN values. If this policy changes,
@@ -23,8 +30,10 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 	 * we return a single book.
 	*/
 	//public List<Book> findByIsbn(String isbn);
+	@RestResource(exported = false)
 	public Book findByIsbn(String isbn);
 
+	@RestResource(exported = false)
 	public boolean existsByIsbn(String isbn);
 
 }
