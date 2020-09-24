@@ -4,3 +4,12 @@
 	border-top: 1px dotted #888;
 	padding-top: 1.5em;
 }
+
+.apiref-table-right {
+	width: 50%;
+}
+
+.apiref-table-title {
+	background-color: #48C;
+	color: #FFF;
+}
