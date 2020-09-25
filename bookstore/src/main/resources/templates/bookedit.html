@@ -20,30 +20,65 @@
 
     	<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
 
-    		<div class="form-group bookform-section">
-    			<label for="BookAuthor"
-    			th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
-    			book.author
-    			</label>
-    			<input class="form-control" type="text" th:field="*{author}" placeholder="Book author"/>
+			<div class="bookform-section">
+			    <div>
+    				<h3 th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
+    				book.author
+    				</h3>
+    			</div>
+    			<div class="form-group row">
+    				<div class="col">
+    					<label for="BookAuthor"
+    					th:text="${#messages.msgOrNull('book.author.firstName')} ?: 'book.author.firstName'">
+    					book.author.firstName
+    					</label>
+    					<input class="form-control" type="text" th:field="*{author.firstName}" placeholder="Book author first name"/>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.author')} ?: 'book.desc.set.author'">
-    			book.desc.set.author
-    			</small>
+    					<small class="form-text text-muted"
+    					th:text="${#messages.msgOrNull('book.desc.set.author.firstname')} ?: 'book.desc.set.author.firstname'">
+    					book.desc.set.author.firstname
+    					</small>
 
-    			<small style="display: inline-block;" class="form-text text-info"
-    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    			book.desc.example.headertext
-    			</small>
+    					<small style="display: inline-block;" class="form-text text-info"
+    					th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    					book.desc.example.headertext
+    					</small>
 
-    			<small style="display: inline-block;" class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.example.author')} ?: 'book.desc.example.author'">
-    			book.desc.example.author
-    			</small>
+    					<small style="display: inline-block;" class="form-text text-muted"
+    					th:text="${#messages.msgOrNull('book.desc.example.author.firstname')} ?: 'book.desc.example.author.firstname'">
+    					book.desc.example.author.firstname
+    					</small>
 
-    			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author')}"
-    			th:errors="*{author}">Invalid author value</div>
+    					<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.firstName')}"
+    					th:errors="*{author.firstName}">Invalid author first name value</div>
+    				</div>
+    			
+    				<div class="col">
+    					<label for="BookAuthor"
+    					th:text="${#messages.msgOrNull('book.author.lastName')} ?: 'book.author.lastName'">
+    					book.author.lastName
+    					</label>
+    					<input class="form-control" type="text" th:field="*{author.lastName}" placeholder="Book author last name"/>
+
+    					<small class="form-text text-muted"
+    					th:text="${#messages.msgOrNull('book.desc.set.author.lastname')} ?: 'book.desc.set.author.lastname'">
+    					book.desc.set.author.lastname
+    					</small>
+
+    					<small style="display: inline-block;" class="form-text text-info"
+    					th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+    					book.desc.example.headertext
+    					</small>
+
+    					<small style="display: inline-block;" class="form-text text-muted"
+    					th:text="${#messages.msgOrNull('book.desc.example.author.lastname')} ?: 'book.desc.example.author.lastname'">
+    					book.desc.example.author.lastname
+    					</small>
+
+    					<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.lastName')}"
+    					th:errors="*{author.lastName}">Invalid author last name value</div>
+    				</div>	
+    			</div>
     		</div>
 
     		<div class="form-group bookform-section">
