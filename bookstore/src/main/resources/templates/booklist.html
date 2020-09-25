@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--/* 
+<!--/*
 
 Idea of the following syntax used in this and other HTML document:
 
-<foo th:text="${#messages.msgOrNull('<key_from_messages.properties>')} ?: 'myThymeleafText'">
-  myHTMLPlainText
-</foo>
+	<foo th:text="${#messages.msgOrNull('<key_from_messages.properties>')} ?: 'myThymeleafText'">
+		myHTMLPlainText
+	</foo>
 
 -> A) In Thymeleaf, we check if a message key exists. In normal cases, a non-existent key is NOT null.
-      Therefore, we use method msgorNull and enforce null value if the message key is not found.
+		Therefore, we use method msgorNull and enforce null value if the message key is not found.
 
 -> B) IF key is null: in section '?: myThymeleafText' we use text 'myThymeleafText' as a replacement
-      value for the HTML tag string value.
+		value for the HTML tag string value.
 
 -> C) The last string value 'myHTMLPlainText' between tags is used if we open plain HTML file without
-      Thymeleaf rendering. This is useful for offline viewing and for developers who want correct file
-      rendering without Java overhead.
+		Thymeleaf rendering. This is useful for offline viewing and for developers who want correct file
+		rendering without Java overhead.
 
 */-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <!--/*
+	<!--/*
 	CSS href fields:
 
-    Plain HTML rendering gets CSS style files directly from the relative file system path.
-    This is useful for offline viewing and for developers who want correct file
-    rendering without Java overhead.
-    
-    Instead, Thymeleaf template engine gets CSS style files via URI refs. Therefore, values of
-    href and th:href differ. However, both use cases are covered: Thymeleaf & plain HTML.
+	Plain HTML rendering gets CSS style files directly from the relative file system path.
+	This is useful for offline viewing and for developers who want correct file
+	rendering without Java overhead.
 
-    */-->
+	Instead, Thymeleaf template engine gets CSS style files via URI refs. Therefore, values of
+	href and th:href differ. However, both use cases are covered: Thymeleaf & plain HTML.
 
-    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+	*/-->
 
-    <title th:text="${#messages.msgOrNull('page.title.browser.list')} ?: 'page.title.browser.list'">
-    page.title.browser.list
-    </title>
+	<link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+
+	<title th:text="${#messages.msgOrNull('page.title.browser.list')} ?: 'page.title.browser.list'">
+	page.title.browser.list
+	</title>
 
 </head>
 <body>
@@ -66,41 +66,41 @@ Idea of the following syntax used in this and other HTML document:
 			</tr>
 
 			<tr th:each="book : ${books}">
-				
+
 				<!--/*
 				Check if book.author exists. If yes, then:
-				  |-> Check if firstName exists. If yes, then:
-				  |     Set author first name
-				  |   else:
-				  |     Set empty string for first name
-                  |----------
-                  |-> Check if lastName exists, if yes, then:
-                  |     Set author last name
-                  |   else:
-                  |     Set empty string for last name
-                ##########
-                else:
-                  |-> Check if book.null.author exists. If yes, then:
-                  |     Get value from book.null.author message key
-                  |   else:
-                  |     Author is string value 'book.null.author'
+					|-> Check if firstName exists. If yes, then:
+					|	 Set author first name
+					|   else:
+					|	 Set empty string for first name
+					|----------
+					|-> Check if lastName exists, if yes, then:
+					|	 Set author last name
+					|   else:
+					|	 Set empty string for last name
+				##########
+				else:
+					|-> Check if book.null.author exists. If yes, then:
+					|	 Get value from book.null.author message key
+					|   else:
+					|	 Author is string value 'book.null.author'
 				*/-->
 
 				<td th:text="${book.author != null} ? ( (${book.author.firstName != null} ? (${book.author.firstName} + ' ') : '') + (${book.author.lastName != null} ? ${book.author.lastName} : '') ) : (${#messages.msgOrNull('book.null.author')} ?: 'book.null.author')">(obj) book.author.firstName (obj) book.author.lastName</td>
-				
+
 				<td th:text="${book.title}">(obj) book.title</td>
 				<td th:text="${book.isbn}">(obj) book.isbn</td>
 				<td th:text="${book.year}">(obj) book.year</td>
-				
-				
+
+
 				<!--/*
 				Check if book.category exists (book entity object). If yes, then:
-				  Get string value of book.category.name (book entity object (method))
+					Get string value of book.category.name (book entity object (method))
 				else:
-				  |-> Check if book.null.category (message key) exists. If yes, then:
-				  |     Get string value of book.null.category message key
-				  |   else:
-				  |     Category is string value 'book.null.category'
+					|-> Check if book.null.category (message key) exists. If yes, then:
+					|	 Get string value of book.null.category message key
+					|   else:
+					|	 Category is string value 'book.null.category'
 				*/-->
 
 				<td th:text="${book.category != null} ? ${book.category.name} : (${#messages.msgOrNull('book.null.category')} ?: 'book.null.category')">(obj) book.category.name</td>
@@ -108,7 +108,7 @@ Idea of the following syntax used in this and other HTML document:
 				<!--/*
 				Get book price with two decimal precision.
 				If price is not found, fall back to string value 0.00.
-				
+
 				Combine with message key 'page.symbols.currency' value.
 				*/-->
 
@@ -132,7 +132,7 @@ Idea of the following syntax used in this and other HTML document:
 					page.text.list.edit
 					</a>
 				</td>
-				
+
 				<td>
 					<a class="btn btn-info"
 					th:href="@{__${restpage}__/book/{id}(id=${book.id})}"

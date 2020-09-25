@@ -1,236 +1,236 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
 
-    <title th:text="${#messages.msgOrNull('page.title.browser.edit')} ?: 'page.title.browser.edit'">
-    page.title.browser.edit
-    </title>
+	<title th:text="${#messages.msgOrNull('page.title.browser.edit')} ?: 'page.title.browser.edit'">
+	page.title.browser.edit
+	</title>
 
 </head>
 <body>
-    <div class="col-md-4 mb-3">
+	<div class="col-md-4 mb-3">
 
-    	<h1 th:text="${#messages.msgOrNull('page.title.webform.edit')} ?: 'page.title.webform.edit'">
-    	page.title.webform.edit
-    	</h1>
+		<h1 th:text="${#messages.msgOrNull('page.title.webform.edit')} ?: 'page.title.webform.edit'">
+		page.title.webform.edit
+		</h1>
 
-    	<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
+		<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
 
 			<div class="bookform-section">
-			    <div>
-    				<h3 th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
-    				book.author
-    				</h3>
-    			</div>
-    			<div class="form-group row">
-    				<div class="col">
-    					<label for="BookAuthor"
-    					th:text="${#messages.msgOrNull('book.author.firstName')} ?: 'book.author.firstName'">
-    					book.author.firstName
-    					</label>
-    					<input class="form-control" type="text" th:field="*{author.firstName}" placeholder="Book author first name"/>
+				<div>
+					<h3 th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
+					book.author
+					</h3>
+				</div>
+				<div class="form-group row">
+					<div class="col">
+						<label for="BookAuthor"
+						th:text="${#messages.msgOrNull('book.author.firstName')} ?: 'book.author.firstName'">
+						book.author.firstName
+						</label>
+						<input class="form-control" type="text" th:field="*{author.firstName}" placeholder="Book author first name"/>
 
-    					<small class="form-text text-muted"
-    					th:text="${#messages.msgOrNull('book.desc.set.author.firstname')} ?: 'book.desc.set.author.firstname'">
-    					book.desc.set.author.firstname
-    					</small>
+						<small class="form-text text-muted"
+						th:text="${#messages.msgOrNull('book.desc.set.author.firstname')} ?: 'book.desc.set.author.firstname'">
+						book.desc.set.author.firstname
+						</small>
 
-    					<small style="display: inline-block;" class="form-text text-info"
-    					th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    					book.desc.example.headertext
-    					</small>
+						<small style="display: inline-block;" class="form-text text-info"
+						th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+						book.desc.example.headertext
+						</small>
 
-    					<small style="display: inline-block;" class="form-text text-muted"
-    					th:text="${#messages.msgOrNull('book.desc.example.author.firstname')} ?: 'book.desc.example.author.firstname'">
-    					book.desc.example.author.firstname
-    					</small>
+						<small style="display: inline-block;" class="form-text text-muted"
+						th:text="${#messages.msgOrNull('book.desc.example.author.firstname')} ?: 'book.desc.example.author.firstname'">
+						book.desc.example.author.firstname
+						</small>
 
-    					<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.firstName')}"
-    					th:errors="*{author.firstName}">Invalid author first name value</div>
-    				</div>
-    			
-    				<div class="col">
-    					<label for="BookAuthor"
-    					th:text="${#messages.msgOrNull('book.author.lastName')} ?: 'book.author.lastName'">
-    					book.author.lastName
-    					</label>
-    					<input class="form-control" type="text" th:field="*{author.lastName}" placeholder="Book author last name"/>
+						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.firstName')}"
+						th:errors="*{author.firstName}">Invalid author first name value</div>
+					</div>
 
-    					<small class="form-text text-muted"
-    					th:text="${#messages.msgOrNull('book.desc.set.author.lastname')} ?: 'book.desc.set.author.lastname'">
-    					book.desc.set.author.lastname
-    					</small>
+					<div class="col">
+						<label for="BookAuthor"
+						th:text="${#messages.msgOrNull('book.author.lastName')} ?: 'book.author.lastName'">
+						book.author.lastName
+						</label>
+						<input class="form-control" type="text" th:field="*{author.lastName}" placeholder="Book author last name"/>
 
-    					<small style="display: inline-block;" class="form-text text-info"
-    					th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    					book.desc.example.headertext
-    					</small>
+						<small class="form-text text-muted"
+						th:text="${#messages.msgOrNull('book.desc.set.author.lastname')} ?: 'book.desc.set.author.lastname'">
+						book.desc.set.author.lastname
+						</small>
 
-    					<small style="display: inline-block;" class="form-text text-muted"
-    					th:text="${#messages.msgOrNull('book.desc.example.author.lastname')} ?: 'book.desc.example.author.lastname'">
-    					book.desc.example.author.lastname
-    					</small>
+						<small style="display: inline-block;" class="form-text text-info"
+						th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+						book.desc.example.headertext
+						</small>
 
-    					<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.lastName')}"
-    					th:errors="*{author.lastName}">Invalid author last name value</div>
-    				</div>	
-    			</div>
-    		</div>
+						<small style="display: inline-block;" class="form-text text-muted"
+						th:text="${#messages.msgOrNull('book.desc.example.author.lastname')} ?: 'book.desc.example.author.lastname'">
+						book.desc.example.author.lastname
+						</small>
 
-    		<div class="form-group bookform-section">
-    			<label for="BookName"
-    			th:text="${#messages.msgOrNull('book.title')} ?: 'book.title'">
-    			book.title
-    			</label>
-    			<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
+						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.lastName')}"
+						th:errors="*{author.lastName}">Invalid author last name value</div>
+					</div>
+				</div>
+			</div>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.title')} ?: 'book.desc.set.title'">
-    			book.desc.set.title
-    			</small>
+			<div class="form-group bookform-section">
+				<label for="BookName"
+				th:text="${#messages.msgOrNull('book.title')} ?: 'book.title'">
+				book.title
+				</label>
+				<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
 
-    			<small style="display: inline-block;" class="form-text text-info"
-    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    			book.desc.example.headertext:
-    			</small>
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.title')} ?: 'book.desc.set.title'">
+				book.desc.set.title
+				</small>
 
-    			<small style="display: inline-block;" class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.example.title')} ?: 'book.desc.example.title'">
-    			book.desc.example.title
-    			</small>
+				<small style="display: inline-block;" class="form-text text-info"
+				th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+				book.desc.example.headertext:
+				</small>
 
-    			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
-    			th:errors="*{title}">Invalid title</div>
-    		</div>
+				<small style="display: inline-block;" class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.example.title')} ?: 'book.desc.example.title'">
+				book.desc.example.title
+				</small>
 
-    		<div class="form-group bookform-section">
-    			<label for="BookISBN"
-    			th:text="${#messages.msgOrNull('book.isbn')} ?: 'book.isbn'">
-    			book.isbn
-    			</label>
-    			<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
+				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
+				th:errors="*{title}">Invalid title</div>
+			</div>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.isbn')} ?: 'book.desc.set.isbn'">
-    			book.desc.set.isbn
-    			</small>
+			<div class="form-group bookform-section">
+				<label for="BookISBN"
+				th:text="${#messages.msgOrNull('book.isbn')} ?: 'book.isbn'">
+				book.isbn
+				</label>
+				<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
 
-    			<small style="display: inline-block;" class="form-text text-info"
-    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    			book.desc.example.headertext
-    			</small>
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.isbn')} ?: 'book.desc.set.isbn'">
+				book.desc.set.isbn
+				</small>
 
-    			<small style="display: inline-block;" class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.example.isbn')} ?: 'book.desc.example.isbn'">
-    			book.desc.example.isbn
-    			</small>
+				<small style="display: inline-block;" class="form-text text-info"
+				th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+				book.desc.example.headertext
+				</small>
 
-    			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
-    			th:errors="*{isbn}">Invalid ISBN code value</div>
-    		</div>
+				<small style="display: inline-block;" class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.example.isbn')} ?: 'book.desc.example.isbn'">
+				book.desc.example.isbn
+				</small>
 
-    		<div class="form-group bookform-section">
-    			<label for="BookYear"
-    			th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">
-    			book.year
-    			</label>
-    			<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
+				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
+				th:errors="*{isbn}">Invalid ISBN code value</div>
+			</div>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.year')} ?: 'book.desc.set.year'">
-    			book.desc.set.year
-    			</small>
+			<div class="form-group bookform-section">
+				<label for="BookYear"
+				th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">
+				book.year
+				</label>
+				<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
 
-    			<small style="display: inline-block;" class="form-text text-info"
-    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    			book.desc.example.headertext:
-    			</small>
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.year')} ?: 'book.desc.set.year'">
+				book.desc.set.year
+				</small>
 
-    			<small style="display: inline-block;" class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.example.year')} ?: 'book.desc.example.year'">
-    			book.desc.example.year
-    			</small>
+				<small style="display: inline-block;" class="form-text text-info"
+				th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+				book.desc.example.headertext:
+				</small>
 
-    			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
-    			th:errors="*{year}">Invalid year value</div>
-    		</div>
+				<small style="display: inline-block;" class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.example.year')} ?: 'book.desc.example.year'">
+				book.desc.example.year
+				</small>
 
-    		<div class="form-group bookform-section">
-    			<label for="fname"
-    			th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">
-    			book.price
-    			</label>
-    			<div class="input-group mb-2">
-    				 <div class="input-group-prepend">
-    				 	<div class="input-group-text"
-    				 	th:text="${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency'">
-    				 	page.symbols.currency
-    				 	</div>
-    				 </div>
-    				<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
-    			</div>
+				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
+				th:errors="*{year}">Invalid year value</div>
+			</div>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.price')} ?: 'book.desc.set.price'">
-    			book.desc.set.price
-    			</small>
+			<div class="form-group bookform-section">
+				<label for="fname"
+				th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">
+				book.price
+				</label>
+				<div class="input-group mb-2">
+					 <div class="input-group-prepend">
+					 	<div class="input-group-text"
+					 	th:text="${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency'">
+					 	page.symbols.currency
+					 	</div>
+					 </div>
+					<input class="form-control" type="text" th:field="*{price}" placeholder="Book price"/>
+				</div>
 
-    			<small style="display: inline-block;" class="form-text text-info"
-    			th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
-    			book.desc.example.headertext:
-    			</small>
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.price')} ?: 'book.desc.set.price'">
+				book.desc.set.price
+				</small>
 
-    			<small style="display: inline-block;" class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.example.price')} ?: 'book.desc.example.price'">
-    			book.desc.example.price
-    			</small>
+				<small style="display: inline-block;" class="form-text text-info"
+				th:text="(${#messages.msgOrNull('book.desc.example.headertext')} ?: 'book.desc.example.headertext') + ': '">
+				book.desc.example.headertext:
+				</small>
 
-    			<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
-    			th:errors="*{price}">Invalid price value</div>
-    		</div>
-    		
-    		<div class="form-group bookform-section">
-    			<label for="BookCategory"
-    			th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">
-    			book.category
-    			</label>
-    			<select class="form-control" th:field="*{category}" th:selected="*{category}">
-    				<option
-    				th:each="category : ${categories}"
-    				th:value="${category.id}"
-    				th:text="${category.name}"
-    				>(obj) category.name</option>
-					<option value="" 
+				<small style="display: inline-block;" class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.example.price')} ?: 'book.desc.example.price'">
+				book.desc.example.price
+				</small>
+
+				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
+				th:errors="*{price}">Invalid price value</div>
+			</div>
+
+			<div class="form-group bookform-section">
+				<label for="BookCategory"
+				th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">
+				book.category
+				</label>
+				<select class="form-control" th:field="*{category}" th:selected="*{category}">
+					<option
+					th:each="category : ${categories}"
+					th:value="${category.id}"
+					th:text="${category.name}"
+					>(obj) category.name</option>
+					<option value=""
 					th:text="${#messages.msgOrNull('book.null.category')} ?: 'book.null.category'">
 					book.null.category
 					</option>
-    			</select>
+				</select>
 
-    			<small class="form-text text-muted"
-    			th:text="${#messages.msgOrNull('book.desc.set.category')} ?: 'book.desc.set.category'">
-    			book.desc.set.category
-    			</small>
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.category')} ?: 'book.desc.set.category'">
+				book.desc.set.category
+				</small>
 
-    		</div>
+			</div>
 
-    		<button class="btn btn-primary" type="submit"
-    		th:text="${#messages.msgOrNull('button.book.edit')} ?: 'button.book.edit'">
-    		button.book.edit
-    		</button>
+			<button class="btn btn-primary" type="submit"
+			th:text="${#messages.msgOrNull('button.book.edit')} ?: 'button.book.edit'">
+			button.book.edit
+			</button>
 
-    	</form>
+		</form>
 
-    	<br>
+		<br>
 
-    	<a class="btn btn-success" th:href="@{../__${listpage}__}"
+		<a class="btn btn-success" th:href="@{../__${listpage}__}"
 		th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
 		button.page.list.return
 		</a>
 
-    </div>
+	</div>
 </body>
 </html>

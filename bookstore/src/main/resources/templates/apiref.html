@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
- 
-    <title th:text="${#messages.msgOrNull('page.title.browser.apiref')} ?: 'page.title.browser.apiref'">
-    page.title.browser.apiref
-    </title>
+	<link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+
+	<title th:text="${#messages.msgOrNull('page.title.browser.apiref')} ?: 'page.title.browser.apiref'">
+	page.title.browser.apiref
+	</title>
 
 </head>
 <body th:with="baseUrl=(@{__${#httpServletRequest.scheme}__} + '://' + @{__${#httpServletRequest.serverName}__} + ':' + @{__${#httpServletRequest.serverPort}__} + '/')">
 
-    <h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
-    page.title.webform.apiref
-    </h1>
+	<h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
+	page.title.webform.apiref
+	</h1>
 
-    <p th:text="${#messages.msgOrNull('page.text.apiref.warning')} ?: 'page.text.apiref.warning'">
-    page.text.apiref.warning
-    </p>
+	<p th:text="${#messages.msgOrNull('page.text.apiref.warning')} ?: 'page.text.apiref.warning'">
+	page.text.apiref.warning
+	</p>
 
 	<table class="table table-striped">
 		<tbody>
@@ -136,7 +136,7 @@
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-		
+
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.add')} ?: 'page.text.apiref.book.add'">
@@ -170,7 +170,7 @@
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-			
+
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.delete')} ?: 'page.text.apiref.book.delete'">
@@ -188,7 +188,7 @@
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-			
+
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.author.edit')} ?: 'page.text.apiref.author.edit'">
@@ -209,7 +209,7 @@
 		</tbody>
 		<tr>
 			<td>
-		    	<a class="btn btn-success" th:href="@{__${listpage}__}"
+				<a class="btn btn-success" th:href="@{__${listpage}__}"
 				th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
 				button.page.list.return
 				</a>
@@ -217,8 +217,6 @@
 			<td></td>
 		</tr>
 	</table>
-
-
 
 </body>
 </html>
