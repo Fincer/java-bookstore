@@ -204,7 +204,10 @@
     				th:value="${category.id}"
     				th:text="${category.name}"
     				>(obj) category.name</option>
-    				<option value="">None</option>
+					<option value="" 
+					th:text="${#messages.msgOrNull('book.null.category')} ?: 'book.null.category'">
+					book.null.category
+					</option>
     			</select>
     			<small class="form-text text-muted"
     			th:text="${#messages.msgOrNull('book.desc.set.category')} ?: 'book.desc.set.category'">

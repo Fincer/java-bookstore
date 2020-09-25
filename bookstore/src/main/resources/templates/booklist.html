@@ -45,15 +45,19 @@
                   |     Set author last name
                   |   else:
                   |     Set empty string for last name
+                ##########
                 else:
-                  Author is 'Unknown'
+                  |-> Check if book.null.author exists. If yes, then:
+                  |     Get value from book.null.author message key
+                  |   else:
+                  |     Author is string value 'book.null.author'
 				*/-->
-				<td th:text="${book.author != null} ? ( (${book.author.firstName != null} ? (${book.author.firstName} + ' ') : '') + (${book.author.lastName != null} ? ${book.author.lastName} : '') ) : 'Unknown'">(obj) book.author.firstName (obj) book.author.lastName</td>
+				<td th:text="${book.author != null} ? ( (${book.author.firstName != null} ? (${book.author.firstName} + ' ') : '') + (${book.author.lastName != null} ? ${book.author.lastName} : '') ) : (${#messages.msgOrNull('book.null.author')} ?: 'book.null.author')">(obj) book.author.firstName (obj) book.author.lastName</td>
 				
 				<td th:text="${book.title}">(obj) book.title</td>
 				<td th:text="${book.isbn}">(obj) book.isbn</td>
 				<td th:text="${book.year}">(obj) book.year</td>
-				<td th:text="${book.category != null} ? ${book.category.name} : 'None'">(obj) book.category.name</td>
+				<td th:text="${book.category != null} ? ${book.category.name} : (${#messages.msgOrNull('book.null.category')} ?: 'book.null.category')">(obj) book.category.name</td>
 				<td th:text="(${#numbers.formatDecimal(book.price, 1, 2)} ?: '0.00') + ' ' + (${#messages.msgOrNull('page.symbols.currency')} ?: 'page.symbols.currency')">
 				0.00 page.symbols.currency
 				</td>
