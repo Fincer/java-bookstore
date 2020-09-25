@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.fjordtek.bookstore.model.Author;
+import com.fjordtek.bookstore.model.AuthorRepository;
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.CategoryRepository;
@@ -41,10 +43,13 @@ public class BookController {
 	}
 
 	@Autowired
-	private BookRepository       bookRepository;
+	private CategoryRepository   categoryRepository;
 
 	@Autowired
-	private CategoryRepository   categoryRepository;
+	private AuthorRepository     authorRepository;
+
+	@Autowired
+	private BookRepository       bookRepository;
 
 	private static final String RestJSONPageView      = "json";
 	private static final String RestAPIRefPageView    = "apiref";
@@ -76,6 +81,38 @@ public class BookController {
 		// Security implications of adding these all controller-wide?
 		dataModel.addAllAttributes(globalModelMap);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
+		dataModel.addAttribute("authors", authorRepository.findAll());
+	}
+
+	//////////////////////////////
+	// Private methods
+
+	private void detectAndSaveBookAuthor(Book book) {
+		/*
+		 * Find an author from the current AUTHOR table by his/her first and last name.
+		 * In CrudRepository, if Id attribute is not found, it is stored
+		 * as a new row value. Therefore, it's crucial to identify whether row value already
+		 * exists in AUTHOR table.
+		 */
+
+		try {
+			Author authorI = authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+					book.getAuthor().getFirstName(),book.getAuthor().getLastName())
+					.get(0);
+
+			/*
+			 * When author is found, use it's Id attribute for book's author Id...
+			 */
+			book.getAuthor().setId(authorI.getId());
+
+			/*
+			 * ...Otherwise, consider this a new author and store it appropriately.
+			 * Actually, when author is not found, we get IndexOutOfBoundsException.
+			 */
+		} catch (IndexOutOfBoundsException e) {
+			authorRepository.save(book.getAuthor());
+		}
+
 	}
 
 	//////////////////////////////
@@ -144,7 +181,9 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
+		detectAndSaveBookAuthor(book);
 		bookRepository.save(book);
+
 
 		return "redirect:" + bookListPageView;
 	}
@@ -231,6 +270,8 @@ public class BookController {
 			return bookEditPageView;
 		}
 
+
+		detectAndSaveBookAuthor(book);
 		bookRepository.save(book);
 
 		httpServerLogger.log(requestData, responseData);

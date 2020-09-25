@@ -43,8 +43,8 @@ public class Category {
 	@OneToMany(
 			mappedBy     = "category",
 			fetch        = FetchType.LAZY,
-			cascade      = CascadeType.ALL
-			//targetEntity = Book.class
+			cascade      = CascadeType.ALL,
+			targetEntity = Book.class
 			)
 	private List<Book> books;
 

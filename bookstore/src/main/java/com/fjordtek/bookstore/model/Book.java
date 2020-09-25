@@ -98,19 +98,24 @@ public class Book {
 	private String title;
 
 	//////////
-	@Column(nullable = false)
-	@Size(
-			min = strMin, max = strMax,
-			message = "Author length must be " + strMin + "-" + strMax + " characters"
+	// If category is null, we do not print it in JSON output.
+	@JsonUnwrapped
+
+	/*
+	 * There are many ways to filter which category fields we want to JSON output.
+	 * Using a custom JSON serializer is one of them.
+	 */
+	@JsonSerialize(using = AuthorJsonSerializer.class)
+	@ManyToOne(
+			fetch        = FetchType.EAGER,
+			optional     = true,
+			targetEntity = Author.class
 			)
-	@NotBlank(
-			message = "Fill the book author form"
-			)
-	@Pattern(
-			regexp  = regexCommon,
-			message = "Invalid characters"
-			)
-	private String author;
+    @JoinColumn(
+    		name     = "author_id",
+    		nullable = true
+    		)
+	private Author author;
 
 	//////////
 	// TODO: Prefer Timestamp data type
@@ -175,8 +180,9 @@ public class Book {
 	 */
 	@JsonSerialize(using = CategoryJsonSerializer.class)
 	@ManyToOne(
-			fetch    = FetchType.EAGER,
-			optional = true
+			fetch        = FetchType.EAGER,
+			optional     = true,
+			targetEntity = Category.class
 			)
     @JoinColumn(
     		name     = "category_id",
@@ -198,7 +204,7 @@ public class Book {
 		this.title = title;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
 
@@ -231,7 +237,7 @@ public class Book {
 		return title;
 	}
 
-	public String getAuthor() {
+	public Author getAuthor() {
 		return author;
 	}
 
@@ -256,7 +262,7 @@ public class Book {
 
 	public Book() {}
 
-	public Book(String title, String author, int year, String isbn, BigDecimal price, Category category) {
+	public Book(String title, Author author, int year, String isbn, BigDecimal price, Category category) {
 		// super();
 	    this.title    = title;
 	    this.author   = author;

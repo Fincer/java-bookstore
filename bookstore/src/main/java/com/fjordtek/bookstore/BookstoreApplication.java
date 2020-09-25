@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import com.fjordtek.bookstore.model.Author;
+import com.fjordtek.bookstore.model.AuthorRepository;
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.Category;
@@ -26,7 +28,11 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public CommandLineRunner bookDatabaseRunner(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner bookDatabaseRunner(
+			BookRepository bookRepository,
+			CategoryRepository categoryRepository,
+			AuthorRepository authorRepository
+			) {
 
 		return (args) -> {
 
@@ -36,11 +42,16 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			categoryRepository.save(new Category("Fantasy"));
 			categoryRepository.save(new Category("Sci-Fi"));
 
+			authorRepository.save(new Author("Angela","Carter"));
+			authorRepository.save(new Author("Andrzej","Sapkowski"));
+
 			commonLogger.info("Add new sample books to database");
 
 			bookRepository.save(new Book(
 					"Bloody Chamber",
-					"Angela Carter",
+					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+							"Angela","Carter"
+							).get(0),
 					1979,
 					"1231231-12",
 					new BigDecimal("18.00"),
@@ -48,7 +59,9 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					));
 			bookRepository.save(new Book(
 					"The Witcher: The Lady of the Lake",
-					"Andrzej Sapkowski",
+					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+							"Andrzej","Sapkowski"
+							).get(0),
 					1999,
 					"3213221-3",
 					new BigDecimal("19.99"),
@@ -59,6 +72,10 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			commonLogger.info("Sample categories in the database");
 			for (Category category : categoryRepository.findAll()) {
 				commonLogger.info(category.toString());
+			}
+			commonLogger.info("Sample authors in the database");
+			for (Author author : authorRepository.findAll()) {
+				commonLogger.info(author.toString());
 			}
 			commonLogger.info("Sample books in the database");
 			for (Book book : bookRepository.findAll()) {
