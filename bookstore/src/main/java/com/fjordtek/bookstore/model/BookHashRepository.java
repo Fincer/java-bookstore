@@ -1,3 +1,5 @@
+//Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
+
 package com.fjordtek.bookstore.model;
 
 import org.springframework.data.jpa.repository.Modifying;
