@@ -18,7 +18,7 @@
 		page.title.webform.edit
 		</h1>
 
-		<form th:object="${book}" action="#" th:action="@{{id}(id=${book.id})}" method="post">
+		<form th:object="${book}" action="#" th:action="@{{hash_id}(hash_id=${book.bookHash.hashId})}" method="post">
 
 			<div class="bookform-section">
 				<div>

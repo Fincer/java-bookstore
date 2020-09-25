@@ -119,7 +119,7 @@ Idea of the following syntax used in this and other HTML document:
 				<td>
 					<a class="btn btn-danger"
 					th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
-					th:href="@{__${deletepage}__/{id}(id=${book.id})}"
+					th:href="@{__${deletepage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.delete')} ?: 'page.text.list.delete'">
 					page.text.list.delete
 					</a>
@@ -127,7 +127,7 @@ Idea of the following syntax used in this and other HTML document:
 
 				<td>
 					<a class="btn btn-warning"
-					th:href="@{__${editpage}__/{id}(id=${book.id})}"
+					th:href="@{__${editpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
 					page.text.list.edit
 					</a>
@@ -135,7 +135,7 @@ Idea of the following syntax used in this and other HTML document:
 
 				<td>
 					<a class="btn btn-info"
-					th:href="@{__${restpage}__/book/{id}(id=${book.id})}"
+					th:href="@{__${restpage}__/book/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.json')} ?: 'page.text.list.json'">
 					page.text.list.json
 					</a>

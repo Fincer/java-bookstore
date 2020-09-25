@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fjordtek.bookstore.model.Book;
+import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 
 @RestController
@@ -23,6 +24,9 @@ public class BookRestController {
 
 	@Autowired
 	private BookRepository       bookRepository;
+
+	@Autowired
+	private BookHashRepository   bookHashRepository;
 /*
 	@Autowired
 	private CategoryRepository   categoryRepository;
@@ -48,14 +52,16 @@ public class BookRestController {
 	}
 
 	@RequestMapping(
-			value  = "book" + "/{id}",
+			value  = "book" + "/{hash_id}",
 			method = RequestMethod.GET
 			)
 	public @ResponseBody Optional<Book> getBookRestData(
-			@PathVariable("id") Long bookId,
+			@PathVariable("hash_id") String bookHashId,
 			HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
+
+		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
 
 		httpServerLogger.log(requestData, responseData);
 

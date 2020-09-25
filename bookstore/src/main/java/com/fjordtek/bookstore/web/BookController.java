@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.fjordtek.bookstore.model.Author;
 import com.fjordtek.bookstore.model.AuthorRepository;
 import com.fjordtek.bookstore.model.Book;
+import com.fjordtek.bookstore.model.BookHash;
+import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.CategoryRepository;
 
@@ -50,6 +53,9 @@ public class BookController {
 
 	@Autowired
 	private BookRepository       bookRepository;
+
+	@Autowired
+	private BookHashRepository   bookHashRepository;
 
 	private static final String RestJSONPageView      = "json";
 	private static final String RestAPIRefPageView    = "apiref";
@@ -182,8 +188,20 @@ public class BookController {
 		httpServerLogger.log(requestData, responseData);
 
 		detectAndSaveBookAuthor(book);
-		bookRepository.save(book);
 
+		/*
+		 * Generate hash id for the book. One-to-one unidirectional tables.
+		 * Associate generated book hash object information
+		 * to the book (table).
+		 * Associate new book object information
+		 * to the book hash (table).
+		 */
+		BookHash bookHash = new BookHash();
+		book.setBookHash(bookHash);
+		bookHash.setBook(book);
+
+		bookRepository.save(book);
+		bookHashRepository.save(bookHash);
 
 		return "redirect:" + bookListPageView;
 	}
@@ -191,16 +209,24 @@ public class BookController {
 	//////////////////////////////
 	// DELETE BOOK
 
+	@Transactional
 	@RequestMapping(
-			value    = bookDeletePageView + "/{id}",
+			value    = bookDeletePageView + "/{hash_id}",
 			method   = RequestMethod.GET
 			)
 	public String webFormDeleteBook(
-			@PathVariable("id") Long bookId,
+			@PathVariable("hash_id") String bookHashId,
 			HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
 
+		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+
+		/*
+		 * Delete associated book id foreign key (+ other row data) from book hash table
+		 * at first, after which delete the book.
+		 */
+		bookHashRepository.deleteByBookId(bookId);
 		bookRepository.deleteById(bookId);
 
 		httpServerLogger.log(requestData, responseData);
@@ -212,15 +238,17 @@ public class BookController {
 	// UPDATE BOOK
 
 	@RequestMapping(
-			value    = bookEditPageView + "/{id}",
+			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.GET
 			)
 	public String webFormEditBook(
-			@PathVariable("id") Long bookId,
+			@PathVariable("hash_id") String bookHashId,
 			Model dataModel,
 			HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
+
+		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
 
 		Book book = bookRepository.findById(bookId).get();
 		dataModel.addAttribute("book", book);
@@ -237,29 +265,29 @@ public class BookController {
 	 * but just as an URL end point.
 	*/
 	@RequestMapping(
-			value    = bookEditPageView + "/{id}",
+			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.POST
 			)
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
-			Model dataModel,
-			@PathVariable("id") Long bookId,
+			@PathVariable("hash_id") String bookHashId,
 			HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
 
-		// NOTE: We have a unique and non-nullable ISBN value for each book.
-		if (bookId != book.getId()) {
+		BookHash bookHash = bookHashRepository.findByHashId(bookHashId);
+		if (bookHash == null) {
 			bindingResult.rejectValue("name", "error.user", "Wrong book");
 		}
+		Long bookId = bookHash.getBookId();
 
 		// TODO consider better solution. Add custom Hibernate annotation for Book class?
 		Book bookI = bookRepository.findByIsbn(book.getIsbn());
 
 		// If existing ISBN value is not attached to the current book...
 		if (bookI != null) {
-			if (bookI.getId() != book.getId()) {
+			if (bookI.getId() != bookId) {
 				bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
 			}
 		}
@@ -270,6 +298,11 @@ public class BookController {
 			return bookEditPageView;
 		}
 
+		/*
+		 *  This is necessary so that Hibernate does not attempt to INSERT data
+		 *  but UPDATEs current table data.
+		 */
+		book.setId(bookId);
 
 		detectAndSaveBookAuthor(book);
 		bookRepository.save(book);

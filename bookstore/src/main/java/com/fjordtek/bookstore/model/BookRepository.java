@@ -5,6 +5,8 @@ package com.fjordtek.bookstore.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -35,5 +37,20 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	@RestResource(exported = false)
 	public boolean existsByIsbn(String isbn);
+
+	@Override
+	public List<Book> findAll();
+
+	/*
+	 * We need to override native delete method due to book hash id usage.
+	 * This is a native query, do not unnecessarily validate it.
+	 */
+	@Override
+	@Modifying
+	@Query(
+			value = "DELETE FROM BOOK i WHERE i.id = :id",
+			nativeQuery = true
+			)
+	public void deleteById(@Param("id") Long id);
 
 }

@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import com.fjordtek.bookstore.model.Author;
 import com.fjordtek.bookstore.model.AuthorRepository;
 import com.fjordtek.bookstore.model.Book;
+import com.fjordtek.bookstore.model.BookHash;
+import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.Category;
 import com.fjordtek.bookstore.model.CategoryRepository;
@@ -30,6 +32,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	@Bean
 	public CommandLineRunner bookDatabaseRunner(
 			BookRepository bookRepository,
+			BookHashRepository bookHashRepository,
 			CategoryRepository categoryRepository,
 			AuthorRepository authorRepository
 			) {
@@ -37,17 +40,15 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 		return (args) -> {
 
 			commonLogger.info("Add new categories to database");
-
 			categoryRepository.save(new Category("Horror"));
 			categoryRepository.save(new Category("Fantasy"));
 			categoryRepository.save(new Category("Sci-Fi"));
 
+			commonLogger.info("Add new authors to database");
 			authorRepository.save(new Author("Angela","Carter"));
 			authorRepository.save(new Author("Andrzej","Sapkowski"));
 
-			commonLogger.info("Add new sample books to database");
-
-			bookRepository.save(new Book(
+			Book bookA = new Book(
 					"Bloody Chamber",
 					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
 							"Angela","Carter"
@@ -56,8 +57,9 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"1231231-12",
 					new BigDecimal("18.00"),
 					categoryRepository.findByName("Horror").get(0)
-					));
-			bookRepository.save(new Book(
+					);
+
+			Book bookB = new Book(
 					"The Witcher: The Lady of the Lake",
 					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
 							"Andrzej","Sapkowski"
@@ -66,7 +68,25 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"3213221-3",
 					new BigDecimal("19.99"),
 					categoryRepository.findByName("Fantasy").get(0)
-					));
+					);
+
+			commonLogger.info("Add new sample books to database");
+
+			bookRepository.save(bookA);
+			bookRepository.save(bookB);
+
+			BookHash bookHashA = new BookHash();
+			BookHash bookHashB = new BookHash();
+
+			// One-to-one unidirectional relationship
+			// Both directions for table operations must be considered here.
+			bookA.setBookHash(bookHashA);
+			bookB.setBookHash(bookHashB);
+			bookHashA.setBook(bookA);
+			bookHashB.setBook(bookB);
+
+			bookHashRepository.save(bookHashA);
+			bookHashRepository.save(bookHashB);
 
 			commonLogger.info("------------------------------");
 			commonLogger.info("Sample categories in the database");
@@ -80,6 +100,11 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			commonLogger.info("Sample books in the database");
 			for (Book book : bookRepository.findAll()) {
 				commonLogger.info(book.toString());
+			}
+			commonLogger.info("Sample book hashes in the database");
+			commonLogger.info("**THIS IS ADDED FOR SECURITY PURPOSES**");
+			for (BookHash hash : bookHashRepository.findAll()) {
+				commonLogger.info(hash.toString());
 			}
 
 		};

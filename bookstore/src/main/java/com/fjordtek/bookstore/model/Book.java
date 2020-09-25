@@ -4,6 +4,7 @@ package com.fjordtek.bookstore.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 //import java.sql.Timestamp;
@@ -16,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -78,6 +81,19 @@ public class Book {
 			)
 	@JsonIgnore
     private Long id;
+
+	////////////////////
+	// Random hash id purely for front-end purposes
+	// Difficult to enumerate
+
+	@JsonIgnore
+	@OneToOne(
+			fetch        = FetchType.LAZY,
+			cascade      = CascadeType.ALL,
+			targetEntity = BookHash.class
+			)
+	@PrimaryKeyJoinColumn
+	private BookHash bookHash;
 
 	////////////////////
 	// Attributes with hard-coded constraints
@@ -200,6 +216,10 @@ public class Book {
 		this.id = id;
 	}
 
+	public void setBookHash(BookHash bookHash) {
+		this.bookHash = bookHash;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -231,6 +251,10 @@ public class Book {
 
 	public Long getId() {
 		return id;
+	}
+
+	public BookHash getBookHash() {
+		return bookHash;
 	}
 
 	public String getTitle() {
@@ -277,13 +301,14 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "[" + "id: " + this.id       + ", " +
-			   "title: "    + this.title    + ", " +
-			   "author: "   + this.author   + ", " +
-			   "year: "     + this.year     + ", " +
-			   "isbn: "     + this.isbn     + ", " +
-			   "price: "    + this.price    + ", " +
-			   "category: " + this.category + "]";
+		return "[" + "id: "     + this.id       + ", " +
+				"bookhash_id: " + this.bookHash + ", " +
+				   "title: "    + this.title    + ", " +
+				   "author: "   + this.author   + ", " +
+				   "year: "     + this.year     + ", " +
+				   "isbn: "     + this.isbn     + ", " +
+				   "price: "    + this.price    + ", " +
+				   "category: " + this.category + "]";
 	}
 
 }
