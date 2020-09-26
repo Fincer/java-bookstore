@@ -4,9 +4,9 @@
 
 _Front-end view_
 
-![](sample_1.png)
+![](db_plans/sample_1.png)
 
-_Database structure_
+_[Database structure](db_plans/bookstore-model.mwb)_
 
 - This repository contains school-related Java server-side project work for an imaginary book store with required/necessary back-end features & course requirement description.
 
@@ -23,6 +23,7 @@ _Database structure_
 |----------|-------------------------|---------------------------|
 | `Folder` | [bookstore](bookstore)  |    Main project folder    |
 | `Folder` | [packaging](packaging)  | OS-specific build scripts |
+| `Folder` |  [db_plans](db_plans)   |  Database plans & drafts  |
 
 ### Recommendations
 
