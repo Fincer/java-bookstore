@@ -43,7 +43,11 @@ public class Author {
     private Long id;
 
 	//////////
-	@Column(name = "firstname", nullable = false)
+	@Column(
+			name = "firstname",
+			nullable = false,
+			columnDefinition = "NVARCHAR(" + strMax + ")"
+			)
 	@Size(
 			min = strMin, max = strMax,
 			message = "First name length must be " + strMin + "-" + strMax + " characters"
@@ -58,7 +62,11 @@ public class Author {
 	private String firstName;
 
 	//////////
-	@Column(name = "lastname", nullable = false)
+	@Column(
+			name = "lastname",
+			nullable = false,
+			columnDefinition = "NVARCHAR(" + strMax + ")"
+			)
 	@Size(
 			min = strMin, max = strMax,
 			message = "Last name length must be " + strMin + "-" + strMax + " characters"
@@ -74,14 +82,14 @@ public class Author {
 
 	// Omit from Jackson JSON serialization
 	//@JsonBackReference(value = "books")
-
 	@JsonIgnore
+
 	@OneToMany(
-			mappedBy     = "author",
-			// We consider EAGER FetchType for updatable tables, i.e. when adding new author
-			fetch        = FetchType.EAGER,
-			cascade      = CascadeType.ALL,
-			targetEntity = Book.class
+			mappedBy      = "author",
+			fetch         = FetchType.LAZY,
+			cascade       = CascadeType.ALL,
+			targetEntity  = Book.class
+			//orphanRemoval = true
 			)
 	private List<Book> books;
 

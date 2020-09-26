@@ -75,7 +75,8 @@ public class BookHash {
 			name             = "hash_id",
 			unique           = true,
 			columnDefinition = "CHAR(32)",
-			updatable        = false
+			updatable        = false,
+			nullable         = false
 			)
 	private String hashId;
 

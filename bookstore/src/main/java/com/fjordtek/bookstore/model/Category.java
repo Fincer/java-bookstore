@@ -5,6 +5,7 @@ package com.fjordtek.bookstore.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,12 +35,16 @@ public class Category {
 
 	////////////////////
 	// Attributes with hard-coded constraints
+	@Column(
+			nullable = false,
+			columnDefinition = "NVARCHAR(50)"
+			)
 	private String name;
 
 	// Omit from Jackson JSON serialization
 	//@JsonBackReference(value = "books")
-
 	@JsonIgnore
+
 	@OneToMany(
 			mappedBy     = "category",
 			fetch        = FetchType.LAZY,

@@ -99,7 +99,10 @@ public class Book {
 	// Attributes with hard-coded constraints
 
 	//////////
-	@Column(nullable = false)
+	@Column(
+			nullable = false,
+			columnDefinition = "NVARCHAR(" + strMax + ")"
+			)
 	@Size(
 			min = strMin, max = strMax,
 			message = "Title length must be " + strMin + "-" + strMax + " characters"
@@ -139,7 +142,10 @@ public class Book {
 	// private Timestamp     year;
 	// ...
 	// TODO: Consider allowing 0 value if year is not known
-	@Column(nullable = true)
+	@Column(
+			nullable = false,
+			columnDefinition = "INT(4)"
+			)
 	@Min(
 			value   = yearMin,
 			message = "Minimum allowed year: " + yearMin
@@ -148,7 +154,10 @@ public class Book {
 	private int year;
 
 	//////////
-	@Column(unique  = true, nullable = false)
+	@Column(
+			unique  = true,
+			nullable = false
+			)
 	@NotBlank(
 			message = "Fill the ISBN code form"
 			)
