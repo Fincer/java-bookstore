@@ -19,11 +19,11 @@ _[Database structure](db_plans/bookstore-model.mwb)_
 ## Repository structure
 
 
-| **Type** |        **Name**         |       **Description**     |
-|----------|-------------------------|---------------------------|
-| `Folder` | [bookstore](bookstore)  |    Main project folder    |
-| `Folder` | [packaging](packaging)  | OS-specific build scripts |
-| `Folder` |  [db_plans](db_plans)   |  Database plans & drafts  |
+| **Type** |        **Name**         |        **Description**      |
+|----------|-------------------------|-----------------------------|
+| `Folder` | [bookstore](bookstore)  | Main project folder (Maven) |
+| `Folder` | [packaging](packaging)  |  OS-specific build scripts  |
+| `Folder` |  [db_plans](db_plans)   | SQL Database plans & drafts |
 
 ### Recommendations
 
