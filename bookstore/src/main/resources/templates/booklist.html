@@ -65,7 +65,9 @@ Idea of the following syntax used in this and other HTML document:
 				<th th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">book.year</th>
 				<th th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">book.category</th>
 				<th th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">book.price</th>
-				<th th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'">page.text.list.actions</th>
+				<th th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'">
+				page.text.list.actions
+				</th>
 				<th></th>
 				<th th:text="${#messages.msgOrNull('book.json')} ?: 'book.json'">book.json</th>
 			</tr>
@@ -91,7 +93,9 @@ Idea of the following syntax used in this and other HTML document:
 					|	 Author is string value 'book.null.author'
 				*/-->
 
-				<td th:text="${book.author != null} ? ( (${book.author.firstName != null} ? (${book.author.firstName} + ' ') : '') + (${book.author.lastName != null} ? ${book.author.lastName} : '') ) : (${#messages.msgOrNull('book.null.author')} ?: 'book.null.author')">(obj) book.author.firstName (obj) book.author.lastName</td>
+				<td th:text="${book.author != null} ? ( (${book.author.firstName != null} ? (${book.author.firstName} + ' ') : '') + (${book.author.lastName != null} ? ${book.author.lastName} : '') ) : (${#messages.msgOrNull('book.null.author')} ?: 'book.null.author')">
+				(obj) book.author.firstName (obj) book.author.lastName
+				</td>
 
 				<td th:text="${book.title}">(obj) book.title</td>
 				<td th:text="${book.isbn}">(obj) book.isbn</td>
