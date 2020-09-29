@@ -108,7 +108,9 @@ Idea of the following syntax used in this and other HTML document:
 					|	 Category is string value 'book.null.category'
 				*/-->
 
-				<td th:text="${book.category != null} ? ${book.category.name} : (${#messages.msgOrNull('book.null.category')} ?: 'book.null.category')">(obj) book.category.name</td>
+				<td th:text="${book.category != null} ? ${book.category.name} : (${#messages.msgOrNull('book.null.category')} ?: 'book.null.category')">
+				(obj) book.category.name
+				</td>
 
 				<!--/*
 				Get book price with two decimal precision.
