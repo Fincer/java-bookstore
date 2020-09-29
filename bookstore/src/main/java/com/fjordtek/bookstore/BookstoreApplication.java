@@ -21,6 +21,15 @@ import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.Category;
 import com.fjordtek.bookstore.model.CategoryRepository;
 
+/**
+*
+* This is the main Spring Boot application class for the bookstore project.
+* <p>
+* Initializes and handles initialization of the application.
+*
+* @author Pekka Helenius
+*/
+
 @SpringBootApplication
 public class BookstoreApplication extends SpringBootServletInitializer {
 	private static final Logger commonLogger = LoggerFactory.getLogger(BookstoreApplication.class);

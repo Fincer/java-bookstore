@@ -9,6 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+/**
+ * This interface extends CrudRepository interface, implementing
+ * custom methods for a repository containing Category entities.
+ *
+ * @author Pekka Helenius
+ */
+
 @RepositoryRestResource(
 		path            = "categories",
 		itemResourceRel = "categories",

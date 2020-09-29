@@ -19,19 +19,27 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/*
+/**
+ * This class implements BookHash entity which forms
+ * core structure for the corresponding BOOK_HASH table in a database.
+ * <p>
+ * Additionally, BookHash entity objects are Java objects having
+ * methods, attributes and other class-related additions within them.
+ * <p>
  * This entity shares same primary key with the Book entity
  * which is simultaneously a foreign key (unidirectional mapping)
  * for this one.
- * For implementation reference, see also:
- * https://www.programmersought.com/article/1610322983/
- *
+ * <p>
  * This entity generates a table which holds auto-generated
  * random string values associated to each book.
- *
+ * <p>
  * These random string values represent difficult-to-enumerate
  * unique book IDs used for front-end purposes. Main purpose
  * is not to expose real Book entity id value.
+ *
+ * @see https://www.programmersought.com/article/1610322983/
+ *
+ * @author Pekka Helenius
  */
 
 @Entity

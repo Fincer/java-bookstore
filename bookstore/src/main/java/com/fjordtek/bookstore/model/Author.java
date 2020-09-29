@@ -19,6 +19,16 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class implements Author entity which forms
+ * core structure for the corresponding AUTHOR table in a database.
+ * <p>
+ * Additionally, Author entity objects are Java objects having
+ * methods, attributes and other class-related additions within them.
+ *
+ * @author Pekka Helenius
+ */
+
 @Entity
 public class Author {
 

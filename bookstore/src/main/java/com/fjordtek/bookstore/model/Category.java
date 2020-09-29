@@ -16,6 +16,16 @@ import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * This class implements Category entity which forms
+ * core structure for the corresponding CATEGORY table in a database.
+ * <p>
+ * Additionally, Category entity objects are Java objects having
+ * methods, attributes and other class-related additions within them.
+ *
+ * @author Pekka Helenius
+ */
+
 @Entity
 public class Category {
 

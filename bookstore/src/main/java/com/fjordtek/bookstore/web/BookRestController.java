@@ -20,6 +20,15 @@ import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 
+/**
+*
+* This class implements a custom JSON-related controller for the bookstore,
+* handling requests to a predetermined end points only, using a special prefix
+* value in its hard-coded @RequestMapping annotation.
+*
+* @author Pekka Helenius
+*/
+
 @RestController
 @RequestMapping("json")
 public class BookRestController {

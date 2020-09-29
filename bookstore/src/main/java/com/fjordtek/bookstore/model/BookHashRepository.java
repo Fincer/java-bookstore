@@ -8,6 +8,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+/**
+ * This interface extends CrudRepository interface, implementing
+ * custom methods for a repository containing BookHash entities.
+ *
+ * @author Pekka Helenius
+ */
+
 @RepositoryRestResource(
 		path            = "bookhashes",
 		itemResourceRel = "bookhashes",

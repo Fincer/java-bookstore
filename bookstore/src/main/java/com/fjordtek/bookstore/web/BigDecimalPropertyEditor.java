@@ -5,6 +5,12 @@ package com.fjordtek.bookstore.web;
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 
+/**
+ * Converts numbers with custom decimal separators to proper BigDecimal format.
+ *
+ * @author Pekka Helenius
+ */
+
 public class BigDecimalPropertyEditor extends PropertyEditorSupport {
 
 	@Override

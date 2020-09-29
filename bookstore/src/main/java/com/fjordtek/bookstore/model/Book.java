@@ -33,6 +33,16 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fjordtek.bookstore.annotation.CurrentYear;
 
+/**
+ * This class implements Book entity which forms
+ * core structure for the corresponding BOOK table in a database.
+ * <p>
+ * Additionally, Book entity objects are Java objects having
+ * methods, attributes and other class-related additions within them.
+ *
+ * @author Pekka Helenius
+ */
+
 @Entity
 public class Book {
 

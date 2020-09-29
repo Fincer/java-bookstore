@@ -7,6 +7,22 @@ import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is part of Spring framework, having @Component
+ * annotation.
+ * <p>
+ * The class implements @RepositoryEventHandler annotation
+ * for Book class which instructs Spring to use custom method
+ * implementations for events annotated with specific event
+ * handlers in the class.
+ *
+ * @see https://docs.spring.io/spring-data/rest/docs/current/reference/html/#events
+ * @see https://stackoverflow.com/questions/49504103/override-spring-data-rest-post-method
+ * @see https://www.baeldung.com/spring-data-rest-events
+ *
+ * @author Pekka Helenius
+ */
+
 @Component
 @RepositoryEventHandler(Book.class)
 public class BookEventHandler {
@@ -22,9 +38,6 @@ public class BookEventHandler {
 	 *     curl --request POST --header "Content-Type: application/json" --data
 	 *     '{"title":"Bloody Chamber", ...}' http://localhost:8080/api/booklist
 	 *
-	 * Ref: https://docs.spring.io/spring-data/rest/docs/current/reference/html/#events
-	 *      https://stackoverflow.com/questions/49504103/override-spring-data-rest-post-method
-	 *      https://www.baeldung.com/spring-data-rest-events
 	 */
 	@HandleAfterCreate
 	public void handleAfterCreate(Book book) {
