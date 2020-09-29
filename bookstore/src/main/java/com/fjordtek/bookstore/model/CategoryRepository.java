@@ -16,7 +16,10 @@ import org.springframework.data.rest.core.annotation.RestResource;
 		)
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 
-	@RestResource(path = "category", rel = "category")
+	@RestResource(exported = false)
 	public List<Category> findByName(@Param("name") String name);
+
+	@RestResource(path = "category", rel = "category")
+	public List<Category> findByNameIgnoreCaseContaining(@Param("name") String name);
 
 }
