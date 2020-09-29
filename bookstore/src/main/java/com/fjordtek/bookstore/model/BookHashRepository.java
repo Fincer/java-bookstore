@@ -30,9 +30,9 @@ public interface BookHashRepository extends CrudRepository<BookHash, String> {
 	 */
 	@Modifying
 	@Query(
-			value = "DELETE FROM BOOK_HASH i WHERE i.book_id = :bookId",
+			value = "DELETE FROM BOOK_HASH i WHERE i.book_id = :bookid",
 			nativeQuery = true
 			)
-	public void deleteByBookId(@Param("bookId") Long bookId);
+	public void deleteByBookId(@Param("bookid") Long bookId);
 
 }

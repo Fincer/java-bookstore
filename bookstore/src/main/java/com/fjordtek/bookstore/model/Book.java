@@ -103,7 +103,7 @@ public class Book {
 			targetEntity = BookHash.class
 			)
 	@PrimaryKeyJoinColumn
-	private BookHash bookHash;
+	private BookHash bookhash;
 
 	////////////////////
 	// Attributes with hard-coded constraints
@@ -234,9 +234,13 @@ public class Book {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public void setBookHash(BookHash bookHash) {
-		this.bookHash = bookHash;
+/*
+	@JsonProperty(
+			value = "bookhash"
+			)
+*/
+	public void setBookHash(BookHash bookhash) {
+		this.bookhash = bookhash;
 	}
 
 	public void setTitle(String title) {
@@ -272,8 +276,9 @@ public class Book {
 		return id;
 	}
 
+	@JsonIgnore
 	public BookHash getBookHash() {
-		return bookHash;
+		return bookhash;
 	}
 
 	public String getTitle() {
@@ -321,7 +326,7 @@ public class Book {
 	@Override
 	public String toString() {
 		return "[" + "id: "     + this.id       + ", " +
-				"bookhash_id: " + this.bookHash + ", " +
+				"bookhash_id: " + this.bookhash + ", " +
 				   "title: "    + this.title    + ", " +
 				   "author: "   + this.author   + ", " +
 				   "year: "     + this.year     + ", " +

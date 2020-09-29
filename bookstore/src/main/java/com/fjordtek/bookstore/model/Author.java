@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class implements Author entity which forms
@@ -69,6 +70,9 @@ public class Author {
 			regexp  = regexCommon,
 			message = "Invalid characters"
 			)
+	@JsonProperty(
+			value = "firstname"
+			)
 	private String firstName;
 
 	//////////
@@ -87,6 +91,9 @@ public class Author {
 	@Pattern(
 			regexp  = regexCommon,
 			message = "Invalid characters"
+			)
+	@JsonProperty(
+			value = "lastname"
 			)
 	private String lastName;
 

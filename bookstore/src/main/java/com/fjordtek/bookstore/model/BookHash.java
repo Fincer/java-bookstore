@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This class implements BookHash entity which forms
@@ -68,7 +69,7 @@ public class BookHash {
 	@OneToOne(
 			cascade      = { CascadeType.MERGE, CascadeType.REMOVE },
 			fetch        = FetchType.LAZY,
-			mappedBy     = "bookHash",
+			mappedBy     = "bookhash",
 			targetEntity = Book.class
 			)
 	@PrimaryKeyJoinColumn(
@@ -85,6 +86,9 @@ public class BookHash {
 			columnDefinition = "CHAR(32)",
 			updatable        = false,
 			nullable         = false
+			)
+	@JsonProperty(
+			value = "hashid"
 			)
 	private String hashId;
 
