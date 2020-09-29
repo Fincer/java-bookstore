@@ -26,13 +26,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.fjordtek.bookstore.model.Author;
 import com.fjordtek.bookstore.model.AuthorRepository;
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookHash;
 import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.CategoryRepository;
+
+/**
+*
+* This class implements the default Spring Model View controller for the bookstore.
+*
+* @author Pekka Helenius
+*/
 
 @Controller
 public class BookController {
@@ -57,6 +63,8 @@ public class BookController {
 	@Autowired
 	private BookHashRepository   bookHashRepository;
 
+	private BookAuthorHelper     bookAuthorHelper;
+
 	private static final String RestJSONPageView      = "json";
 	private static final String RestAPIRefPageView    = "apiref";
 
@@ -65,6 +73,18 @@ public class BookController {
 	private static final String bookAddPageView       = "bookadd";
 	private static final String bookDeletePageView    = "bookdelete";
 	private static final String bookEditPageView      = "bookedit";
+
+	/*
+	 * This method MUST exist with Autowired annotation. Handles autowiring of external classes.
+	 * If this method is not defined, they are not found by this controller class (are null).
+	 */
+	@Autowired
+	private void instanceAttributeController(
+			BookAuthorHelper bookAuthorHelper
+			) {
+		this.bookAuthorHelper = bookAuthorHelper;
+	}
+
 
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
 		private static final long serialVersionUID = 1L;
@@ -88,37 +108,6 @@ public class BookController {
 		dataModel.addAllAttributes(globalModelMap);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 		dataModel.addAttribute("authors", authorRepository.findAll());
-	}
-
-	//////////////////////////////
-	// Private methods
-
-	private void detectAndSaveBookAuthor(Book book) {
-		/*
-		 * Find an author from the current AUTHOR table by his/her first and last name.
-		 * In CrudRepository, if Id attribute is not found, it is stored
-		 * as a new row value. Therefore, it's crucial to identify whether row value already
-		 * exists in AUTHOR table.
-		 */
-
-		try {
-			Author authorI = authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
-					book.getAuthor().getFirstName(),book.getAuthor().getLastName())
-					.get(0);
-
-			/*
-			 * When author is found, use it's Id attribute for book's author Id...
-			 */
-			book.getAuthor().setId(authorI.getId());
-
-			/*
-			 * ...Otherwise, consider this a new author and store it appropriately.
-			 * Actually, when author is not found, we get IndexOutOfBoundsException.
-			 */
-		} catch (IndexOutOfBoundsException e) {
-			authorRepository.save(book.getAuthor());
-		}
-
 	}
 
 	//////////////////////////////
@@ -187,7 +176,7 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		detectAndSaveBookAuthor(book);
+		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
 		/*
 		 * Generate hash id for the book. One-to-one unidirectional tables.
@@ -304,7 +293,7 @@ public class BookController {
 		 */
 		book.setId(bookId);
 
-		detectAndSaveBookAuthor(book);
+		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 		bookRepository.save(book);
 
 		httpServerLogger.log(requestData, responseData);
