@@ -10,12 +10,14 @@ import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookEventHandler;
 import com.fjordtek.bookstore.model.BookRepository;
@@ -61,6 +63,42 @@ public class BookBasePathAwareController {
 		this.bookEventHandler = bookEventHandler;
 	}
 
+	//////////////////////////////
+	private void bookGetAndSetNestedJSON(Book book, JsonNode bookNode) {
+		// Nested data: Determine nested JSON keys & their values
+
+		String authorFirstName = null, authorLastName = null;
+		String categoryName = null;
+
+		// We keep going even if some of these is still null
+		try { authorFirstName = bookNode.get("author").get("firstname").textValue(); } catch (NullPointerException e) {};
+		try { authorLastName  = bookNode.get("author").get("lastname").textValue(); } catch (NullPointerException e) {};
+		try { categoryName    = bookNode.get("category").get("name").textValue(); } catch (NullPointerException e) {};
+
+		/*
+		 *  Treat nested JSON keys & values in a special way. Since input
+		 *  JSON data may lack some information to form a proper object,
+		 *  we need to use sophisticated methods to find and set missing
+		 *  attribute values properly for the Book entity object.
+		 */
+
+		// These must be set anyway, otherwise we get an error.
+		book.setAuthor(null);
+		book.setCategory(null);
+
+		if (authorFirstName != null && authorLastName != null) {
+			book.setAuthor(
+					bookAuthorHelper.detectAndSaveAuthorByName(authorFirstName, authorLastName)
+					);
+		}
+		if (categoryName != null) {
+			book.setCategory(
+					categoryRepository.findByNameIgnoreCaseContaining(categoryName).get(0)
+					);
+		}
+	}
+
+	//////////////////////////////
 	@RequestMapping(
 			value    = "booklist",
 			method   = RequestMethod.POST,
@@ -83,34 +121,9 @@ public class BookBasePathAwareController {
 			ObjectMapper jsonMapper = new ObjectMapper();
 			Book bookJ = jsonMapper.readValue(bookJsonNodeEntity.toString(), Book.class);
 
-			// Nested data: Determine nested JSON keys & their values
-			String authorFirstName = bookJsonNodeEntity.get("author").get("firstname").textValue();
-			String authorLastName  = bookJsonNodeEntity.get("author").get("lastname").textValue();
-			String categoryName    = bookJsonNodeEntity.get("category").get("name").textValue();
+			this.bookGetAndSetNestedJSON(bookJ, bookJsonNodeEntity);
 
-			/*
-			 *  Treat nested JSON keys & values in a special way. Since input
-			 *  JSON data may lack some information to form a proper object,
-			 *  we need to use sophisticated methods to find and set missing
-			 *  attribute values properly for the Book entity object.
-			 */
-
-			// These must be set anyway, otherwise we get an error.
-			bookJ.setAuthor(null);
-			bookJ.setCategory(null);
-
-			if (authorFirstName != null && authorLastName != null) {
-				bookJ.setAuthor(
-						bookAuthorHelper.detectAndSaveAuthorByName(authorFirstName, authorLastName)
-						);
-			}
-			if (categoryName != null) {
-				bookJ.setCategory(
-						categoryRepository.findByNameIgnoreCaseContaining(categoryName).get(0)
-						);
-			}
-
-			// Save book and send JSON HAL response to the client
+			// Save book
 			bookRepository.save(bookJ);
 
 			// Manually call a book event handler. Is there a better way to do this?
@@ -118,7 +131,10 @@ public class BookBasePathAwareController {
 
 			httpServerLogger.log(requestData, responseData);
 
-			// return object type: PersistentEntityResource
+			/*
+			 * Send JSON HAL response to the client
+			 * Return object type: PersistentEntityResource
+			 */
 			return ResponseEntity.ok(bookAssembler.toFullResource(bookJ));
 
 		} catch (Exception e) {
@@ -128,5 +144,45 @@ public class BookBasePathAwareController {
 		}
 	}
 
-	// TODO implement a custom method for handling PUT request methods with nested JSON data
+	@RequestMapping(
+			value    = "booklist" + "/{id}",
+			method   = RequestMethod.PUT,
+			consumes = "application/json",
+			produces = "application/hal+json"
+			)
+	public ResponseEntity<?> bookUpdateJSONFormPut(
+			@RequestBody JsonNode bookPartialJsonNodeEntity,
+			@PathVariable("id") Long bookId,
+			PersistentEntityResourceAssembler bookAssembler,
+    		HttpServletRequest requestData,
+			HttpServletResponse responseData
+			) {
+
+		try {
+			Book bookR = bookRepository.findById(bookId).get();
+
+			ObjectMapper jsonMapper = new ObjectMapper();
+			ObjectReader jsonReader = jsonMapper.readerForUpdating(bookR);
+
+			Book bookJ = jsonReader.readValue(bookPartialJsonNodeEntity.toString(), Book.class);
+
+			this.bookGetAndSetNestedJSON(bookJ, bookPartialJsonNodeEntity);
+
+			bookRepository.save(bookJ);
+
+			httpServerLogger.log(requestData, responseData);
+
+			/*
+			 * Send JSON HAL response to the client
+			 * Return object type: PersistentEntityResource
+			 */
+			return ResponseEntity.ok(bookAssembler.toFullResource(bookJ));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			httpServerLogger.log(requestData, responseData);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }
