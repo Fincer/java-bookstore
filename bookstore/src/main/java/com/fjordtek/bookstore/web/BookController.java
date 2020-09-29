@@ -267,17 +267,42 @@ public class BookController {
 
 		BookHash bookHash = bookHashRepository.findByHashId(bookHashId);
 		if (bookHash == null) {
-			bindingResult.rejectValue("name", "error.user", "Wrong book");
-		}
-		Long bookId = bookHash.getBookId();
+			bindingResult.rejectValue("name", "error.user", "Unknown book");
+		} else {
 
-		// TODO consider better solution. Add custom Hibernate annotation for Book class?
-		Book bookI = bookRepository.findByIsbn(book.getIsbn());
+			// One-to-one unidirectional relationship handling
+			/*
+			 * Must be set. Otherwise, we get TemplateProcessingException
+			 * when user puts invalid field values
+			 * (Thymeleaf template engine can't handle book.bookHash.hashId).
+			 */
+			book.setBookHash(bookHash);
+			/*
+			 * Must be set. Otherwise, we may get merge errors when user
+			 * has preceding error inputs in this view.
+			 */
+			bookHash.setBook(book);
 
-		// If existing ISBN value is not attached to the current book...
-		if (bookI != null) {
-			if (bookI.getId() != bookId) {
-				bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+			// TODO consider better solution. Add custom Hibernate annotation for Book class?
+			Book bookI = bookRepository.findByIsbn(book.getIsbn());
+			Long bookId = bookHash.getBookId();
+
+			if (bookId == null) {
+				bindingResult.rejectValue("name", "error.user", "Unknown book");
+			} else {
+
+				// If existing ISBN value is not attached to the current book...
+				if (bookI != null) {
+					if (bookI.getId() != bookId) {
+						bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+					}
+				}
+
+				/*
+				 *  This is necessary so that Hibernate does not attempt to INSERT data
+				 *  but UPDATEs current table data.
+				 */
+				book.setId(bookId);
 			}
 		}
 
@@ -286,12 +311,6 @@ public class BookController {
 			httpServerLogger.log(requestData, responseData);
 			return bookEditPageView;
 		}
-
-		/*
-		 *  This is necessary so that Hibernate does not attempt to INSERT data
-		 *  but UPDATEs current table data.
-		 */
-		book.setId(bookId);
 
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 		bookRepository.save(book);
