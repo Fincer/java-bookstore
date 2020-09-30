@@ -1,6 +1,6 @@
 // Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
 
-package com.fjordtek.bookstore.web;
+package com.fjordtek.bookstore.service;
 
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;

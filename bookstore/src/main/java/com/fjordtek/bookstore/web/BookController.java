@@ -33,6 +33,9 @@ import com.fjordtek.bookstore.model.BookHash;
 import com.fjordtek.bookstore.model.BookHashRepository;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.CategoryRepository;
+import com.fjordtek.bookstore.service.BigDecimalPropertyEditor;
+import com.fjordtek.bookstore.service.BookAuthorHelper;
+import com.fjordtek.bookstore.service.HttpServerLogger;
 
 /**
 *

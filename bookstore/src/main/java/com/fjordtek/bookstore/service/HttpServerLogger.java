@@ -1,6 +1,6 @@
 // Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
 
-package com.fjordtek.bookstore.web;
+package com.fjordtek.bookstore.service;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

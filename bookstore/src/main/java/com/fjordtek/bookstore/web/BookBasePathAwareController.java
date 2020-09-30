@@ -22,6 +22,8 @@ import com.fjordtek.bookstore.model.Book;
 import com.fjordtek.bookstore.model.BookEventHandler;
 import com.fjordtek.bookstore.model.BookRepository;
 import com.fjordtek.bookstore.model.CategoryRepository;
+import com.fjordtek.bookstore.service.BookAuthorHelper;
+import com.fjordtek.bookstore.service.HttpServerLogger;
 
 /**
  *
