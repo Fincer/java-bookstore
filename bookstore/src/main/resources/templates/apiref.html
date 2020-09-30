@@ -257,6 +257,22 @@
 			</tr>
 
 			<tr>
+				<td class="apiref-table-right">
+					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.d')} ?: 'page.text.apiref.book.add.d'">
+					page.text.apiref.book.add.d
+					</small>
+					<br>
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' + ${baseUrl} + 'api/booklist'">
+					code placeholder
+					</code>
+					<br>
+					<small th:text="${#messages.msgOrNull('page.text.apiref.book.info.a')} ?: 'page.text.apiref.book.info.a'">
+					page.text.apiref.book.info.a
+					</small>
+				</td>
+			</tr>
+
+			<tr>
 				<td>
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
