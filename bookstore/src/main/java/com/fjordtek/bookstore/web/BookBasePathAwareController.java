@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fjordtek.bookstore.model.Book;
-import com.fjordtek.bookstore.model.BookEventHandler;
-import com.fjordtek.bookstore.model.BookRepository;
-import com.fjordtek.bookstore.model.CategoryRepository;
+import com.fjordtek.bookstore.model.book.Book;
+import com.fjordtek.bookstore.model.book.BookEventHandler;
+import com.fjordtek.bookstore.model.book.BookRepository;
+import com.fjordtek.bookstore.model.book.CategoryRepository;
 import com.fjordtek.bookstore.service.BookAuthorHelper;
 import com.fjordtek.bookstore.service.HttpServerLogger;
 

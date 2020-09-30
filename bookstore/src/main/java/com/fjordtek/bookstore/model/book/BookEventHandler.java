@@ -1,6 +1,6 @@
 //Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
 
-package com.fjordtek.bookstore.model;
+package com.fjordtek.bookstore.model.book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;

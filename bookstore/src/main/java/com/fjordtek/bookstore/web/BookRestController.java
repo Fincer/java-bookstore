@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fjordtek.bookstore.model.Book;
-import com.fjordtek.bookstore.model.BookHashRepository;
-import com.fjordtek.bookstore.model.BookRepository;
+import com.fjordtek.bookstore.model.book.Book;
+import com.fjordtek.bookstore.model.book.BookHashRepository;
+import com.fjordtek.bookstore.model.book.BookRepository;
 import com.fjordtek.bookstore.service.HttpServerLogger;
 
 /**

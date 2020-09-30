@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.fjordtek.bookstore.model.AuthorRepository;
-import com.fjordtek.bookstore.model.Book;
-import com.fjordtek.bookstore.model.BookHash;
-import com.fjordtek.bookstore.model.BookHashRepository;
-import com.fjordtek.bookstore.model.BookRepository;
-import com.fjordtek.bookstore.model.CategoryRepository;
+import com.fjordtek.bookstore.model.book.AuthorRepository;
+import com.fjordtek.bookstore.model.book.Book;
+import com.fjordtek.bookstore.model.book.BookHash;
+import com.fjordtek.bookstore.model.book.BookHashRepository;
+import com.fjordtek.bookstore.model.book.BookRepository;
+import com.fjordtek.bookstore.model.book.CategoryRepository;
 import com.fjordtek.bookstore.service.BigDecimalPropertyEditor;
 import com.fjordtek.bookstore.service.BookAuthorHelper;
 import com.fjordtek.bookstore.service.HttpServerLogger;

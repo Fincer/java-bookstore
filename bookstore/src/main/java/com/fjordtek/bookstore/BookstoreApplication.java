@@ -12,14 +12,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import com.fjordtek.bookstore.model.Author;
-import com.fjordtek.bookstore.model.AuthorRepository;
-import com.fjordtek.bookstore.model.Book;
-import com.fjordtek.bookstore.model.BookHash;
-import com.fjordtek.bookstore.model.BookHashRepository;
-import com.fjordtek.bookstore.model.BookRepository;
-import com.fjordtek.bookstore.model.Category;
-import com.fjordtek.bookstore.model.CategoryRepository;
+import com.fjordtek.bookstore.model.book.Author;
+import com.fjordtek.bookstore.model.book.AuthorRepository;
+import com.fjordtek.bookstore.model.book.Book;
+import com.fjordtek.bookstore.model.book.BookHash;
+import com.fjordtek.bookstore.model.book.BookHashRepository;
+import com.fjordtek.bookstore.model.book.BookRepository;
+import com.fjordtek.bookstore.model.book.Category;
+import com.fjordtek.bookstore.model.book.CategoryRepository;
 
 /**
 *

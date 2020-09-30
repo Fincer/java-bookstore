@@ -5,9 +5,9 @@ package com.fjordtek.bookstore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fjordtek.bookstore.model.Author;
-import com.fjordtek.bookstore.model.AuthorRepository;
-import com.fjordtek.bookstore.model.Book;
+import com.fjordtek.bookstore.model.book.Author;
+import com.fjordtek.bookstore.model.book.AuthorRepository;
+import com.fjordtek.bookstore.model.book.Book;
 
 /**
 *
