@@ -27,61 +27,79 @@ public class BookAuthorHelper {
 	@Autowired
 	private AuthorRepository authorRepository;
 
+	public Author detectAndSaveUpdateAuthorByName(String firstName, String lastName) {
+
+		/*
+		 * Find an author from the current AUTHOR table by his/her first and/or last
+		 * name. In CrudRepository, if a matching Id value is not found, it is stored
+		 * as a new Author entity object. Therefore, it's crucial to identify whether
+		 * author row values already exist in AUTHOR table.
+		 */
+
+		Author author = null;
+
+		try {
+
+			/*
+			 * Find by first and last name; ignore case
+			 */
+			if (firstName != null && lastName != null) {
+				author = authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+					firstName,lastName).get(0);
+			}
+
+			/*
+			 * Find by first name; ignore case
+			 * NOTE: There is a risk we get a wrong Author!
+			 * Should we auto-detect author or let the user absolutely
+			 * decide the naming scheme without 'intelligent' detection feature?
+			 */
+			if (firstName != null && lastName == null) {
+				author = authorRepository.findByFirstNameIgnoreCaseContaining(
+						firstName).get(0);
+			}
+
+			/*
+			 * Find by last name; ignore case
+			 * NOTE: There is a risk we get a wrong Author!
+			 * Should we auto-detect author or let the user absolutely
+			 * decide the naming scheme without 'intelligent' detection feature?
+			 */
+			if (firstName == null && lastName != null) {
+				author = authorRepository.findByLastNameIgnoreCaseContaining(
+						lastName).get(0);
+			}
+
+		/*
+		 * If author is still not found, we get IndexOutOfBoundsException
+		 * Consider this a new author and store it appropriately.
+		 */
+		} catch (IndexOutOfBoundsException e) {
+			author = authorRepository.save(new Author(firstName, lastName));
+		}
+
+		return author;
+	}
+
 	public void detectAndSaveUpdateAuthorForBook(Book book) {
 
+		Author author = this.detectAndSaveUpdateAuthorByName(
+				book.getAuthor().getFirstName(),
+				book.getAuthor().getLastName()
+				);
+
 		/*
-		 * Find an author from the current AUTHOR table by his/her first and last name,
-		 * included in the Book entity object. In CrudRepository, if a matching Id
-		 * value is not found, it is stored as a new Author entity object. Therefore,
-		 * it's crucial to identify whether author row values already exist in
-		 * AUTHOR table.
+		 * When author is found, use it's Id attribute for book's author Id
+		 *
+		 * NOTE: This step is required by Hibernate,
+		 * otherwise we get TransientPropertyValueException
 		 */
-
-		try {
-			Author authorI = authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
-					book.getAuthor().getFirstName(),book.getAuthor().getLastName())
-					.get(0);
-
-			/*
-			 * When author is found, use it's Id attribute for book's author Id
-			 *
-			 * NOTE: This step is required by Hibernate, otherwise we get
-			 * TransientPropertyValueException
-			 */
-			book.getAuthor().setId(authorI.getId());
-
-			/*
-			 * Otherwise, consider this a new author and store it appropriately.
-			 * Actually, when author is not found, we get IndexOutOfBoundsException.
-			 */
-		} catch (IndexOutOfBoundsException e) {
-			authorRepository.save(book.getAuthor());
+		if (author != null) {
+			book.getAuthor().setId(author.getId());
+		} else {
+			book.setAuthor(null);
 		}
 
 	}
-
-	public Author detectAndSaveAuthorByName(String firstName, String lastName) {
-
-		/*
-		 * Find an author from the current AUTHOR table by his/her first and last name.
-		 * In CrudRepository, if a matching Id value is not found, it is stored
-		 * as a new Author entity object. Therefore, it's crucial to identify
-		 * whether author row values already exist in AUTHOR table.
-		 */
-
-		try {
-			return authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
-					firstName,lastName).get(0);
-			/*
-			 * Otherwise, consider this a new author and store it appropriately.
-			 * Actually, when author is not found, we get IndexOutOfBoundsException.
-			 */
-		} catch (IndexOutOfBoundsException e) {
-			return authorRepository.save(new Author(firstName,lastName));
-		}
-
-	}
-
-	// TODO implement methods to save author even if either his/her first or last name is missing
 
 }

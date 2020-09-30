@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -176,8 +177,6 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
-
 		/*
 		 * Generate hash id for the book. One-to-one unidirectional tables.
 		 * Associate generated book hash object information
@@ -189,10 +188,17 @@ public class BookController {
 		book.setBookHash(bookHash);
 		bookHash.setBook(book);
 
+		/*
+		 * More sophisticated methods are required to handle
+		 * user input with random letter cases etc. considered
+		 */
+		//authorRepository.save(book.getAuthor());
+		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
+
 		bookRepository.save(book);
 		bookHashRepository.save(bookHash);
 
-		return "redirect:" + bookListPageView;
+		return "redirect:/" + bookListPageView;
 	}
 
 	//////////////////////////////
@@ -269,6 +275,7 @@ public class BookController {
 			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.POST
 			)
+	@ExceptionHandler
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResultBook,
@@ -326,7 +333,13 @@ public class BookController {
 			return bookEditPageView;
 		}
 
+		/*
+		 * More sophisticated methods are required to handle
+		 * user input with random letter cases etc. considered
+		 */
+		//authorRepository.save(book.getAuthor());
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
+
 		bookRepository.save(book);
 
 		httpServerLogger.log(requestData, responseData);

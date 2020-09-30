@@ -86,11 +86,10 @@ public class BookBasePathAwareController {
 		book.setAuthor(null);
 		book.setCategory(null);
 
-		if (authorFirstName != null && authorLastName != null) {
-			book.setAuthor(
-					bookAuthorHelper.detectAndSaveAuthorByName(authorFirstName, authorLastName)
-					);
-		}
+		book.setAuthor(
+				bookAuthorHelper.detectAndSaveUpdateAuthorByName(authorFirstName, authorLastName)
+				);
+
 		if (categoryName != null) {
 			book.setCategory(
 					categoryRepository.findByNameIgnoreCaseContaining(categoryName).get(0)

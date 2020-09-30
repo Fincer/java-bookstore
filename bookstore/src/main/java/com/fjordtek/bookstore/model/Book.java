@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -144,6 +145,12 @@ public class Book {
     		name     = "author_id",
     		nullable = true
     		)
+	/*
+	 *  Trigger nested (web form) constraint validation when
+	 *  this entity object is referred from another entity
+	 *  object.
+	 */
+	@Valid
 	private Author author;
 
 	//////////

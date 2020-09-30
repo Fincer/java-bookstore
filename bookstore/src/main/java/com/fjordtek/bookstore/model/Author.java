@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -33,9 +32,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Author {
 
-	private static final int strMin         = 2;
 	private static final int strMax         = 100;
-	// We format length check in Size annotation, not here
+
+	// We format length check in Size annotations, not here
 	private static final String regexCommon = "^[a-zA-Z0-9\\-:\\s]*$";
 
 	////////////////////
@@ -56,16 +55,16 @@ public class Author {
 	//////////
 	@Column(
 			name = "firstname",
-			nullable = false,
+			nullable = true,
 			columnDefinition = "NVARCHAR(" + strMax + ")"
 			)
 	@Size(
-			min = strMin, max = strMax,
-			message = "First name length must be " + strMin + "-" + strMax + " characters"
+			max = strMax,
+			message = "First name length must be " + strMax + " characters at most"
 			)
-	@NotBlank(
+	/*@NotBlank(
 			message = "Fill the first name form"
-			)
+			)*/
 	@Pattern(
 			regexp  = regexCommon,
 			message = "Invalid characters"
@@ -78,16 +77,16 @@ public class Author {
 	//////////
 	@Column(
 			name = "lastname",
-			nullable = false,
+			nullable = true,
 			columnDefinition = "NVARCHAR(" + strMax + ")"
 			)
 	@Size(
-			min = strMin, max = strMax,
-			message = "Last name length must be " + strMin + "-" + strMax + " characters"
+			max = strMax,
+			message = "Last name length must be " + strMax + " characters at most"
 			)
-	@NotBlank(
+	/*@NotBlank(
 			message = "Fill the first name form"
-			)
+			)*/
 	@Pattern(
 			regexp  = regexCommon,
 			message = "Invalid characters"
@@ -118,13 +117,27 @@ public class Author {
 	}
 
 	public void setFirstName(String firstName) {
-		// Delete leading & trailing whitespaces (typos from user)
-		this.firstName = firstName.trim();
+
+		// Delete leading & trailing white spaces
+		firstName = firstName.trim();
+
+		if (firstName.isEmpty()) {
+			this.firstName = null;
+		} else {
+			this.firstName = firstName;
+		}
 	}
 
 	public void setLastName(String lastName) {
-		// Delete leading & trailing whitespaces (typos from user)
-		this.lastName = lastName.trim();
+
+		// Delete leading & trailing white spaces
+		lastName = lastName.trim();
+
+		if (lastName.isEmpty()) {
+			this.lastName = null;
+		} else {
+			this.lastName = lastName;
+		}
 	}
 
 	public void setBooks(List<Book> books) {
