@@ -31,7 +31,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 	public Optional<Book> findById(Long id);
 
 	@RestResource(path = "title", rel = "title")
-	public List<Book> findByTitle(@Param("name") String title);
+	public List<Book> findByTitleIgnoreCaseContaining(@Param("name") String title);
 
 	/* Assume a single book with a single ISBN, or multiple books with possibly duplicate ISBNs?
 	 * For meanwhile, we have a UNIQUE constraint for ISBN values. If this policy changes,

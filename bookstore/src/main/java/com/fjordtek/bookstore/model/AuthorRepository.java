@@ -23,9 +23,19 @@ import org.springframework.data.rest.core.annotation.RestResource;
 		)
 public interface AuthorRepository extends CrudRepository<Author,Long> {
 
-	@RestResource(path = "author", rel = "author")
+	@RestResource(path = "fullname", rel = "fullname")
 	public List<Author> findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
 			@Param("firstname") String firstName, @Param("lastname") String lastName
+			);
+
+	@RestResource(path = "firstname", rel = "firstname")
+	public List<Author> findByFirstNameIgnoreCaseContaining(
+			@Param("firstname") String firstName
+			);
+
+	@RestResource(path = "lastname", rel = "lastname")
+	public List<Author> findByLastNameIgnoreCaseContaining(
+			@Param("lastname") String lastName
 			);
 
 }
