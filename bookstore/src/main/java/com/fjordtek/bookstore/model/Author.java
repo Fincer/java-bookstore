@@ -124,7 +124,8 @@ public class Author {
 		if (firstName.isEmpty()) {
 			this.firstName = null;
 		} else {
-			this.firstName = firstName;
+			// Capitalize the first letter
+			this.firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
 		}
 	}
 
@@ -136,7 +137,8 @@ public class Author {
 		if (lastName.isEmpty()) {
 			this.lastName = null;
 		} else {
-			this.lastName = lastName;
+			// Capitalize the first letter
+			this.lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
 		}
 	}
 
