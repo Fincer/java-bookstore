@@ -50,7 +50,9 @@
 						</small>
 
 						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.firstName')}"
-						th:errors="*{author.firstName}">Invalid author first name value</div>
+						th:errors="*{author.firstName}">
+						Invalid author first name value
+						</div>
 					</div>
 
 					<div class="col">
@@ -76,7 +78,9 @@
 						</small>
 
 						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.lastName')}"
-						th:errors="*{author.lastName}">Invalid author last name value</div>
+						th:errors="*{author.lastName}">
+						Invalid author last name value
+						</div>
 					</div>
 				</div>
 			</div>
@@ -104,7 +108,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
-				th:errors="*{title}">Invalid title</div>
+				th:errors="*{title}">
+				Invalid title
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -130,7 +136,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
-				th:errors="*{isbn}">Invalid ISBN code value</div>
+				th:errors="*{isbn}">
+				Invalid ISBN code value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -156,7 +164,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
-				th:errors="*{year}">Invalid year value</div>
+				th:errors="*{year}">
+				Invalid year value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -190,7 +200,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
-				th:errors="*{price}">Invalid price value</div>
+				th:errors="*{price}">
+				Invalid price value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -226,7 +238,7 @@
 
 		<br>
 
-		<a class="btn btn-success" th:href="@{../__${listpage}__}"
+		<a class="btn btn-success" th:href="@{/__${listpage}__}"
 		th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
 		button.page.list.return
 		</a>
