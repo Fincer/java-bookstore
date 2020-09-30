@@ -70,7 +70,7 @@ public class BookBasePathAwareController {
 		String authorFirstName = null, authorLastName = null;
 		String categoryName = null;
 
-		// We keep going even if some of these is still null
+		// We keep going even if some of these are still null
 		try { authorFirstName = bookNode.get("author").get("firstname").textValue(); } catch (NullPointerException e) {};
 		try { authorLastName  = bookNode.get("author").get("lastname").textValue(); } catch (NullPointerException e) {};
 		try { categoryName    = bookNode.get("category").get("name").textValue(); } catch (NullPointerException e) {};
@@ -139,7 +139,10 @@ public class BookBasePathAwareController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
+
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -180,7 +183,10 @@ public class BookBasePathAwareController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
+
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 

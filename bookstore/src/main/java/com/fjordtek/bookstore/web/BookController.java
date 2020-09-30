@@ -209,18 +209,23 @@ public class BookController {
 			HttpServletResponse responseData
 			) {
 
-		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+		try {
+			Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
 
-		/*
-		 * Delete associated book id foreign key (+ other row data) from book hash table
-		 * at first, after which delete the book.
-		 */
-		bookHashRepository.deleteByBookId(bookId);
-		bookRepository.deleteById(bookId);
+			/*
+			 * Delete associated book id foreign key (+ other row data) from book hash table
+			 * at first, after which delete the book.
+			 */
+			bookHashRepository.deleteByBookId(bookId);
+			bookRepository.deleteById(bookId);
+
+		} catch (NullPointerException e) {
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
 
 		httpServerLogger.log(requestData, responseData);
 
-		return "redirect:../" + bookListPageView;
+		return "redirect:/" + bookListPageView;
 	}
 
 	//////////////////////////////
@@ -237,14 +242,21 @@ public class BookController {
 			HttpServletResponse responseData
 			) {
 
-		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+		try {
+			Long bookIdFromHash = bookHashRepository.findByHashId(bookHashId).getBookId();
+			Book book = bookRepository.findById(bookIdFromHash).get();
 
-		Book book = bookRepository.findById(bookId).get();
-		dataModel.addAttribute("book", book);
+			dataModel.addAttribute("book", book);
 
-		httpServerLogger.log(requestData, responseData);
+			httpServerLogger.log(requestData, responseData);
+			return bookEditPageView;
 
-		return bookEditPageView;
+		} catch (NullPointerException e) {
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServerLogger.log(requestData, responseData);
+			return "redirect:/" + bookListPageView;
+		}
+
 	}
 
 	/* NOTE: We keep Id here for the sake of proper URL formatting.
@@ -259,54 +271,56 @@ public class BookController {
 			)
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
-			BindingResult bindingResult,
-			@PathVariable("hash_id") String bookHashId,
+			BindingResult bindingResultBook,
+			@ModelAttribute ("hash_id") String bookHashId,
 			HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
 
 		BookHash bookHash = bookHashRepository.findByHashId(bookHashId);
+
 		if (bookHash == null) {
-			bindingResult.rejectValue("name", "error.user", "Unknown book");
-		} else {
-
-			// One-to-one unidirectional relationship handling
-			/*
-			 * Must be set. Otherwise, we get TemplateProcessingException
-			 * when user puts invalid field values
-			 * (Thymeleaf template engine can't handle book.bookHash.hashId).
-			 */
-			book.setBookHash(bookHash);
-			/*
-			 * Must be set. Otherwise, we may get merge errors when user
-			 * has preceding error inputs in this view.
-			 */
-			bookHash.setBook(book);
-
-			// TODO consider better solution. Add custom Hibernate annotation for Book class?
-			Book bookI = bookRepository.findByIsbn(book.getIsbn());
-			Long bookId = bookHash.getBookId();
-
-			if (bookId == null) {
-				bindingResult.rejectValue("name", "error.user", "Unknown book");
-			} else {
-
-				// If existing ISBN value is not attached to the current book...
-				if (bookI != null) {
-					if (bookI.getId() != bookId) {
-						bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
-					}
-				}
-
-				/*
-				 *  This is necessary so that Hibernate does not attempt to INSERT data
-				 *  but UPDATEs current table data.
-				 */
-				book.setId(bookId);
-			}
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServerLogger.log(requestData, responseData);
+			return "redirect:/" + bookListPageView;
 		}
 
-		if (bindingResult.hasErrors()) {
+		// One-to-one unidirectional relationship handling
+		/*
+		 * Must be set. Otherwise, we get TemplateProcessingException
+		 * when user puts invalid field values
+		 * (Thymeleaf template engine can't handle book.bookHash.hashId).
+		 */
+		book.setBookHash(bookHash);
+		/*
+		 * Must be set. Otherwise, we may get merge errors when user
+		 * has preceding error inputs in this view.
+		 */
+		bookHash.setBook(book);
+
+		// TODO consider better solution. Add custom Hibernate annotation for Book class?
+		Book bookI = bookRepository.findByIsbn(book.getIsbn());
+		Long bookId = bookHash.getBookId();
+
+		if (bookId == null) {
+			bindingResultBook.rejectValue("name", "error.user", "Unknown book");
+		} else {
+
+			// If existing ISBN value is not attached to the current book...
+			if (bookI != null) {
+				if (bookI.getId() != bookId) {
+					bindingResultBook.rejectValue("isbn", "error.user", "ISBN code already exists");
+				}
+			}
+
+			/*
+			 *  This is necessary so that Hibernate does not attempt to INSERT data
+			 *  but UPDATEs current table data.
+			 */
+			book.setId(bookId);
+		}
+
+		if (bindingResultBook.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
 			return bookEditPageView;
@@ -316,8 +330,7 @@ public class BookController {
 		bookRepository.save(book);
 
 		httpServerLogger.log(requestData, responseData);
-
-		return "redirect:../" + bookListPageView;
+		return "redirect:/" + bookListPageView;
 	}
 
 	//////////////////////////////
@@ -338,7 +351,7 @@ public class BookController {
 	// REDIRECTS
 
 	@RequestMapping(
-			value    = { "*" }
+			value    = { "*", "error" }
 			)
 	@ResponseStatus(HttpStatus.FOUND)
 	public String redirectToDefaultWebForm(
@@ -346,8 +359,11 @@ public class BookController {
 			HttpServletResponse responseData
 			)
 	{
+		if (requestData.getRequestURI().matches("error")) {
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
 		httpServerLogger.log(requestData, responseData);
-		return "redirect:" + bookListPageView;
+		return "redirect:/" + bookListPageView;
 	}
 
 	@RequestMapping(

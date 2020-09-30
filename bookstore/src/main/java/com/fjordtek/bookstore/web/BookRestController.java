@@ -72,11 +72,20 @@ public class BookRestController {
 			HttpServletResponse responseData
 			) {
 
-		Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+		try {
 
-		httpServerLogger.log(requestData, responseData);
+			Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+			httpServerLogger.log(requestData, responseData);
+			return bookRepository.findById(bookId);
 
-		return bookRepository.findById(bookId);
+		} catch (NullPointerException e) {
+
+			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			httpServerLogger.log(requestData, responseData);
+
+			this.redirectToDefaultWebForm(requestData, responseData);
+			return null;
+		}
 	}
 
 	//////////////////////////////
@@ -90,9 +99,9 @@ public class BookRestController {
     		HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
-    	httpServerLogger.log(requestData, responseData);
     	responseData.setHeader("Location", "/" + bookListPageView);
     	responseData.setStatus(302);
+    	httpServerLogger.log(requestData, responseData);
     }
 
 }
