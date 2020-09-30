@@ -16,11 +16,11 @@
 	<h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
 	page.title.webform.apiref
 	</h1>
-
+<!--/*
 	<p th:text="${#messages.msgOrNull('page.text.apiref.warning.a')} ?: 'page.text.apiref.warning.a'">
 	page.text.apiref.warning.a
 	</p>
-
+*/-->
 	<table class="table table-striped">
 		<tbody>
 			<tr>
@@ -30,16 +30,16 @@
 					</h3>
 				</th>
 				<th>
-<!--
+<!--/*
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.links.title')} ?: 'page.text.apiref.links.title'">
 					page.text.apiref.links.title
 					</h3>
--->
+*/-->
 				</th>
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/booklist/'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/booklist/'">
 					code placeholder
 					</code>
 				</td>
@@ -53,7 +53,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/categories/'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/'">
 					code placeholder
 					</code>
 				</td>
@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/authors/'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/'">
 					code placeholder
 					</code>
 				</td>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber'">
 					code placeholder
 					</code>
 				</td>
@@ -107,7 +107,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/categories/search/category?name=Fantasy'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/search/category?name=Fantasy'">
 					code placeholder
 					</code>
 				</td>
@@ -119,15 +119,61 @@
 					</a>
 				</td>
 			</tr>
+			
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="${baseUrl} + 'api/authors/search/author?firstname=Angela&lastname=Carter'">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/search/category?name=horr'">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/authors/search/author?firstname=Angela&lastname=Carter'"
+					th:href="${baseUrl} + 'api/categories/search/category?name=horr'"
+					>
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter'">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter'"
+					>
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/search/firstname?firstname=anGel'">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="${baseUrl} + 'api/authors/search/firstname?firstname=anGel'"
+					>
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski'">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski'"
 					>
 					page.text.apiref.link
 					</a>
@@ -152,6 +198,13 @@
 					<br>
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="${baseUrl} + 'api/booklist/2'"
+					>
+					page.text.apiref.link
+					</a>
+				</td>
 			</tr>
 
 			<tr>
@@ -162,6 +215,7 @@
 				</th>
 				<th></th>
 			</tr>
+
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.a')} ?: 'page.text.apiref.book.add.a'">
@@ -173,6 +227,7 @@
 					</code>
 				</td>
 			</tr>
+
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.b')} ?: 'page.text.apiref.book.add.b'">
@@ -184,6 +239,23 @@
 					</code>
 				</td>
 			</tr>
+
+			<tr>
+				<td class="apiref-table-right">
+					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.c')} ?: 'page.text.apiref.book.add.c'">
+					page.text.apiref.book.add.c
+					</small>
+					<br>
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' + ${baseUrl} + 'api/booklist'">
+					code placeholder
+					</code>
+					<br>
+					<small th:text="${#messages.msgOrNull('page.text.apiref.book.info.a')} ?: 'page.text.apiref.book.info.a'">
+					page.text.apiref.book.info.a
+					</small>
+				</td>
+			</tr>
+
 			<tr>
 				<td>
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
@@ -262,7 +334,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstName&quot;:&quot;Tanya&quot;,&quot;lastName&quot;:&quot;Rose&quot;}\' ' + ${baseUrl} + 'api/authors/1'">
+					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' + ${baseUrl} + 'api/authors/1'">
 					code placeholder
 					</code>
 					<br>
