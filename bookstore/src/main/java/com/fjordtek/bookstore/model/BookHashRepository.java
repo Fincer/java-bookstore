@@ -18,7 +18,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(
 		path            = "bookhashes",
 		itemResourceRel = "bookhashes",
-		exported        = true
+		exported        = false
 		)
 public interface BookHashRepository extends CrudRepository<BookHash, String> {
 
