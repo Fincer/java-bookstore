@@ -22,7 +22,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 		)
 public interface BookHashRepository extends CrudRepository<BookHash, String> {
 
-	public BookHash findByHashId(String bookHashId);
+	BookHash findByHashId(String bookHashId);
 
 	/*
 	 * We need to override native delete method.
@@ -33,6 +33,6 @@ public interface BookHashRepository extends CrudRepository<BookHash, String> {
 			value = "DELETE FROM BOOK_HASH i WHERE i.book_id = :bookid",
 			nativeQuery = true
 			)
-	public void deleteByBookId(@Param("bookid") Long bookId);
+	void deleteByBookId(@Param("bookid") Long bookId);
 
 }

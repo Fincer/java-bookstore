@@ -28,10 +28,10 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	@Override
 	//@RestResource(exported = false)
-	public Optional<Book> findById(Long id);
+	Optional<Book> findById(Long id);
 
 	@RestResource(path = "title", rel = "title")
-	public List<Book> findByTitleIgnoreCaseContaining(@Param("name") String title);
+	List<Book> findByTitleIgnoreCaseContaining(@Param("name") String title);
 
 	/* Assume a single book with a single ISBN, or multiple books with possibly duplicate ISBNs?
 	 * For meanwhile, we have a UNIQUE constraint for ISBN values. If this policy changes,
@@ -40,13 +40,13 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 	*/
 	//public List<Book> findByIsbn(String isbn);
 	@RestResource(exported = false)
-	public Book findByIsbn(String isbn);
+	Book findByIsbn(String isbn);
 
 	@RestResource(exported = false)
-	public boolean existsByIsbn(String isbn);
+	boolean existsByIsbn(String isbn);
 
 	@Override
-	public List<Book> findAll();
+	List<Book> findAll();
 
 	/*
 	 * We need to override native delete method due to book hash id usage.
@@ -58,6 +58,6 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 			value = "DELETE FROM BOOK i WHERE i.id = :id",
 			nativeQuery = true
 			)
-	public void deleteById(@Param("id") Long id);
+	void deleteById(@Param("id") Long id);
 
 }
