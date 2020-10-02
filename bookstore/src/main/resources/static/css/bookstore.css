@@ -13,3 +13,14 @@
 	background-color: #48C;
 	color: #FFF;
 }
+
+#bookstore-topform-base {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#bookstore-loginout {
+	text-align: right;
+	margin: 0.5em 2em;
+}
