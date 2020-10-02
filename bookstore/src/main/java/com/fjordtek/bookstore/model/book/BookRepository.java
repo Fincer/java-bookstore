@@ -24,7 +24,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 		itemResourceRel = "booklist",
 		exported        = true
 		)
-public interface BookRepository extends CrudRepository<Book, Long> {
+public interface BookRepository extends CrudRepository<Book, Long>, BookRepositoryCustom {
 
 	@Override
 	//@RestResource(exported = false)
@@ -50,7 +50,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	/*
 	 * We need to override native delete method due to book hash id usage.
-	 * This is a native query, do not unnecessarily validate it.
+	 * This is a native HQL query, do not unnecessarily validate it.
 	 */
 	@Override
 	@Modifying
