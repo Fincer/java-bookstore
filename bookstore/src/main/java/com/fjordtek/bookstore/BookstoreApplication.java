@@ -11,7 +11,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fjordtek.bookstore.model.auth.Role;
+import com.fjordtek.bookstore.model.auth.RoleRepository;
+import com.fjordtek.bookstore.model.auth.User;
+import com.fjordtek.bookstore.model.auth.UserRepository;
+import com.fjordtek.bookstore.model.auth.UserRole;
+import com.fjordtek.bookstore.model.auth.UserRoleRepository;
 import com.fjordtek.bookstore.model.book.Author;
 import com.fjordtek.bookstore.model.book.AuthorRepository;
 import com.fjordtek.bookstore.model.book.Book;
@@ -31,11 +39,98 @@ import com.fjordtek.bookstore.model.book.CategoryRepository;
 */
 
 @SpringBootApplication
+/*@SpringBootApplication(
+	exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
+)*/
 public class BookstoreApplication extends SpringBootServletInitializer {
 	private static final Logger commonLogger = LoggerFactory.getLogger(BookstoreApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
+	}
+
+	@Bean
+	public CommandLineRunner userDatabaseRunner(
+			UserRepository userRepository,
+			RoleRepository roleRepository,
+			UserRoleRepository userRoleRepository
+			) {
+
+		return (args) -> {
+
+			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+			commonLogger.info("Add new roles to database");
+			Role adminAR    = new Role("ADMIN");
+			Role helpdeskAR = new Role("HELPDESK");
+			Role userAR     = new Role("USER");
+			Role salesAR    = new Role("MARKETING");
+
+			roleRepository.save(adminAR);
+			roleRepository.save(helpdeskAR);
+			roleRepository.save(userAR);
+			roleRepository.save(salesAR);
+
+			commonLogger.info("Add new users to database");
+
+			User adminAU = new User(
+					"admin",
+					passwordEncoder.encode("admin"),
+					"admin@fjordtek.com"
+					);
+
+			User helpdeskAU = new User(
+					"helpdesk",
+					passwordEncoder.encode("helpdesk"),
+					"helpdesk@fjordtek.com"
+					);
+
+			User salesManagerAU = new User(
+					"salesmanager",
+					passwordEncoder.encode("salesmanager"),
+					"salesmanager@fjordtek.com"
+					);
+
+			User userAU = new User(
+					"user",
+					passwordEncoder.encode("user"),
+					"user@fjordtek.com"
+					);
+
+			userRepository.save(adminAU);
+			userRepository.save(helpdeskAU);
+			userRepository.save(userAU);
+			userRepository.save(salesManagerAU);
+
+			// Add example roles for admin user
+			userRoleRepository.save(new UserRole(adminAU, adminAR));
+			userRoleRepository.save(new UserRole(adminAU, salesAR));
+			userRoleRepository.save(new UserRole(adminAU, userAR));
+
+			// Add an example role for helpdesk user
+			userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
+
+			// Add an example role for sales manager
+			userRoleRepository.save(new UserRole(salesManagerAU, salesAR));
+
+			// Add an example role for user
+			userRoleRepository.save(new UserRole(userAU, userAR));
+
+			commonLogger.info("Sample roles in the database");
+			for (Role role : roleRepository.findAll()) {
+				commonLogger.info(role.toString());
+			}
+			commonLogger.info("Sample users in the database");
+			commonLogger.info("**ENCRYPTED PASSWORDS ARE PRINTED ONLY FOR DEMO PURPOSES**");
+			for (User user : userRepository.findAll()) {
+				commonLogger.info(user.toString());
+			}
+			commonLogger.info("Sample user roles in the database");
+			for (UserRole userRole : userRoleRepository.findAll()) {
+				commonLogger.info(userRole.toString());
+			}
+
+		};
 	}
 
 	@Bean
