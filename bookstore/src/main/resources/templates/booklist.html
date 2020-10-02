@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
 
 <!--/*
 
@@ -47,16 +50,24 @@ Idea of the following syntax used in this and other HTML document:
 <body>
 	<div>
 
-		<h1 th:text="${#messages.msgOrNull('page.title.webform.list')} ?: 'page.title.webform.list'">
-		page.title.webform.list
-		</h1>
+		<div id="bookstore-topform-base">
+			<div>
+				<h1
+				th:text="${#messages.msgOrNull('page.title.webform.list')} ?: 'page.title.webform.list'">
+				page.title.webform.list
+				</h1>
+			</div>
+
+			<th:block th:replace="fragments/loginout :: loginout"/>
+
+		</div>
 
 		<!--/*
 		TODO: Use proper object notation here?
 		For example syntax, see
 		https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#order-details
 		*/-->
-		<table class="table table-striped">
+		<table class="table table-striped" sec:authorize="isAuthenticated()">
 
 			<tr>
 				<th th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">book.author</th>
@@ -65,9 +76,17 @@ Idea of the following syntax used in this and other HTML document:
 				<th th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">book.year</th>
 				<th th:text="${#messages.msgOrNull('book.category')} ?: 'book.category'">book.category</th>
 				<th th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">book.price</th>
-				<th th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'">
+
+				<th
+				th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'"
+				th:if="${#authorization.expression('hasAuthority(''MARKETING'') or hasAuthority(''HELPDESK'')')}"
+				>
 				page.text.list.actions
 				</th>
+				
+				<th th:unless="${#authorization.expression('hasAuthority(''MARKETING'') or hasAuthority(''HELPDESK'')')}">
+				</th>
+
 				<th></th>
 				<th th:text="${#messages.msgOrNull('book.json')} ?: 'book.json'">book.json</th>
 			</tr>
@@ -127,8 +146,8 @@ Idea of the following syntax used in this and other HTML document:
 				0.00 page.symbols.currency
 				</td>
 
-				<td>
-					<a class="btn btn-danger"
+				<td sec:authorize="hasAuthority('ADMIN')">
+					<a class="btn btn-danger" 
 					th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
 					th:href="@{__${deletepage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.delete')} ?: 'page.text.list.delete'">
@@ -137,11 +156,14 @@ Idea of the following syntax used in this and other HTML document:
 				</td>
 
 				<td>
-					<a class="btn btn-warning"
+					<a class="btn btn-warning" sec:authorize="hasAuthority('MARKETING') or hasAuthority('HELPDESK')"
 					th:href="@{__${editpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
 					page.text.list.edit
 					</a>
+				</td>
+
+				<td th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}">
 				</td>
 
 				<td>
@@ -156,7 +178,7 @@ Idea of the following syntax used in this and other HTML document:
 
 			<tr>
 				<td>
-					<a class="btn btn-success" th:href="@{__${addpage}__}"
+					<a class="btn btn-success" th:href="@{__${addpage}__}" sec:authorize="hasAuthority('MARKETING')"
 					th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
 					button.book.add
 					</a>
@@ -178,7 +200,7 @@ Idea of the following syntax used in this and other HTML document:
 
 			<tr style="background-color: #FFF !important;">
 				<td>
-					<a class="btn btn-info" th:href="@{__${apirefpage}__}"
+					<a class="btn btn-info" th:href="@{__${apirefpage}__}" sec:authorize="hasAuthority('ADMIN')"
 					th:text="${#messages.msgOrNull('button.page.apiref')} ?: 'button.page.apiref'">
 					button.page.apiref
 					</a>
@@ -194,6 +216,14 @@ Idea of the following syntax used in this and other HTML document:
 			</tr>
 
 		</table>
+		
+		<div sec:authorize="isAnonymous()">
+			<p th:text="${#messages.msgOrNull('page.text.list.anon.info')} ?: 'page.text.list.anon.info'">
+			page.text.list.anon.info
+			</p>
+			<img src="http://dreamicus.com/data/abyss/abyss-08.jpg" style="max-width: 600px; height: auto;" alt="abyss">
+		</div>
+		
 	</div>
 </body>
 </html>

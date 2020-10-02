@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+	<th:block th:fragment="loginout">
+		<div id="bookstore-loginout">
+			<div sec:authorize="isAuthenticated()">
+				<div>
+					<form th:action="@{__${logoutpage}__}" method="post">
+						<button type="submit" class="btn btn-info"
+						th:href="@{__${logoutpage}__}"
+						th:text="${#messages.msgOrNull('button.page.logout')} ?: 'button.page.logout'">
+						button.page.logout
+						</button>
+					</form>
+				</div>
+				<p class="mt-2"
+				th:text="${#httpServletRequest.remoteUser} ? (${#messages.msgOrNull('page.text.list.authenticated')} ?: 'page.text.list.authenticated') + ' ' + ${#httpServletRequest.remoteUser} : 'httpServletRequest.remoteUser'">
+				page.text.list.authenticated httpServletRequest.remoteUser
+				</p>
+			</div>
+
+			<div sec:authorize="isAnonymous()">
+			
+				<form th:action="@{__${loginpage}__}" method="post">
+				
+					<input type="text" id="username" name="username" placeholder="User name">
+					
+					<input type="password" id="password" name="password" placeholder="Password">
+
+					<div class="mt-2">
+						<button type="submit" class="btn btn-info"
+						name="login-submit" id="login-submit"
+						th:text="${#messages.msgOrNull('button.page.login')} ?: 'button.page.login'">
+						button.page.login
+						</button>
+					</div>
+				</form>
+				<th:block th:replace="fragments/devusers :: devusers"/>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>
