@@ -13,12 +13,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +78,9 @@ public class BookController {
 	private static final String bookDeletePageView    = "bookdelete";
 	private static final String bookEditPageView      = "bookedit";
 
+	private static final String bookLoginPageView     = "/login";
+	private static final String bookLogoutPageView    = "/logout";
+
 	/*
 	 * This method MUST exist with Autowired annotation. Handles autowiring of external classes.
 	 * If this method is not defined, they are not found by this controller class (are null).
@@ -101,6 +104,9 @@ public class BookController {
 		put("addpage",    bookAddPageView);
 		put("deletepage", bookDeletePageView);
 		put("editpage",   bookEditPageView);
+
+		put("loginpage",  bookLoginPageView);
+		put("logoutpage", bookLogoutPageView);
 	}};
 
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
@@ -137,6 +143,7 @@ public class BookController {
 	//////////////////////////////
 	// ADD BOOK
 
+	@PreAuthorize("hasAuthority('MARKETING')")
 	@RequestMapping(
 			value    = bookAddPageView,
 			method   = { RequestMethod.GET, RequestMethod.PUT }
@@ -156,6 +163,7 @@ public class BookController {
 		return bookAddPageView;
 	}
 
+	@PreAuthorize("hasAuthority('MARKETING')")
 	@RequestMapping(
 			value    = bookAddPageView,
 			method   = RequestMethod.POST
@@ -208,6 +216,7 @@ public class BookController {
 	// DELETE BOOK
 
 	@Transactional
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(
 			value    = bookDeletePageView + "/{hash_id}",
 			method   = RequestMethod.GET
@@ -240,6 +249,7 @@ public class BookController {
 	//////////////////////////////
 	// UPDATE BOOK
 
+	@PreAuthorize("hasAuthority('MARKETING') or hasAuthority('HELPDESK')")
 	@RequestMapping(
 			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.GET
@@ -274,11 +284,11 @@ public class BookController {
 	 * Internally, we never use URL id as a reference for user modifications,
 	 * but just as an URL end point.
 	*/
+	@PreAuthorize("hasAuthority('MARKETING') or hasAuthority('HELPDESK')")
 	@RequestMapping(
 			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.POST
 			)
-	@ExceptionHandler
 	public String webFormUpdateBook(
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResultBook,
@@ -343,7 +353,11 @@ public class BookController {
 		//authorRepository.save(book.getAuthor());
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
-		bookRepository.save(book);
+		if (book.getPrice() == null) {
+			bookRepository.updateWithoutPrice(book);
+		} else {
+			bookRepository.save(book);
+		}
 
 		httpServerLogger.log(requestData, responseData);
 		return "redirect:/" + bookListPageView;
