@@ -28,11 +28,19 @@ _Normal user view for the bookstore: get basic information of published books._
 
 ------------------------------
 
+### Help desk view
+
+![](images/page_helpdesk_front.png)
+
+_Help desk view for the bookstore: view and edit published books._
+
+------------------------------
+
 ### Sales manager view
 
 ![](images/page_salesmanager_front.png)
 
-_Sales manager view for the bookstore: view, edit and add books. Get published and unpublished books._
+_Sales manager view for the bookstore: view, edit and add published and unpublished books._
 
 ------------------------------
 
@@ -40,7 +48,7 @@ _Sales manager view for the bookstore: view, edit and add books. Get published a
 
 ![](images/page_admin_front.png)
 
-_Administrative view for the bookstore: view, edit, delete and add books. Get published and unpublished books. Access REST API._
+_Administrative view for the bookstore: view, edit, delete and add published and unpublished books. Access REST API._
 
 ------------------------------
 
