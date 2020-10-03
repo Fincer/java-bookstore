@@ -11,7 +11,7 @@
 	</title>
 
 </head>
-<body th:with="baseUrl=(@{__${#httpServletRequest.scheme}__} + '://' + @{__${#httpServletRequest.serverName}__} + ':' + @{__${#httpServletRequest.serverPort}__} + '/')">
+<body th:with="baseUrl=(@{__${#httpServletRequest.scheme}__} + '://' + @{__${#httpServletRequest.serverName}__} + ':' + @{__${#httpServletRequest.serverPort}__} + '/'), adminUser='admin:admin'">
 
 	<h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
 	page.title.webform.apiref
@@ -39,7 +39,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/booklist/'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -53,7 +53,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -107,7 +107,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/search/category?name=Fantasy'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/search/category?name=Fantasy' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -122,7 +122,7 @@
 			
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/categories/search/category?name=horr'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/search/category?name=horr' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -137,7 +137,7 @@
 			
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET &quot;' + ${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter&quot;'">
+					<code th:text="'curl --include --request GET &quot;' + ${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter&quot;' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -152,7 +152,7 @@
 
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/search/firstname?firstname=anGel'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/search/firstname?firstname=anGel' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -167,7 +167,7 @@
 
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -190,7 +190,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request GET ' + ${baseUrl} + 'api/booklist/2'">
+					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 					<br>
@@ -222,7 +222,7 @@
 					page.text.apiref.book.add.a
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist'">
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -234,7 +234,7 @@
 					page.text.apiref.book.add.b
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Retribution&quot;,&quot;year&quot;:2010,&quot;isbn&quot;:&quot;0345520-722&quot;,&quot;price&quot;:29.90,&quot;category&quot;:{&quot;name&quot;:&quot;Sci-Fi&quot;},&quot;author&quot;:{&quot;firstname&quot;:&quot;Drew&quot;,&quot;lastname&quot;:&quot;Karpyshyn&quot;}}\' ' + ${baseUrl} + 'api/booklist'">
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Retribution&quot;,&quot;year&quot;:2010,&quot;isbn&quot;:&quot;0345520-722&quot;,&quot;price&quot;:29.90,&quot;category&quot;:{&quot;name&quot;:&quot;Sci-Fi&quot;},&quot;author&quot;:{&quot;firstname&quot;:&quot;Drew&quot;,&quot;lastname&quot;:&quot;Karpyshyn&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -246,7 +246,7 @@
 					page.text.apiref.book.add.c
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' + ${baseUrl} + 'api/booklist'">
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 					<br>
@@ -262,7 +262,7 @@
 					page.text.apiref.book.add.d
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' + ${baseUrl} + 'api/booklist'">
+					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 					<br>
@@ -292,7 +292,7 @@
 					page.text.apiref.book.add.a
 					</small>
 					<br>
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1999,&quot;isbn&quot;:&quot;3213221-3&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist/2'">
+					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1999,&quot;isbn&quot;:&quot;3213221-3&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -303,7 +303,7 @@
 					page.text.apiref.book.add.b
 					</small>
 					<br>
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;}}\' ' + ${baseUrl} + 'api/booklist/2'">
+					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;}}\' ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 				</td>
@@ -330,7 +330,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --request DELETE ' + ${baseUrl} + 'api/booklist/2'">
+					<code th:text="'curl --include --request DELETE ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 					<br>
@@ -350,7 +350,7 @@
 			</tr>
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' + ${baseUrl} + 'api/authors/1'">
+					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' + ${baseUrl} + 'api/authors/1' + ' --user ' + ${adminUser}">
 					code placeholder
 					</code>
 					<br>
