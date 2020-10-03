@@ -36,11 +36,11 @@ _Sales manager view for the bookstore: view, edit and add books. Get published a
 
 ------------------------------
 
-### Administration view
+### Administrative view
 
 ![](images/page_admin_front.png)
 
-_Administration view for the bookstore: view, edit, delete and add books. Get published and unpublished books. Access REST API._
+_Administrative view for the bookstore: view, edit, delete and add books. Get published and unpublished books. Access REST API._
 
 ------------------------------
 
