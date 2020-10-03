@@ -1,3 +1,5 @@
+//Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
+
 package com.fjordtek.bookstore.model.book;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ *
+ * This class implements methods defined in BookRepositoryCustom interface.
  *
  * @author Pekka Helenius
  */

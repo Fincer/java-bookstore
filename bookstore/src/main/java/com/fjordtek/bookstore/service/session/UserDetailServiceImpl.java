@@ -19,10 +19,12 @@ import com.fjordtek.bookstore.model.auth.UserRole;
 import com.fjordtek.bookstore.model.auth.UserRoleRepository;
 
 /**
-*
-*
-* @author Pekka Helenius
-*/
+ *
+ * This class implements Spring Framework security UserDetailsService interface,
+ * adding custom methods to define proper user authorities.
+ *
+ * @author Pekka Helenius
+ */
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {

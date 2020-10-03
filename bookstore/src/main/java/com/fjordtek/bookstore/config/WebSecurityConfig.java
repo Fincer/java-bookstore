@@ -16,11 +16,19 @@ import com.fjordtek.bookstore.service.session.BookStoreAccessDeniedHandler;
 import com.fjordtek.bookstore.service.session.UserDetailServiceImpl;
 
 /**
-*
-* @see https://docs.spring.io/spring-security/site/docs/current/reference/html5/#multiple-httpsecurity
-*
-* @author Pekka Helenius
-*/
+ *
+ * This class and its subclasses extend Spring Framework security
+ * WebSecurityConfigurerAdapter configuration for HTTP end points and sessions.
+ * <p>
+ * The class uses a custom UserDetailService interface class implementation
+ * to determine proper user authorities.
+ * <p>
+ * This class has multiple sub-configurations for different end points.
+ *
+ * @see https://docs.spring.io/spring-security/site/docs/current/reference/html5/#multiple-httpsecurity
+ *
+ * @author Pekka Helenius
+ */
 
 @Configuration
 @EnableWebSecurity

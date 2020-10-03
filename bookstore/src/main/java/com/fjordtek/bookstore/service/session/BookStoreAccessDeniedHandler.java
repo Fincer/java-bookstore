@@ -1,3 +1,5 @@
+//Pekka Helenius <fincer89@hotmail.com>, Fjordtek 2020
+
 package com.fjordtek.bookstore.service.session;
 
 import java.io.IOException;
@@ -13,6 +15,16 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import com.fjordtek.bookstore.service.HttpServerLogger;
+
+/**
+ *
+ * This class implements Spring Framework security AccessDeniedHandler
+ * interface with specific method overrides.
+ * <p>
+ * Main purpose is to properly handle erroneous client requests.
+ *
+ * @author Pekka Helenius
+ */
 
 @Component
 public class BookStoreAccessDeniedHandler implements AccessDeniedHandler {
