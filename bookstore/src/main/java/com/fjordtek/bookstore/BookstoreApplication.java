@@ -60,7 +60,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-			commonLogger.info("Add new roles to database");
+			commonLogger.info("Add new roles to the database");
 			Role adminAR    = new Role("ADMIN");
 			Role helpdeskAR = new Role("HELPDESK");
 			Role userAR     = new Role("USER");
@@ -143,12 +143,12 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 		return (args) -> {
 
-			commonLogger.info("Add new categories to database");
+			commonLogger.info("Add new categories to the database");
 			categoryRepository.save(new Category("Horror"));
 			categoryRepository.save(new Category("Fantasy"));
 			categoryRepository.save(new Category("Sci-Fi"));
 
-			commonLogger.info("Add new authors to database");
+			commonLogger.info("Add new authors to the database");
 			authorRepository.save(new Author("Angela","Carter"));
 			authorRepository.save(new Author("Andrzej","Sapkowski"));
 
@@ -160,7 +160,8 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					1979,
 					"1231231-12",
 					new BigDecimal("18.00"),
-					categoryRepository.findByName("Horror").get(0)
+					categoryRepository.findByName("Horror").get(0),
+					1
 					);
 
 			Book bookB = new Book(
@@ -171,10 +172,11 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					1999,
 					"3213221-3",
 					new BigDecimal("19.99"),
-					categoryRepository.findByName("Fantasy").get(0)
+					categoryRepository.findByName("Fantasy").get(0),
+					1
 					);
 
-			commonLogger.info("Add new sample books to database");
+			commonLogger.info("Add new sample books to the database");
 
 			bookRepository.save(bookA);
 			bookRepository.save(bookB);
