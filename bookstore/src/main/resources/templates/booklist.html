@@ -89,12 +89,12 @@ Idea of the following syntax used in this and other HTML document:
 
 				<th
 				th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'"
-				th:if="${#authorization.expression('hasAuthority(''MARKETING'') or hasAuthority(''HELPDESK'')')}"
+				th:if="${#authorization.expression('hasAnyAuthority(''MARKETING'', ''HELPDESK'')')}"
 				>
 				page.text.list.actions
 				</th>
 				
-				<th th:unless="${#authorization.expression('hasAuthority(''MARKETING'') or hasAuthority(''HELPDESK'')')}">
+				<th th:unless="${#authorization.expression('hasAnyAuthority(''MARKETING'', ''HELPDESK'')')}">
 				</th>
 
 				<th></th>
@@ -178,7 +178,7 @@ Idea of the following syntax used in this and other HTML document:
 				</td>
 
 				<td>
-					<a class="btn btn-warning" sec:authorize="hasAuthority('MARKETING') or hasAuthority('HELPDESK')"
+					<a class="btn btn-warning" sec:authorize="hasAnyAuthority('MARKETING', 'HELPDESK')"
 					th:href="@{__${editpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
 					page.text.list.edit

@@ -249,7 +249,7 @@ public class BookController {
 	//////////////////////////////
 	// UPDATE BOOK
 
-	@PreAuthorize("hasAuthority('MARKETING') or hasAuthority('HELPDESK')")
+	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
 	@RequestMapping(
 			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.GET
@@ -284,7 +284,7 @@ public class BookController {
 	 * Internally, we never use URL id as a reference for user modifications,
 	 * but just as an URL end point.
 	*/
-	@PreAuthorize("hasAuthority('MARKETING') or hasAuthority('HELPDESK')")
+	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
 	@RequestMapping(
 			value    = bookEditPageView + "/{hash_id}",
 			method   = RequestMethod.POST
