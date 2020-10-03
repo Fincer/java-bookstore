@@ -104,7 +104,7 @@ Idea of the following syntax used in this and other HTML document:
 			<tr 
 			th:each="book : ${books}"
 			th:object="${book}"
-			th:if="${book.publish == 1 or #authorization.expression('hasAuthority(''MARKETING'')')}"
+			th:if="${book.publish == true or #authorization.expression('hasAuthority(''MARKETING'')')}"
 			>
 
 				<!--/*
@@ -162,7 +162,7 @@ Idea of the following syntax used in this and other HTML document:
 
 				<td>
 					<p sec:authorize="hasAuthority('MARKETING')"
-					th:text="${book.publish == 1} ? (${#messages.msgOrNull('page.text.list.yes')} ?: 'page.text.list.yes') : (${#messages.msgOrNull('page.text.list.no')} ?: 'page.text.list.no')"
+					th:text="${book.publish == true} ? (${#messages.msgOrNull('page.text.list.yes')} ?: 'page.text.list.yes') : (${#messages.msgOrNull('page.text.list.no')} ?: 'page.text.list.no')"
 					>
 					page.text.list.[yes|no]
 					</p>

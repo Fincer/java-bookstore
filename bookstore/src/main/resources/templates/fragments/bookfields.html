@@ -216,7 +216,8 @@
 					</div>
 
 					<div class="checkbox-box">
-						<input class="form-control" type="checkbox" th:checked="*{publish}"/>
+						<input type="checkbox" th:field="*{publish}"/>
+						<!--/* th:text="${#messages.msgOrNull('book.fields.publish')} ?: 'book.fields.publish'" */-->
 					</div>
 				</div>
 

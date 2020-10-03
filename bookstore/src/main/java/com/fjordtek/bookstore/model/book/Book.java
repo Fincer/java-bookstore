@@ -24,7 +24,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -233,14 +232,15 @@ public class Book {
     		)
 	private Category category;
 
+	/*
+	 * TODO should this be a separate Entity with one-to-one relationship?
+	 */
 	@Column(
 			nullable = false,
 			columnDefinition = "BIT"
 			)
-	@Min(0)
-	@Max(1)
 	@JsonIgnore
-	private int publish;
+	private boolean publish;
 
 	////////////////////
 	// Attribute setters
@@ -284,7 +284,7 @@ public class Book {
 		this.category = category;
 	}
 
-	public void setPublish(int publish) {
+	public void setPublish(boolean publish) {
 		this.publish = publish;
 	}
 
@@ -326,7 +326,7 @@ public class Book {
 		return category;
 	}
 
-	public int getPublish() {
+	public boolean getPublish() {
 		return publish;
 	}
 
@@ -335,7 +335,7 @@ public class Book {
 
 	public Book() {}
 
-	public Book(String title, Author author, int year, String isbn, BigDecimal price, Category category, int publish) {
+	public Book(String title, Author author, int year, String isbn, BigDecimal price, Category category, boolean publish) {
 		// super();
 	    this.title    = title;
 	    this.author   = author;
