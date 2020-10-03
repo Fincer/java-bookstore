@@ -25,7 +25,7 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 	 * Hibernate takes care of entityManager transactions (begin, commit, rollback, close, etc.)
 	 */
 	@Override
-	public void updateWithoutPrice(Book book) {
+	public void updateWithoutPriceAndWithoutPublish(Book book) {
 		try {
 
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookRepositoryCustom {
 
-	void updateWithoutPrice(Book book);
+	void updateWithoutPriceAndWithoutPublish(Book book);
 
 	List<Book> findAllPublished();
 }

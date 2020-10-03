@@ -354,7 +354,7 @@ public class BookController {
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
 		if (book.getPrice() == null) {
-			bookRepository.updateWithoutPrice(book);
+			bookRepository.updateWithoutPriceAndWithoutPublish(book);
 		} else {
 			bookRepository.save(book);
 		}
