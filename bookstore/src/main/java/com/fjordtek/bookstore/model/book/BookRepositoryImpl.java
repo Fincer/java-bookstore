@@ -1,8 +1,11 @@
 package com.fjordtek.bookstore.model.book;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +55,27 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 			e.printStackTrace();
 		}
 
+	}
+
+	/*
+	 * Find all published books
+	 */
+	@Override
+	public List<Book> findAllPublished() {
+		try {
+
+			TypedQuery<Book> query = entityManager.createQuery(
+					"SELECT i FROM Book i WHERE publish = 1",
+					Book.class
+					);
+
+			return query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }
