@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<link type="text/css" rel="stylesheet" href="../../static/css/bookstore.css" />
+	<link type="text/css" rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+</head>
 <body>
+<div class="col-md-4 mb-3">
+
 	<th:block th:fragment="bookfields">
 
 			<div class="bookform-section">
@@ -198,7 +204,31 @@
 				book.desc.set.category
 				</small>
 			</div>
+			
+			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}">
+
+				<div class="checkbox-base">
+					<div>
+						<label for="BookPublish"
+						th:text="${#messages.msgOrNull('book.fields.publish')} ?: 'book.fields.publish'">
+						book.fields.publish
+						</label>
+					</div>
+
+					<div class="checkbox-box">
+						<input class="form-control" type="checkbox" th:checked="*{publish}"/>
+					</div>
+				</div>
+
+				<small class="form-text text-muted"
+				th:text="${#messages.msgOrNull('book.desc.set.publish')} ?: 'book.desc.set.publish'">
+				book.desc.set.publish
+				</small>
+
+			</div>
 
 	</th:block>
+	
+</div>
 </body>
 </html>

@@ -78,6 +78,16 @@ Idea of the following syntax used in this and other HTML document:
 				<th th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">book.price</th>
 
 				<th
+				th:text="${#messages.msgOrNull('page.text.list.published')} ?: 'page.text.list.published'"
+				th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}"
+				>
+				page.text.list.published
+				</th>
+				
+				<th th:unless="${#authorization.expression('hasAuthority(''MARKETING'')')}">
+				</th>
+
+				<th
 				th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'"
 				th:if="${#authorization.expression('hasAuthority(''MARKETING'') or hasAuthority(''HELPDESK'')')}"
 				>
@@ -91,7 +101,11 @@ Idea of the following syntax used in this and other HTML document:
 				<th th:text="${#messages.msgOrNull('book.json')} ?: 'book.json'">book.json</th>
 			</tr>
 
-			<tr th:each="book : ${books}">
+			<tr 
+			th:each="book : ${books}"
+			th:object="${book}"
+			th:if="${book.publish == 1 or #authorization.expression('hasAuthority(''MARKETING'')')}"
+			>
 
 				<!--/*
 				Check if book.author exists. If yes, then:
@@ -146,6 +160,14 @@ Idea of the following syntax used in this and other HTML document:
 				0.00 page.symbols.currency
 				</td>
 
+				<td>
+					<p sec:authorize="hasAuthority('MARKETING')"
+					th:text="${book.publish == 1} ? (${#messages.msgOrNull('page.text.list.yes')} ?: 'page.text.list.yes') : (${#messages.msgOrNull('page.text.list.no')} ?: 'page.text.list.no')"
+					>
+					page.text.list.[yes|no]
+					</p>
+				</td>
+
 				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" 
 					th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
@@ -190,6 +212,7 @@ Idea of the following syntax used in this and other HTML document:
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
 				<td>
 					<a class="btn btn-dark" th:href="@{__${restpage}__} + '/' + @{__${listpage}__}"
 					th:text="${#messages.msgOrNull('button.page.list.json')} ?: 'button.page.list.json'">
@@ -205,6 +228,7 @@ Idea of the following syntax used in this and other HTML document:
 					button.page.apiref
 					</a>
 				</td>
+				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
