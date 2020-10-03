@@ -24,3 +24,12 @@
 	text-align: right;
 	margin: 0.5em 2em;
 }
+
+.checkbox-base {
+	display: flex;
+	/*justify-content: space-between;*/
+}
+
+.checkbox-box {
+	margin-left: 7.5em;
+}
