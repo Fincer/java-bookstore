@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -294,8 +295,11 @@ public class BookController {
 			BindingResult bindingResultBook,
 			@ModelAttribute ("hash_id") String bookHashId,
 			HttpServletRequest requestData,
-			HttpServletResponse responseData
+			HttpServletResponse responseData,
+			Authentication authData
 			) {
+
+		String authorities = authData.getAuthorities().toString();
 
 		BookHash bookHash = bookHashRepository.findByHashId(bookHashId);
 
@@ -353,10 +357,10 @@ public class BookController {
 		//authorRepository.save(book.getAuthor());
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
-		if (book.getPrice() == null) {
-			bookRepository.updateWithoutPriceAndWithoutPublish(book);
-		} else {
+		if (authorities.contains("MARKETING") ) {
 			bookRepository.save(book);
+		} else {
+			bookRepository.updateWithoutPriceAndWithoutPublish(book);
 		}
 
 		httpServerLogger.log(requestData, responseData);
