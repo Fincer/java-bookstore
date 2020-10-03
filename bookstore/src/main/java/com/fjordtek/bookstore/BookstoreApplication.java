@@ -161,7 +161,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"1231231-12",
 					new BigDecimal("18.00"),
 					categoryRepository.findByName("Horror").get(0),
-					1
+					true
 					);
 
 			Book bookB = new Book(
@@ -173,7 +173,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					"3213221-3",
 					new BigDecimal("19.99"),
 					categoryRepository.findByName("Fantasy").get(0),
-					1
+					true
 					);
 
 			commonLogger.info("Add new sample books to the database");
