@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,12 +56,19 @@ public class BookRestController {
 			)
 	public @ResponseBody Iterable<Book> getAllBooksRestData(
 			HttpServletRequest requestData,
-			HttpServletResponse responseData
+			HttpServletResponse responseData,
+			Authentication authData
 			) {
+
+		String authorities = authData.getAuthorities().toString();
 
 		httpServerLogger.log(requestData, responseData);
 
-		return bookRepository.findAll();
+		if (authorities.contains("MARKETING")) {
+			return bookRepository.findAll();
+		} else {
+			return bookRepository.findAllPublished();
+		}
 	}
 
 	@RequestMapping(
