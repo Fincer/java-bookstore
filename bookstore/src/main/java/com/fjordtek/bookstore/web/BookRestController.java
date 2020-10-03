@@ -78,12 +78,29 @@ public class BookRestController {
 	public @ResponseBody Optional<Book> getBookRestData(
 			@PathVariable("hash_id") String bookHashId,
 			HttpServletRequest requestData,
-			HttpServletResponse responseData
+			HttpServletResponse responseData,
+			Authentication authData
 			) {
+
+		String authorities = authData.getAuthorities().toString();
 
 		try {
 
 			Long bookId = new Long(bookHashRepository.findByHashId(bookHashId).getBookId());
+
+			Book book = bookRepository.findById(bookId).get();
+
+			/*
+			 * Prevent other than MARKETING users to access hidden book
+			 * data even if they knew hash id.
+			 */
+			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+		    	responseData.setHeader("Location", "/" + bookListPageView);
+		    	responseData.setStatus(302);
+		    	httpServerLogger.log(requestData, responseData);
+		    	return null;
+			}
+
 			httpServerLogger.log(requestData, responseData);
 			return bookRepository.findById(bookId);
 

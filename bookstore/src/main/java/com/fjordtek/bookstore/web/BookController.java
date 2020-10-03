@@ -259,14 +259,26 @@ public class BookController {
 			@PathVariable("hash_id") String bookHashId,
 			Model dataModel,
 			HttpServletRequest requestData,
-			HttpServletResponse responseData
+			HttpServletResponse responseData,
+			Authentication authData
 			) {
+
+		String authorities = authData.getAuthorities().toString();
 
 		try {
 			Long bookIdFromHash = bookHashRepository.findByHashId(bookHashId).getBookId();
 			Book book = bookRepository.findById(bookIdFromHash).get();
 
 			dataModel.addAttribute("book", book);
+
+			/*
+			 * Prevent other than MARKETING users to access hidden book
+			 * data even if they knew hash id.
+			 */
+			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+				//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				return "redirect:/" + bookListPageView;
+			}
 
 			httpServerLogger.log(requestData, responseData);
 			return bookEditPageView;
@@ -348,6 +360,15 @@ public class BookController {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
 			return bookEditPageView;
+		}
+
+		/*
+		 * Prevent other than MARKETING users to access hidden book
+		 * data even if they knew hash id.
+		 */
+		if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+			//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "redirect:/" + bookListPageView;
 		}
 
 		/*
