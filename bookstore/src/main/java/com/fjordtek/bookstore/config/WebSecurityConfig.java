@@ -40,15 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailServiceImpl userDetailService;
 
-	@Autowired
-	private static BookStoreAccessDeniedHandler bookStoreAccessDeniedHandler;
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authManagerBuilder)
     		throws Exception {
     	authManagerBuilder.userDetailsService(userDetailService);
     }
-
 
     /*
      * Have different HTTP security policies for:
@@ -70,9 +66,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					authorize -> authorize
 					.anyRequest().hasAuthority("ADMIN")
 					)
-			.httpBasic()
+				.httpBasic()
 			.and()
-				.csrf().disable()
+				.csrf()
+					.disable()
 			;
 		}
 
@@ -89,9 +86,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 */
 		@Override
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
+
 			httpSecurity
 			.authorizeRequests()
 				.antMatchers(
+					"/h2-console/**",
 					"/",
 					"/booklist",
 					"/error",
@@ -105,24 +104,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticated()
 			.and()
 				.formLogin()
-			// TODO do not expose /login URI end point (prevent direct access)
-				.defaultSuccessUrl("/booklist")
-//				.loginPage("/booklist")
-//				.permitAll()
+					.defaultSuccessUrl("/booklist")
+					.permitAll()
 			.and()
 				.logout()
 					.logoutSuccessUrl("/booklist")
 					.permitAll()
 					.invalidateHttpSession(true)
 					.clearAuthentication(true)
+					.deleteCookies("JSESSIONID")
 			.and()
 				.exceptionHandling()
-				.accessDeniedHandler(bookStoreAccessDeniedHandler)
+					.accessDeniedHandler(new BookStoreAccessDeniedHandler())
 			.and()
 				.csrf()
+					.ignoringAntMatchers("/h2-console/**")
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+			.and()
+				.headers()
+					.frameOptions().sameOrigin()
 			;
 
 		}
