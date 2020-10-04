@@ -12,7 +12,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.stereotype.Component;
 
 import com.fjordtek.bookstore.service.HttpServerLogger;
 
@@ -26,7 +25,6 @@ import com.fjordtek.bookstore.service.HttpServerLogger;
  * @author Pekka Helenius
  */
 
-@Component
 public class BookStoreAccessDeniedHandler implements AccessDeniedHandler {
 
 	private HttpServerLogger httpServerLogger = new HttpServerLogger();
@@ -45,8 +43,7 @@ public class BookStoreAccessDeniedHandler implements AccessDeniedHandler {
 			httpServerLogger.log(requestData, responseData);
 		}
 
-    	responseData.setHeader("Location", "/");
-    	responseData.setStatus(302);
+		responseData.sendRedirect("/");
 	}
 
 }
