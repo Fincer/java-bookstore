@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fjordtek.bookstore.model.book.AuthorRepository;
 import com.fjordtek.bookstore.model.book.Book;
@@ -127,17 +128,52 @@ public class BookController {
 			value    = bookListPageView,
 			method   = { RequestMethod.GET, RequestMethod.POST }
 			)
-	public String defaultWebFormGet(
+	public String defaultWebFormGetPost(
 			HttpServletRequest requestData,
 			HttpServletResponse responseData,
 			Model dataModel
 			) {
 
 		dataModel.addAttribute("books", bookRepository.findAll());
-
 		httpServerLogger.log(requestData, responseData);
 
 		return bookListPageView;
+	}
+
+	//////////////////////////////
+	// AUTHENTICATION ERROR
+
+	/**
+	 * @see com.fjordtek.bookstore.service.session.BookStoreAuthenticationFailureHandler
+	 * @see com.fjordtek.bookstore.config.WebSecurityConfig
+	 */
+	@RequestMapping(
+			value   = "/autherror",
+			method   = RequestMethod.POST
+			)
+	public String authErrorWebFormPost(
+			HttpServletRequest requestData,
+			HttpServletResponse responseData,
+			RedirectAttributes redirectAttributes
+			) {
+
+		/*
+		 * We get these parameters from BookStoreAuthenticationFailureHandler
+		 */
+		String authfailure = (String) requestData.getAttribute("authfailure");
+		String username    = (String) requestData.getAttribute("username");
+
+		if (!username.trim().isEmpty()) {
+			authfailure = authfailure + " (" + username + ")";
+		}
+
+		/*
+		 * Add authfailure attribute to the model
+		 * This attribute is referred in file templates/fragments/loginout.html
+		 */
+		redirectAttributes.addFlashAttribute("authfailure", authfailure);
+
+		return "redirect:/" + bookListPageView;
 
 	}
 
