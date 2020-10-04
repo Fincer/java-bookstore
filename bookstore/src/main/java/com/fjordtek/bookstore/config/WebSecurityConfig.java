@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.fjordtek.bookstore.service.session.BookStoreAccessDeniedHandler;
+import com.fjordtek.bookstore.service.session.BookStoreAuthenticationFailureHandler;
+import com.fjordtek.bookstore.service.session.BookStoreAuthenticationSuccessHandler;
 import com.fjordtek.bookstore.service.session.UserDetailServiceImpl;
 
 /**
@@ -43,8 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authManagerBuilder)
     		throws Exception {
-    	authManagerBuilder.userDetailsService(userDetailService);
+    	authManagerBuilder.userDetailsService(userDetailService)
+//    	.passwordEncoder(bCryptPasswordEncoder)
+    	;
     }
+
+/*
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+*/
 
     /*
      * Have different HTTP security policies for:
@@ -104,6 +115,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticated()
 			.and()
 				.formLogin()
+					.usernameParameter("b_username")
+					.passwordParameter("b_password")
+					.successHandler(new BookStoreAuthenticationSuccessHandler())
+					.failureHandler(new BookStoreAuthenticationFailureHandler())
+					.loginProcessingUrl("/login")
+					.loginPage("/booklist")
 					.defaultSuccessUrl("/booklist")
 					.permitAll()
 			.and()
