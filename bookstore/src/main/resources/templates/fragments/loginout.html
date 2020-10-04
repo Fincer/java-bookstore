@@ -28,9 +28,11 @@
 			
 				<form th:action="@{__${loginpage}__}" method="post">
 				
-					<input type="text" id="username" name="username" placeholder="User name">
+					<input type="text" id="b_username" name="b_username" placeholder="User name">
 					
-					<input type="password" id="password" name="password" placeholder="Password">
+					<input type="password" id="b_password" name="b_password" placeholder="Password">
+
+					<p th:text="${authfailure}"></p>
 
 					<div class="mt-2">
 						<button type="submit" class="btn btn-info"
