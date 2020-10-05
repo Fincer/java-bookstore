@@ -4,6 +4,11 @@
 
 <th:block th:fragment="footerpart">
 
+<!--/*
+We allow broken URLs on development phase since the page is not deployed to the
+target domain environment. Once fully implemented, footer relative URLs should work.
+*/-->
+
 <footer style="margin-top: 350px;" th:include="https://fjordtek.com/ :: footer">
 </footer>
 
