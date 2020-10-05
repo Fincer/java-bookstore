@@ -11,7 +11,23 @@
 	</title>
 
 </head>
-<body>
+
+<!--/* TODO: use proper and scalable fragment HTML replacement for this element */-->
+<body th:with="
+indexpage     = ${@environment.getProperty('page.url.index')},
+listpage      = ${@environment.getProperty('page.url.list')},
+addpage       = ${@environment.getProperty('page.url.add')},
+deletepage    = ${@environment.getProperty('page.url.delete')},
+editpage      = ${@environment.getProperty('page.url.edit')},
+loginpage     = ${@environment.getProperty('page.url.login')},
+logoutpage    = ${@environment.getProperty('page.url.logout')},
+apirefpage    = ${@environment.getProperty('page.url.apiref')},
+jsonpage      = ${@environment.getProperty('page.url.json')},
+jsonbookpage  = ${@environment.getProperty('page.url.json.book')},
+jsonlistpage  = ${@environment.getProperty('page.url.json.list')},
+h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
+">
+
 	<div style="display:flex;">
 		<div class="col-md-4 mb-3">
 
@@ -32,7 +48,7 @@
 
 			<br>
 
-			<a class="btn btn-success" th:href="@{/__${listpage}__}"
+			<a class="btn btn-success" th:href="@{__${listpage}__}"
 			th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
 			button.page.list.return
 			</a>
@@ -40,5 +56,6 @@
 		</div>
 		<th:block th:replace="fragments/loginout :: loginout"/>
 	</div>
+	<th:block th:insert="fragments/footerpart :: footerpart"/>
 </body>
 </html>

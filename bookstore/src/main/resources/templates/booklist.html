@@ -47,7 +47,23 @@ Idea of the following syntax used in this and other HTML document:
 	</title>
 
 </head>
-<body>
+
+<!--/* TODO: use proper and scalable fragment HTML replacement for this element */-->
+<body th:with="
+indexpage     = ${@environment.getProperty('page.url.index')},
+listpage      = ${@environment.getProperty('page.url.list')},
+addpage       = ${@environment.getProperty('page.url.add')},
+deletepage    = ${@environment.getProperty('page.url.delete')},
+editpage      = ${@environment.getProperty('page.url.edit')},
+loginpage     = ${@environment.getProperty('page.url.login')},
+logoutpage    = ${@environment.getProperty('page.url.logout')},
+apirefpage    = ${@environment.getProperty('page.url.apiref')},
+jsonpage      = ${@environment.getProperty('page.url.json')},
+jsonbookpage  = ${@environment.getProperty('page.url.json.book')},
+jsonlistpage  = ${@environment.getProperty('page.url.json.list')},
+h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
+">
+
 	<div>
 
 		<div id="bookstore-topform-base">
@@ -190,7 +206,7 @@ Idea of the following syntax used in this and other HTML document:
 
 				<td>
 					<a class="btn btn-info"
-					th:href="@{__${restpage}__/book/{hash_id}(hash_id=${book.bookHash.hashId})}"
+					th:href="@{__${jsonpage}__} + @{__${jsonbookpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.json')} ?: 'page.text.list.json'">
 					page.text.list.json
 					</a>
@@ -214,7 +230,7 @@ Idea of the following syntax used in this and other HTML document:
 				<td></td>
 				<td></td>
 				<td>
-					<a class="btn btn-dark" th:href="@{__${restpage}__} + '/' + @{__${listpage}__}"
+					<a class="btn btn-dark" th:href="@{__${jsonpage}__} + @{__${jsonlistpage}__}"
 					th:text="${#messages.msgOrNull('button.page.list.json')} ?: 'button.page.list.json'">
 					button.page.list.json
 					</a>
@@ -247,7 +263,7 @@ Idea of the following syntax used in this and other HTML document:
 			</p>
 			<img src="http://dreamicus.com/data/abyss/abyss-08.jpg" style="max-width: 600px; height: auto;" alt="abyss">
 		</div>
-		
 	</div>
+	<th:block th:insert="fragments/footerpart :: footerpart"/>
 </body>
 </html>
