@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import com.fjordtek.bookstore.model.auth.Role;
 import com.fjordtek.bookstore.model.auth.RoleRepository;
@@ -47,6 +48,14 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
+	}
+
+	@Bean
+	public UrlTemplateResolver urlTemplateResolver() {
+		UrlTemplateResolver urlTemplateResolver = new UrlTemplateResolver();
+		urlTemplateResolver.setCacheable(true);
+		urlTemplateResolver.getCharacterEncoding();
+	    return urlTemplateResolver;
 	}
 
 	@Bean
