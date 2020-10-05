@@ -4,14 +4,13 @@ package com.fjordtek.bookstore.web;
 
 import java.math.BigDecimal;
 import java.time.Year;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -58,6 +57,9 @@ public class BookController {
 	}
 
 	@Autowired
+	private Environment env;
+
+	@Autowired
 	private CategoryRepository   categoryRepository;
 
 	@Autowired
@@ -71,18 +73,6 @@ public class BookController {
 
 	private BookAuthorHelper     bookAuthorHelper;
 
-	private static final String RestJSONPageView      = "json";
-	private static final String RestAPIRefPageView    = "apiref";
-
-	private static final String landingPageView       = "index";
-	private static final String bookListPageView      = "booklist";
-	private static final String bookAddPageView       = "bookadd";
-	private static final String bookDeletePageView    = "bookdelete";
-	private static final String bookEditPageView      = "bookedit";
-
-	private static final String bookLoginPageView     = "/login";
-	private static final String bookLogoutPageView    = "/logout";
-
 	/*
 	 * This method MUST exist with Autowired annotation. Handles autowiring of external classes.
 	 * If this method is not defined, they are not found by this controller class (are null).
@@ -93,31 +83,21 @@ public class BookController {
 			) {
 		this.bookAuthorHelper = bookAuthorHelper;
 	}
-
-
+/*
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
 		private static final long serialVersionUID = 1L;
 	{
-		put("restpage",   RestJSONPageView);
-		put("apirefpage", RestAPIRefPageView);
-
-		put("indexpage",  landingPageView);
-		put("listpage",   bookListPageView);
-		put("addpage",    bookAddPageView);
-		put("deletepage", bookDeletePageView);
-		put("editpage",   bookEditPageView);
-
-		put("loginpage",  bookLoginPageView);
-		put("logoutpage", bookLogoutPageView);
+		put("foo", Stringbar);
+		...
 	}};
-
+*/
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 
 	@ModelAttribute
 	public void globalAttributes(Model dataModel) {
 
 		// Security implications of adding these all controller-wide?
-		dataModel.addAllAttributes(globalModelMap);
+//		dataModel.addAllAttributes(globalModelMap);
 		dataModel.addAttribute("categories", categoryRepository.findAll());
 		dataModel.addAttribute("authors", authorRepository.findAll());
 	}
@@ -125,7 +105,7 @@ public class BookController {
 	//////////////////////////////
 	// LIST PAGE
 	@RequestMapping(
-			value    = bookListPageView,
+			value    = "${page.url.list}",
 			method   = { RequestMethod.GET, RequestMethod.POST }
 			)
 	public String defaultWebFormGetPost(
@@ -137,7 +117,7 @@ public class BookController {
 		dataModel.addAttribute("books", bookRepository.findAll());
 		httpServerLogger.log(requestData, responseData);
 
-		return bookListPageView;
+		return env.getProperty("page.url.list");
 	}
 
 	//////////////////////////////
@@ -148,7 +128,7 @@ public class BookController {
 	 * @see com.fjordtek.bookstore.config.WebSecurityConfig
 	 */
 	@RequestMapping(
-			value   = "/autherror",
+			value   = "${page.url.autherror}",
 			method   = RequestMethod.POST
 			)
 	public String authErrorWebFormPost(
@@ -173,7 +153,7 @@ public class BookController {
 		 */
 		redirectAttributes.addFlashAttribute("authfailure", authfailure);
 
-		return "redirect:/" + bookListPageView;
+		return "redirect:" + env.getProperty("page.url.list");
 
 	}
 
@@ -182,7 +162,7 @@ public class BookController {
 
 	@PreAuthorize("hasAuthority('MARKETING')")
 	@RequestMapping(
-			value    = bookAddPageView,
+			value    = "${page.url.add}",
 			method   = { RequestMethod.GET, RequestMethod.PUT }
 			)
 	public String webFormAddBook(
@@ -197,12 +177,12 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		return bookAddPageView;
+		return env.getProperty("page.url.add");
 	}
 
 	@PreAuthorize("hasAuthority('MARKETING')")
 	@RequestMapping(
-			value    = bookAddPageView,
+			value    = "${page.url.add}",
 			method   = RequestMethod.POST
 			)
 	public String webFormSaveNewBook(
@@ -220,7 +200,7 @@ public class BookController {
 		if (bindingResult.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
-			return bookAddPageView;
+			return env.getProperty("page.url.add");
 		}
 
 		httpServerLogger.log(requestData, responseData);
@@ -246,7 +226,7 @@ public class BookController {
 		bookRepository.save(book);
 		bookHashRepository.save(bookHash);
 
-		return "redirect:/" + bookListPageView;
+		return "redirect:" + env.getProperty("page.url.list");
 	}
 
 	//////////////////////////////
@@ -255,7 +235,7 @@ public class BookController {
 	@Transactional
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(
-			value    = bookDeletePageView + "/{hash_id}",
+			value    = "${page.url.delete}" + "/{hash_id}",
 			method   = RequestMethod.GET
 			)
 	public String webFormDeleteBook(
@@ -280,7 +260,7 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		return "redirect:/" + bookListPageView;
+		return "redirect:" + env.getProperty("page.url.list");
 	}
 
 	//////////////////////////////
@@ -288,7 +268,7 @@ public class BookController {
 
 	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
 	@RequestMapping(
-			value    = bookEditPageView + "/{hash_id}",
+			value    = "${page.url.edit}" + "/{hash_id}",
 			method   = RequestMethod.GET
 			)
 	public String webFormEditBook(
@@ -313,16 +293,16 @@ public class BookController {
 			 */
 			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
 				//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				return "redirect:/" + bookListPageView;
+				return "redirect:" + env.getProperty("page.url.list");
 			}
 
 			httpServerLogger.log(requestData, responseData);
-			return bookEditPageView;
+			return env.getProperty("page.url.edit");
 
 		} catch (NullPointerException e) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
-			return "redirect:/" + bookListPageView;
+			return "redirect:" + env.getProperty("page.url.list");
 		}
 
 	}
@@ -335,7 +315,7 @@ public class BookController {
 	*/
 	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
 	@RequestMapping(
-			value    = bookEditPageView + "/{hash_id}",
+			value    = "${page.url.edit}" + "/{hash_id}",
 			method   = RequestMethod.POST
 			)
 	public String webFormUpdateBook(
@@ -354,7 +334,7 @@ public class BookController {
 		if (bookHash == null) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
-			return "redirect:/" + bookListPageView;
+			return "redirect:" + env.getProperty("page.url.list");
 		}
 
 		// One-to-one unidirectional relationship handling
@@ -395,7 +375,7 @@ public class BookController {
 		if (bindingResultBook.hasErrors()) {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			httpServerLogger.log(requestData, responseData);
-			return bookEditPageView;
+			return env.getProperty("page.url.edit");
 		}
 
 		/*
@@ -404,7 +384,7 @@ public class BookController {
 		 */
 		if (!book.getPublish() && !authorities.contains("MARKETING") ) {
 			//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return "redirect:/" + bookListPageView;
+			return "redirect:" + env.getProperty("page.url.list");
 		}
 
 		/*
@@ -421,13 +401,13 @@ public class BookController {
 		}
 
 		httpServerLogger.log(requestData, responseData);
-		return "redirect:/" + bookListPageView;
+		return "redirect:" + env.getProperty("page.url.list");
 	}
 
 	//////////////////////////////
 	// API REFERENCE HELP PAGE
 	@RequestMapping(
-			value    = RestAPIRefPageView,
+			value    = "${page.url.apiref}",
 			method   = { RequestMethod.GET }
 			)
 	public String webFormRestApiRef(
@@ -435,7 +415,7 @@ public class BookController {
 			HttpServletResponse responseData
 			) {
 		httpServerLogger.log(requestData, responseData);
-		return RestAPIRefPageView;
+		return env.getProperty("page.url.apiref");
 	}
 
 	//////////////////////////////
@@ -454,7 +434,7 @@ public class BookController {
 			responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 		httpServerLogger.log(requestData, responseData);
-		return "redirect:/" + bookListPageView;
+		return "redirect:" + env.getProperty("page.url.list");
 	}
 
 	@RequestMapping(

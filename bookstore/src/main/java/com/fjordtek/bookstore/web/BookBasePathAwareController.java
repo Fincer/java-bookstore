@@ -101,7 +101,7 @@ public class BookBasePathAwareController {
 
 	//////////////////////////////
 	@RequestMapping(
-			value    = "booklist",
+			value    = "${page.url.restapi.list}",
 			method   = RequestMethod.POST,
 			consumes = "application/json",
 			produces = "application/hal+json"
@@ -149,7 +149,7 @@ public class BookBasePathAwareController {
 	}
 
 	@RequestMapping(
-			value    = "booklist" + "/{id}",
+			value    = "${page.url.restapi.list}" + "/{id}",
 			method   = RequestMethod.PUT,
 			consumes = "application/json",
 			produces = "application/hal+json"

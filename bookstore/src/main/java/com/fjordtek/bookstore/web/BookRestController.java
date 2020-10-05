@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,11 @@ import com.fjordtek.bookstore.service.HttpServerLogger;
 */
 
 @RestController
-@RequestMapping("json")
+@RequestMapping("${page.url.json}")
 public class BookRestController {
+
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private BookRepository       bookRepository;
@@ -45,13 +49,10 @@ public class BookRestController {
 	private CategoryRepository   categoryRepository;
 */
 
-	// TODO Use single variable reference for all controllers
-	private static final String bookListPageView      = "booklist";
-
 	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 
 	@RequestMapping(
-			value  = "booklist",
+			value  = "${page.url.json.list}",
 			method = RequestMethod.GET
 			)
 	public @ResponseBody Iterable<Book> getAllBooksRestData(
@@ -72,7 +73,7 @@ public class BookRestController {
 	}
 
 	@RequestMapping(
-			value  = "book" + "/{hash_id}",
+			value  = "${page.url.json.book}" + "/{hash_id}",
 			method = RequestMethod.GET
 			)
 	public @ResponseBody Optional<Book> getBookRestData(
@@ -95,7 +96,7 @@ public class BookRestController {
 			 * data even if they knew hash id.
 			 */
 			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
-		    	responseData.setHeader("Location", "/" + bookListPageView);
+		    	responseData.setHeader("Location", env.getProperty("page.url.index"));
 		    	responseData.setStatus(302);
 		    	httpServerLogger.log(requestData, responseData);
 		    	return null;
@@ -125,7 +126,7 @@ public class BookRestController {
     		HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
-    	responseData.setHeader("Location", "/" + bookListPageView);
+    	responseData.setHeader("Location", env.getProperty("page.url.index"));
     	responseData.setStatus(302);
     	httpServerLogger.log(requestData, responseData);
     }

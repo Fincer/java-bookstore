@@ -5,6 +5,7 @@ package com.fjordtek.bookstore.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +41,9 @@ import com.fjordtek.bookstore.service.session.UserDetailServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private Environment env;
+
+	@Autowired
 	private UserDetailServiceImpl userDetailService;
 
     @Autowired
@@ -67,12 +71,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Configuration
 	@Order(1)
-	public static class ApiWebSecurityConfig extends WebSecurityConfigurerAdapter {
+	public class ApiWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		@Override
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity
-			.antMatcher("/api/**")
+			.antMatcher(env.getProperty("spring.data.rest.base-path") + "/**")
 			.authorizeRequests(
 					authorize -> authorize
 					.anyRequest().hasAuthority("ADMIN")
@@ -88,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Configuration
 	@Order(2)
-	public static class WebFormWebSecurityConfig extends WebSecurityConfigurerAdapter {
+	public class WebFormWebSecurityConfig extends WebSecurityConfigurerAdapter {
 /*
 		@Override
 		public void configure(WebSecurity webSecurity) throws Exception {
@@ -101,31 +105,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			httpSecurity
 			.authorizeRequests()
 				.antMatchers(
-					"/h2-console/**",
-					"/",
-					"/booklist",
-					"/error",
-					"/favicon.ico",
-					"/css/**",
-					"/js/**",
-					"/images/**"
+					env.getProperty("spring.h2.console.path")    + "/**",
+					env.getProperty("page.url.index"),
+					env.getProperty("page.url.list"),
+					env.getProperty("page.url.error"),
+					env.getProperty("page.url.resources.css")    + "/**",
+					env.getProperty("page.url.resources.js")     + "/**",
+					env.getProperty("page.url.resources.images") + "/**"
+//					"/favicon.ico",
 					).permitAll()
-				.antMatchers("/apiref/**").hasAuthority("ADMIN")
+				.antMatchers(env.getProperty("page.url.apiref") + "/**")
+					.hasAuthority("ADMIN")
 				.anyRequest()
 				.authenticated()
 			.and()
 				.formLogin()
-					.usernameParameter("b_username")
-					.passwordParameter("b_password")
+					.usernameParameter(env.getProperty("auth.field.username"))
+					.passwordParameter(env.getProperty("auth.field.password"))
 					.successHandler(new BookStoreAuthenticationSuccessHandler())
 					.failureHandler(new BookStoreAuthenticationFailureHandler())
-					.loginProcessingUrl("/login")
-					.loginPage("/booklist")
-					.defaultSuccessUrl("/booklist")
+					.loginProcessingUrl(env.getProperty("page.url.login"))
+					.loginPage(env.getProperty("page.url.list"))
+					.defaultSuccessUrl(env.getProperty("page.url.list"))
 					.permitAll()
 			.and()
 				.logout()
-					.logoutSuccessUrl("/booklist")
+					.logoutSuccessUrl(env.getProperty("page.url.list"))
 					.permitAll()
 					.invalidateHttpSession(true)
 					.clearAuthentication(true)
@@ -135,7 +140,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.accessDeniedHandler(new BookStoreAccessDeniedHandler())
 			.and()
 				.csrf()
-					.ignoringAntMatchers("/h2-console/**")
+					.ignoringAntMatchers(env.getProperty("spring.h2.console.path") + "/**")
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
