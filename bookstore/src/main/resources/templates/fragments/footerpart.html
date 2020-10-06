@@ -10,8 +10,12 @@ target domain environment. Once fully implemented, footer relative URLs should w
 */-->
 
 <div style="margin-top: 400px;">
+
 	<p>Dev note: This footer is fetched from an external URL and presented only for demonstration purposes.</p>
-	<footer th:replace="https://fjordtek.com/ :: footer"></footer>
+
+	<footer th:replace="${@ExternalUrl.getUrl('https://fjordtek.com/')} ? ~{https://fjordtek.com/ :: footer} : _"></footer>
+	<!--/* [//div[@id='footer']]"  */-->
+
 </div>
 
 <link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/style.css">
