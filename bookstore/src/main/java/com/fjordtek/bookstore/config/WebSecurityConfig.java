@@ -3,6 +3,7 @@
 package com.fjordtek.bookstore.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -42,6 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment env;
+
+	@Autowired
+	private MessageSource msg;
 
 	@Autowired
 	private UserDetailServiceImpl userDetailService;
@@ -123,7 +127,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.usernameParameter(env.getProperty("auth.field.username"))
 					.passwordParameter(env.getProperty("auth.field.password"))
 					.successHandler(new BookStoreAuthenticationSuccessHandler())
-					.failureHandler(new BookStoreAuthenticationFailureHandler())
+					.failureHandler(new BookStoreAuthenticationFailureHandler(env, msg))
 					.loginProcessingUrl(env.getProperty("page.url.login"))
 					.loginPage(env.getProperty("page.url.list"))
 					.defaultSuccessUrl(env.getProperty("page.url.list"))

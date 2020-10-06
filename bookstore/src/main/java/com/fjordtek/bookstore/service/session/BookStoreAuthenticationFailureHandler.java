@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -29,7 +31,11 @@ import com.fjordtek.bookstore.service.HttpServerLogger;
 
 public class BookStoreAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
+	private Environment env;
+	private MessageSource msg;
+
 	private HttpServerLogger httpServerLogger = new HttpServerLogger();
+
 
 	@Override
 	public void onAuthenticationFailure(
@@ -42,14 +48,36 @@ public class BookStoreAuthenticationFailureHandler implements AuthenticationFail
 		httpServerLogger.log(requestData, responseData);
 
 		requestData
-			.setAttribute("username", requestData.getParameter("b_username"));
+			.setAttribute("username", requestData.getParameter(
+					env.getProperty("auth.field.username")
+					));
 
 		requestData
-			.setAttribute("authfailure", "Authentication failure!");
+			.setAttribute("authfailure", msg.getMessage(
+					"page.auth.failure",
+					null,
+					"page.auth.failure [placeholder]",
+					requestData.getLocale()
+					));
 
-		requestData.getRequestDispatcher("/autherror")
+		requestData.getRequestDispatcher(env.getProperty("page.url.autherror"))
 			.forward(requestData, responseData);
 
+	}
+
+	////////////////////
+	// Class constructors
+
+	public BookStoreAuthenticationFailureHandler() {
+	}
+
+	/*
+	 * Autowired annotation does not work.
+	 * Therefore, pass Environment & MessageSource as parameters to this class constructor.
+	 */
+	public BookStoreAuthenticationFailureHandler(Environment env, MessageSource msg) {
+		this.env = env;
+		this.msg = msg;
 	}
 
 }
