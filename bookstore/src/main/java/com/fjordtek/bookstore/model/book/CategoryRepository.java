@@ -16,6 +16,8 @@ import org.springframework.data.rest.core.annotation.RestResource;
  * @author Pekka Helenius
  */
 
+//TODO un-hardcode path & itemResourceHel
+//
 @RepositoryRestResource(
 		path            = "categories",
 		itemResourceRel = "categories",

@@ -12,6 +12,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * @author Pekka Helenius
  */
 
+//TODO un-hardcode path & itemResourceHel
+//
 @RepositoryRestResource(
 		path            = "users",
 		itemResourceRel = "users",
