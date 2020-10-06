@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -42,6 +43,14 @@ public class AdditionalPropertiesConfig implements EnvironmentPostProcessor {
 		return resources;
 	}
 
+	private void showSpringConfiguration(MutablePropertySources properties) {
+
+		System.out.print("** Used Spring property sources **\n\n");
+		for (PropertySource<?> source : properties) {
+			System.out.println(source.toString());
+		}
+	}
+
 	@Override
 	public void postProcessEnvironment(
 			ConfigurableEnvironment environment,
@@ -63,6 +72,7 @@ public class AdditionalPropertiesConfig implements EnvironmentPostProcessor {
 			}
 		}
 
+		showSpringConfiguration(propertySources);
 	}
 
 }
