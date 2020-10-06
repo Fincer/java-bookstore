@@ -59,8 +59,12 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	public UrlTemplateResolver urlTemplateResolver() {
 		UrlTemplateResolver urlTemplateResolver = new UrlTemplateResolver();
 		urlTemplateResolver.setCacheable(true);
+
+		// TTL value in milliseconds
+		urlTemplateResolver.setCacheTTLMs(120000L);
+
 		urlTemplateResolver.getCharacterEncoding();
-	    return urlTemplateResolver;
+		return urlTemplateResolver;
 	}
 
 	@Bean
