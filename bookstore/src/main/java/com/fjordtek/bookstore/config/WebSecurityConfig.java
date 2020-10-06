@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatcher(env.getProperty("spring.data.rest.base-path") + "/**")
 			.authorizeRequests(
 					authorize -> authorize
-					.anyRequest().hasAuthority("ADMIN")
+					.anyRequest().hasAuthority(env.getProperty("auth.authority.admin"))
 					)
 				.httpBasic()
 			.and()
@@ -106,6 +106,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 
+			/*
+			 *  Explicitly Permit access to specific end points.
+			 *  Basic norm is: if the end point access is not permitted here,
+			 *  public access to it is denied by default.
+			 */
 			httpSecurity
 			.authorizeRequests()
 				.antMatchers(
@@ -119,7 +124,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //					"/favicon.ico",
 					).permitAll()
 				.antMatchers(env.getProperty("page.url.apiref") + "/**")
-					.hasAuthority("ADMIN")
+					.hasAuthority(env.getProperty("auth.authority.admin"))
 				.anyRequest()
 				.authenticated()
 			.and()
