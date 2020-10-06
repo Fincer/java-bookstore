@@ -45,7 +45,10 @@ public class BookStorePages {
 	REST,
 	RESTAUTHORS,
 	RESTBOOKS,
-	RESTCATEGORIES
+	RESTCATEGORIES,
+	RESTUSERS,
+	RESTROLES,
+	RESTUSERROLES
 	;
 
 	@PostConstruct
@@ -74,6 +77,10 @@ public class BookStorePages {
 		this.RESTAUTHORS    = env.getProperty("page.url.restapi.authors");
 		this.RESTBOOKS      = env.getProperty("page.url.restapi.books");
 		this.RESTCATEGORIES = env.getProperty("page.url.restapi.categories");
+		this.RESTUSERS      = env.getProperty("page.url.restapi.users");
+		this.RESTROLES      = env.getProperty("page.url.restapi.roles");
+		this.RESTUSERROLES  = env.getProperty("page.url.restapi.userroles");
+
 	}
 
 }
