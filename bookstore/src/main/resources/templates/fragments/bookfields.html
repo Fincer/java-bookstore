@@ -172,7 +172,7 @@
 				</div>
 			</div>
 
-			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}">
+			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(@BookAuth.SALES)')}">
 				<label for="BookPrice"
 				th:text="${#messages.msgOrNull('book.price')} ?: 'book.price'">
 				book.price
@@ -232,7 +232,7 @@
 				</small>
 			</div>
 			
-			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}">
+			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(@BookAuth.SALES)')}">
 
 				<div class="checkbox-base">
 					<div>

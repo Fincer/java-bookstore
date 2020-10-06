@@ -95,22 +95,22 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 				<th
 				th:text="${#messages.msgOrNull('page.text.list.published')} ?: 'page.text.list.published'"
-				th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}"
+				th:if="${#authorization.expression('hasAuthority(@BookAuth.SALES)')}"
 				>
 				page.text.list.published
 				</th>
 				
-				<th th:unless="${#authorization.expression('hasAuthority(''MARKETING'')')}">
+				<th th:unless="${#authorization.expression('hasAuthority(@BookAuth.SALES)')}">
 				</th>
 
 				<th
 				th:text="${#messages.msgOrNull('page.text.list.actions')} ?: 'page.text.list.actions'"
-				th:if="${#authorization.expression('hasAnyAuthority(''MARKETING'', ''HELPDESK'')')}"
+				th:if="${#authorization.expression('hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)')}"
 				>
 				page.text.list.actions
 				</th>
 				
-				<th th:unless="${#authorization.expression('hasAnyAuthority(''MARKETING'', ''HELPDESK'')')}">
+				<th th:unless="${#authorization.expression('hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)')}">
 				</th>
 
 				<th></th>
@@ -120,7 +120,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 			<tr 
 			th:each="book : ${books}"
 			th:object="${book}"
-			th:if="${book.publish == true or #authorization.expression('hasAuthority(''MARKETING'')')}"
+			th:if="${book.publish == true or #authorization.expression('hasAuthority(@BookAuth.SALES)')}"
 			>
 
 				<!--/*
@@ -194,14 +194,14 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 				</td>
 
 				<td>
-					<a class="btn btn-warning" sec:authorize="hasAnyAuthority('MARKETING', 'HELPDESK')"
+					<a class="btn btn-warning" sec:authorize="hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)"
 					th:href="@{__${editpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
 					page.text.list.edit
 					</a>
 				</td>
 
-				<td th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+				<td th:unless="${#authorization.expression('hasAuthority(@BookAuth.ADMIN)')}">
 				</td>
 
 				<td>
@@ -216,7 +216,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 			<tr>
 				<td>
-					<a class="btn btn-success" th:href="@{__${addpage}__}" sec:authorize="hasAuthority('MARKETING')"
+					<a class="btn btn-success" th:href="@{__${addpage}__}" sec:authorize="hasAuthority(@BookAuth.SALES)"
 					th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
 					button.book.add
 					</a>
@@ -239,7 +239,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 			<tr style="background-color: #FFF !important;">
 				<td>
-					<a class="btn btn-info" th:href="@{__${apirefpage}__}" sec:authorize="hasAuthority('ADMIN')"
+					<a class="btn btn-info" th:href="@{__${apirefpage}__}" sec:authorize="hasAuthority(@BookAuth.ADMIN)"
 					th:text="${#messages.msgOrNull('button.page.apiref')} ?: 'button.page.apiref'">
 					button.page.apiref
 					</a>
