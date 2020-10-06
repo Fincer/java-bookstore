@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+</head>
 
-<th:block th:fragment="footerpart">
+<body>
 
-<!--/*
-We allow broken URLs on development phase since the page is not deployed to the
-target domain environment. Once fully implemented, footer relative URLs should work.
-*/-->
+	<th:block th:fragment="footerpart">
+	<!--/*
+	We allow broken URLs on development phase since the page is not deployed to the
+	target domain environment. Once fully implemented, footer relative URLs should work.
+	*/-->
 
-<div style="margin-top: 400px;">
+		<div style="margin-top: 400px;">
 
-	<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}">
-		<p>Dev note: This footer is fetched from an external URL and presented only for demonstration purposes.</p>
-		<p>Be aware: External URLs presented in the footer may be broken/relative to the original domain.</p>
-	</div>
+			<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}">
+				<p>Dev note: This footer is fetched from an external URL and presented only for demonstration purposes.</p>
+				<p>Be aware: External URLs presented in the footer may be broken/relative to the original domain.</p>
+			</div>
 
-	<footer th:replace="${@ExternalUrl.getUrl('https://fjordtek.com/')} ? ~{https://fjordtek.com/ :: footer} : _"></footer>
-	<!--/* [//div[@id='footer']]"  */-->
+			<footer th:replace="${@ExternalUrl.getUrl('https://fjordtek.com/')} ? ~{https://fjordtek.com/ :: footer} : _"></footer>
+			<!--/* [//div[@id='footer']]"  */-->
 
-</div>
+		</div>
 
-<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/style.css">
-<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/style2.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/footer-and-social.css?v2.9.3">
+		<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/style.css">
+		<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/style2.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+		<link rel="stylesheet" type="text/css" href="https://fjordtek.com/css/footer-and-social.css?v2.9.3">
 
-</th:block>
-
+	</th:block>
+</body>
 </html>
