@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,6 +69,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
+	@Profile("dev")
 	public CommandLineRunner userDatabaseRunner(
 			UserRepository userRepository,
 			RoleRepository roleRepository,
@@ -123,7 +125,6 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			// Add example roles for admin user
 			userRoleRepository.save(new UserRole(adminAU, adminAR));
 			userRoleRepository.save(new UserRole(adminAU, salesAR));
-//			userRoleRepository.save(new UserRole(adminAU, userAR));
 
 			// Add an example role for helpdesk user
 			userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
@@ -152,6 +153,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
+	@Profile("dev")
 	public CommandLineRunner bookDatabaseRunner(
 			BookRepository bookRepository,
 			BookHashRepository bookHashRepository,
