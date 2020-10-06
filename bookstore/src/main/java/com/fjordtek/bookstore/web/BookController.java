@@ -422,7 +422,7 @@ public class BookController {
 	// REDIRECTS
 
 	@RequestMapping(
-			value    = { "*", "error" }
+			value    = { "*", "${page.url.error}" }
 			)
 	@ResponseStatus(HttpStatus.FOUND)
 	public String redirectToDefaultWebForm(

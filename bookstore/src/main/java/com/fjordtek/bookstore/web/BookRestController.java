@@ -65,7 +65,7 @@ public class BookRestController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		if (authorities.contains("MARKETING")) {
+		if (authorities.contains(env.getProperty("auth.authority.sales"))) {
 			return bookRepository.findAll();
 		} else {
 			return bookRepository.findAllPublished();
@@ -95,7 +95,7 @@ public class BookRestController {
 			 * Prevent other than MARKETING users to access hidden book
 			 * data even if they knew hash id.
 			 */
-			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+			if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 		    	responseData.setHeader("Location", env.getProperty("page.url.index"));
 		    	responseData.setStatus(302);
 		    	httpServerLogger.log(requestData, responseData);
