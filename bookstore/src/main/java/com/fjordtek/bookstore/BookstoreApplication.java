@@ -62,7 +62,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 		urlTemplateResolver.setCacheable(true);
 
 		// TTL value in milliseconds
-		urlTemplateResolver.setCacheTTLMs(120000L);
+//		urlTemplateResolver.setCacheTTLMs(120000L);
 
 		urlTemplateResolver.getCharacterEncoding();
 		return urlTemplateResolver;
