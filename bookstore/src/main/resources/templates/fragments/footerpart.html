@@ -11,9 +11,10 @@ target domain environment. Once fully implemented, footer relative URLs should w
 
 <div style="margin-top: 400px;">
 
-	<p th:if="${@environment.getActiveProfiles()[0] == 'dev'}">
-	Dev note: This footer is fetched from an external URL and presented only for demonstration purposes.
-	</p>
+	<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}">
+		<p>Dev note: This footer is fetched from an external URL and presented only for demonstration purposes.</p>
+		<p>Be aware: External URLs presented in the footer may be broken/relative to the original domain.</p>
+	</div>
 
 	<footer th:replace="${@ExternalUrl.getUrl('https://fjordtek.com/')} ? ~{https://fjordtek.com/ :: footer} : _"></footer>
 	<!--/* [//div[@id='footer']]"  */-->

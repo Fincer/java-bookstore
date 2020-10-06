@@ -99,7 +99,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 			** END: login elements **
 			*/-->
 			<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}" style="margin: 10px 0;">
-				<a th:href="@{__${h2consolepage}__}">H2 database console (dev phase only)</a>
+				<a th:href="@{__${h2consolepage}__}">H2 database console access</a>
 			</div>
 		</div>
 	</th:block>
