@@ -11,7 +11,12 @@
 	</title>
 
 </head>
-<body th:with="baseUrl=(@{__${#httpServletRequest.scheme}__} + '://' + @{__${#httpServletRequest.serverName}__} + ':' + @{__${#httpServletRequest.serverPort}__} + '/'), adminUser='admin:admin'">
+<body th:with="
+baseUrl   = (@{__${#httpServletRequest.scheme}__} + '://' +
+@{__${#httpServletRequest.serverName}__} + ':' +
+@{__${#httpServletRequest.serverPort}__}),
+adminUser = 'admin:admin'
+">
 
 	<h1 th:text="${#messages.msgOrNull('page.title.webform.apiref')} ?: 'page.title.webform.apiref'">
 	page.title.webform.apiref
@@ -23,6 +28,7 @@
 */-->
 	<table class="table table-striped">
 		<tbody>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.endpoints')} ?: 'page.text.apiref.endpoints'">
@@ -37,49 +43,67 @@
 */-->
 				</th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/booklist/'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/categories/'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/authors/'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.examples')} ?: 'page.text.apiref.examples'">
@@ -91,95 +115,127 @@
 				</th>
 				<th></th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/booklist/search/title?name=Bloody+Chamber'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/search/category?name=Fantasy' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/categories/search/category?name=Fantasy'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-			
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/categories/search/category?name=horr' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/categories/search/category?name=horr'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-			
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET &quot;' + ${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter&quot;' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET &quot;' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter&quot;' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/authors/search/fullname?firstname=Angela&lastname=Carter'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/search/firstname?firstname=anGel' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/authors/search/firstname?firstname=anGel'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/authors/search/lastname?lastname=Sapkowski'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.get')} ?: 'page.text.apiref.book.get'">
@@ -188,9 +244,14 @@
 				</th>
 				<th></th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request GET ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 					<br>
@@ -200,13 +261,14 @@
 				</td>
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
-					th:href="${baseUrl} + 'api/booklist/2'"
-					>
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2'
+					">
 					page.text.apiref.link
 					</a>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.add')} ?: 'page.text.apiref.book.add'">
@@ -215,38 +277,50 @@
 				</th>
 				<th></th>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.a')} ?: 'page.text.apiref.book.add.a'">
 					page.text.apiref.book.add.a
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.b')} ?: 'page.text.apiref.book.add.b'">
 					page.text.apiref.book.add.b
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Retribution&quot;,&quot;year&quot;:2010,&quot;isbn&quot;:&quot;0345520-722&quot;,&quot;price&quot;:29.90,&quot;category&quot;:{&quot;name&quot;:&quot;Sci-Fi&quot;},&quot;author&quot;:{&quot;firstname&quot;:&quot;Drew&quot;,&quot;lastname&quot;:&quot;Karpyshyn&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Retribution&quot;,&quot;year&quot;:2010,&quot;isbn&quot;:&quot;0345520-722&quot;,&quot;price&quot;:29.90,&quot;category&quot;:{&quot;name&quot;:&quot;Sci-Fi&quot;},&quot;author&quot;:{&quot;firstname&quot;:&quot;Drew&quot;,&quot;lastname&quot;:&quot;Karpyshyn&quot;}}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.c')} ?: 'page.text.apiref.book.add.c'">
 					page.text.apiref.book.add.c
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 					<br>
@@ -255,14 +329,18 @@
 					</small>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.d')} ?: 'page.text.apiref.book.add.d'">
 					page.text.apiref.book.add.d
 					</small>
 					<br>
-					<code th:text="'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' + ${baseUrl} + 'api/booklist' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 					<br>
@@ -271,13 +349,13 @@
 					</small>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td>
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.edit')} ?: 'page.text.apiref.book.edit'">
@@ -286,28 +364,39 @@
 				</th>
 				<th></th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.a')} ?: 'page.text.apiref.book.add.a'">
 					page.text.apiref.book.add.a
 					</small>
 					<br>
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1999,&quot;isbn&quot;:&quot;3213221-3&quot;,&quot;price&quot;:22.49}\' ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1999,&quot;isbn&quot;:&quot;3213221-3&quot;,&quot;price&quot;:22.49}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.add.b')} ?: 'page.text.apiref.book.add.b'">
 					page.text.apiref.book.add.b
 					</small>
 					<br>
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;}}\' ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;}}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td>
 					<small th:text="${#messages.msgOrNull('page.text.apiref.book.edit.info')} ?: 'page.text.apiref.book.edit.info'">
@@ -319,7 +408,7 @@
 					</small>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.delete')} ?: 'page.text.apiref.book.delete'">
@@ -328,9 +417,14 @@
 				</th>
 				<th></th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request DELETE ' + ${baseUrl} + 'api/booklist/2' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request DELETE ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 					<br>
@@ -339,7 +433,7 @@
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-
+			<!--/* ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.author.edit')} ?: 'page.text.apiref.author.edit'">
@@ -348,9 +442,14 @@
 				</th>
 				<th></th>
 			</tr>
+			<!--/* ------------------------------  */-->
 			<tr>
 				<td class="apiref-table-right">
-					<code th:text="'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' + ${baseUrl} + 'api/authors/1' + ' --user ' + ${adminUser}">
+					<code th:text="
+					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/1' +
+					' --user ' + ${adminUser}
+					">
 					code placeholder
 					</code>
 					<br>
@@ -359,10 +458,11 @@
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
+			<!--/* ------------------------------  */-->
 		</tbody>
 		<tr>
 			<td>
-				<a class="btn btn-success" th:href="@{__${listpage}__}"
+				<a class="btn btn-success" th:href="@{__${@Pages.LIST}__}"
 				th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
 				button.page.list.return
 				</a>

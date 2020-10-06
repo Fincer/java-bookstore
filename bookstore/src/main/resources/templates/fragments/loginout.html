@@ -6,21 +6,7 @@
 	<link type="text/css" rel="stylesheet" href="../../static/css/bootstrap.min.css" />
 </head>
 
-<!--/* TODO: use proper and scalable fragment HTML replacement for this element */-->
-<body th:with="
-indexpage     = ${@environment.getProperty('page.url.index')},
-listpage      = ${@environment.getProperty('page.url.list')},
-addpage       = ${@environment.getProperty('page.url.add')},
-deletepage    = ${@environment.getProperty('page.url.delete')},
-editpage      = ${@environment.getProperty('page.url.edit')},
-loginpage     = ${@environment.getProperty('page.url.login')},
-logoutpage    = ${@environment.getProperty('page.url.logout')},
-apirefpage    = ${@environment.getProperty('page.url.apiref')},
-jsonpage      = ${@environment.getProperty('page.url.json')},
-jsonbookpage  = ${@environment.getProperty('page.url.json.book')},
-jsonlistpage  = ${@environment.getProperty('page.url.json.list')},
-h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
-">
+<body>
 
 	<th:block th:fragment="loginout">
 		<div id="bookstore-loginout">
@@ -32,9 +18,9 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 			*/-->
 			<div sec:authorize="isAuthenticated()">
 				<div>
-					<form th:action="@{__${logoutpage}__}" method="post">
+					<form th:action="@{__${@Pages.LOGOUT}__}" method="post">
 						<button type="submit" class="btn btn-info"
-						th:href="@{__${logoutpage}__}"
+						th:href="@{__${@Pages.LOGOUT}__}"
 						th:text="${#messages.msgOrNull('button.page.logout')} ?: 'button.page.logout'">
 						button.page.logout
 						</button>
@@ -56,7 +42,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 			*/-->
 			<div sec:authorize="isAnonymous()">
 			
-				<form th:action="@{__${loginpage}__}" method="post">
+				<form th:action="@{__${@Pages.LOGIN}__}" method="post">
 				
 					<!--/*
 					Keep normal id field as fallback (i.e. for defining plain HTML CSS styles)
@@ -99,7 +85,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 			** END: login elements **
 			*/-->
 			<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}" style="margin: 10px 0;">
-				<a th:href="@{__${h2consolepage}__}">H2 database console access</a>
+				<a th:href="@{__${@Pages.H2CONSOLE}__}">H2 database console access</a>
 			</div>
 		</div>
 	</th:block>

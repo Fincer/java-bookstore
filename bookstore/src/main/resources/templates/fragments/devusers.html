@@ -5,21 +5,7 @@
 	<link type="text/css" rel="stylesheet" href="../../static/css/bootstrap.min.css" />
 </head>
 
-<!--/* TODO: use proper and scalable fragment HTML replacement for this element */-->
-<body th:with="
-indexpage     = ${@environment.getProperty('page.url.index')},
-listpage      = ${@environment.getProperty('page.url.list')},
-addpage       = ${@environment.getProperty('page.url.add')},
-deletepage    = ${@environment.getProperty('page.url.delete')},
-editpage      = ${@environment.getProperty('page.url.edit')},
-loginpage     = ${@environment.getProperty('page.url.login')},
-logoutpage    = ${@environment.getProperty('page.url.logout')},
-apirefpage    = ${@environment.getProperty('page.url.apiref')},
-jsonpage      = ${@environment.getProperty('page.url.json')},
-jsonbookpage  = ${@environment.getProperty('page.url.json.book')},
-jsonlistpage  = ${@environment.getProperty('page.url.json.list')},
-h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
-">
+<body>
 
 	<th:block th:fragment="devusers">
 		<style>

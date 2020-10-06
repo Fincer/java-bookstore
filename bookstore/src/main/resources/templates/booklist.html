@@ -49,20 +49,7 @@ Idea of the following syntax used in this and other HTML document:
 </head>
 
 <!--/* TODO: use proper and scalable fragment HTML replacement for this element */-->
-<body th:with="
-indexpage     = ${@environment.getProperty('page.url.index')},
-listpage      = ${@environment.getProperty('page.url.list')},
-addpage       = ${@environment.getProperty('page.url.add')},
-deletepage    = ${@environment.getProperty('page.url.delete')},
-editpage      = ${@environment.getProperty('page.url.edit')},
-loginpage     = ${@environment.getProperty('page.url.login')},
-logoutpage    = ${@environment.getProperty('page.url.logout')},
-apirefpage    = ${@environment.getProperty('page.url.apiref')},
-jsonpage      = ${@environment.getProperty('page.url.json')},
-jsonbookpage  = ${@environment.getProperty('page.url.json.book')},
-jsonlistpage  = ${@environment.getProperty('page.url.json.list')},
-h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
-">
+<body>
 
 	<div>
 
@@ -178,26 +165,26 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 				<td>
 					<p sec:authorize="hasAuthority('MARKETING')"
-					th:text="${book.publish == true} ? (${#messages.msgOrNull('page.text.list.yes')} ?: 'page.text.list.yes') : (${#messages.msgOrNull('page.text.list.no')} ?: 'page.text.list.no')"
+					th:text="${book.publish == true} ? (${#messages.msgOrNull('page.text.book.publish.yes')} ?: 'page.text.book.publish.yes') : (${#messages.msgOrNull('page.text.book.publish.no')} ?: 'page.text.book.publish.no')"
 					>
-					page.text.list.[yes|no]
+					page.text.book.publish.[yes|no]
 					</p>
 				</td>
 
 				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" 
 					th:attr="onclick='javascript:return confirm(\'' + 'Delete book: ' + ${book.title} + '?' + '\');'"
-					th:href="@{__${deletepage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
-					th:text="${#messages.msgOrNull('page.text.list.delete')} ?: 'page.text.list.delete'">
-					page.text.list.delete
+					th:href="@{__${@Pages.DELETE}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
+					th:text="${#messages.msgOrNull('page.text.book.delete')} ?: 'page.text.book.delete'">
+					page.text.book.delete
 					</a>
 				</td>
 
 				<td>
 					<a class="btn btn-warning" sec:authorize="hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)"
-					th:href="@{__${editpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
-					th:text="${#messages.msgOrNull('page.text.list.edit')} ?: 'page.text.list.edit'">
-					page.text.list.edit
+					th:href="@{__${@Pages.EDIT}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
+					th:text="${#messages.msgOrNull('page.text.book.edit')} ?: 'page.text.book.edit'">
+					page.text.book.edit
 					</a>
 				</td>
 
@@ -206,9 +193,9 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 				<td>
 					<a class="btn btn-info"
-					th:href="@{__${jsonpage}__} + @{__${jsonbookpage}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
-					th:text="${#messages.msgOrNull('page.text.list.json')} ?: 'page.text.list.json'">
-					page.text.list.json
+					th:href="@{__${@Pages.JSON}__} + @{__${@Pages.JSONBOOK}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
+					th:text="${#messages.msgOrNull('page.text.book.json')} ?: 'page.text.book.json'">
+					page.text.book.json
 					</a>
 				</td>
 
@@ -216,7 +203,8 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 			<tr>
 				<td>
-					<a class="btn btn-success" th:href="@{__${addpage}__}" sec:authorize="hasAuthority(@BookAuth.SALES)"
+					<a class="btn btn-success" th:href="@{__${@Pages.ADD}__}"
+					sec:authorize="hasAuthority(@BookAuth.SALES)"
 					th:text="${#messages.msgOrNull('button.book.add')} ?: 'button.book.add'">
 					button.book.add
 					</a>
@@ -230,7 +218,7 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 				<td></td>
 				<td></td>
 				<td>
-					<a class="btn btn-dark" th:href="@{__${jsonpage}__} + @{__${jsonlistpage}__}"
+					<a class="btn btn-dark" th:href="@{__${@Pages.JSON}__} + @{__${@Pages.JSONLIST}__}"
 					th:text="${#messages.msgOrNull('button.page.list.json')} ?: 'button.page.list.json'">
 					button.page.list.json
 					</a>
@@ -239,7 +227,8 @@ h2consolepage = ${@environment.getProperty('spring.h2.console.path')}
 
 			<tr style="background-color: #FFF !important;">
 				<td>
-					<a class="btn btn-info" th:href="@{__${apirefpage}__}" sec:authorize="hasAuthority(@BookAuth.ADMIN)"
+					<a class="btn btn-info" th:href="@{__${@Pages.APIREF}__}"
+					sec:authorize="hasAuthority(@BookAuth.ADMIN)"
 					th:text="${#messages.msgOrNull('button.page.apiref')} ?: 'button.page.apiref'">
 					button.page.apiref
 					</a>
