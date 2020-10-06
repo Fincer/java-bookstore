@@ -22,7 +22,10 @@
 						th:text="${#messages.msgOrNull('book.author.firstName')} ?: 'book.author.firstName'">
 						book.author.firstName
 						</label>
-						<input class="form-control" type="text" th:field="*{author.firstName}"  placeholder="Book author first name"/>
+						<input class="form-control" type="text" th:field="*{author.firstName}"
+						placeholder="Book author first name"
+						th:placeholder="#{book.placeholder.author.firstname}"
+						/>
 
 						<small class="form-text text-muted"
 						th:text="${#messages.msgOrNull('book.desc.set.author.firstname')} ?: 'book.desc.set.author.firstname'">
@@ -40,7 +43,9 @@
 						</small>
 
 						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.firstName')}"
-						th:errors="*{author.firstName}">Invalid author first name value</div>
+						th:errors="*{author.firstName}">
+						Invalid author first name value
+						</div>
 					</div>
 
 					<div class="col">
@@ -48,7 +53,10 @@
 						th:text="${#messages.msgOrNull('book.author.lastName')} ?: 'book.author.lastName'">
 						book.author.lastName
 						</label>
-						<input class="form-control" type="text" th:field="*{author.lastName}"  placeholder="Book author last name"/>
+						<input class="form-control" type="text" th:field="*{author.lastName}"
+						placeholder="Book author last name"
+						th:placeholder="#{book.placeholder.author.lastname}"
+						/>
 
 						<small class="form-text text-muted"
 						th:text="${#messages.msgOrNull('book.desc.set.author.lastname')} ?: 'book.desc.set.author.lastname'">
@@ -66,7 +74,9 @@
 						</small>
 
 						<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('author.lastName')}"
-						th:errors="*{author.lastName}">Invalid author last name value</div>
+						th:errors="*{author.lastName}">
+						Invalid author last name value
+						</div>
 					</div>
 				</div>
 			</div>
@@ -76,7 +86,10 @@
 				th:text="${#messages.msgOrNull('book.title')} ?: 'book.title'">
 				book.title
 				</label>
-				<input class="form-control" type="text" th:field="*{title}" placeholder="Book title"/>
+				<input class="form-control" type="text" th:field="*{title}"
+				placeholder="Book title"
+				th:placeholder="#{book.placeholder.title}"
+				/>
 
 				<small class="form-text text-muted"
 				th:text="${#messages.msgOrNull('book.desc.set.title')} ?: 'book.desc.set.title'">
@@ -94,7 +107,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('title')}"
-				th:errors="*{title}">Invalid title value</div>
+				th:errors="*{title}">
+				Invalid title value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -102,7 +117,9 @@
 				th:text="${#messages.msgOrNull('book.isbn')} ?: 'book.isbn'">
 				book.isbn
 				</label>
-				<input class="form-control" type="text" th:field="*{isbn}" placeholder="Book ISBN code"/>
+				<input class="form-control" type="text" th:field="*{isbn}"
+				placeholder="Book ISBN code"
+				th:placeholder="#{book.placeholder.isbn}"/>
 
 				<small class="form-text text-muted"
 				th:text="${#messages.msgOrNull('book.desc.set.isbn')} ?: 'book.desc.set.isbn'">
@@ -120,7 +137,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('isbn')}"
-				th:errors="*{isbn}">Invalid ISBN code</div>
+				th:errors="*{isbn}">
+				Invalid ISBN code
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">
@@ -128,7 +147,9 @@
 				th:text="${#messages.msgOrNull('book.year')} ?: 'book.year'">
 				book.year
 				</label>
-				<input class="form-control" type="text" th:field="*{year}" placeholder="Book publication year (YYYY)"/>
+				<input class="form-control" type="text" th:field="*{year}"
+				placeholder="Book publication year (YYYY)"
+				th:placeholder="#{book.placeholder.year}"/>
 
 				<small class="form-text text-muted"
 				th:text="${#messages.msgOrNull('book.desc.set.year')} ?: 'book.desc.set.year'">
@@ -146,7 +167,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('year')}"
-				th:errors="*{year}">Invalid year value</div>
+				th:errors="*{year}">
+				Invalid year value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section" th:if="${#authorization.expression('hasAuthority(''MARKETING'')')}">
@@ -162,7 +185,9 @@
 					 	page.symbols.currency
 					 	</div>
 					 </div>
-					<input class="form-control" type="text" th:field="*{price}" placeholder="0.00"/>
+					<input class="form-control" type="text" th:field="*{price}"
+					placeholder="0.00"
+					th:placeholder="#{book.placeholder.price}"/>
 				</div>
 				<small class="form-text text-muted"
 				th:text="${#messages.msgOrNull('book.desc.set.price')} ?: 'book.desc.set.price'">
@@ -180,7 +205,9 @@
 				</small>
 
 				<div class="alert alert-danger mt-2" th:if="${#fields.hasErrors('price')}"
-				th:errors="*{price}">Invalid price value</div>
+				th:errors="*{price}">
+				Invalid price value
+				</div>
 			</div>
 
 			<div class="form-group bookform-section">

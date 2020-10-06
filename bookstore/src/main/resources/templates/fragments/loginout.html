@@ -8,6 +8,12 @@
 <body>
 	<th:block th:fragment="loginout">
 		<div id="bookstore-loginout">
+		
+			<!--/*
+			HTML element blocks when a user is authenticated
+
+			** START: logout elements **
+			*/-->
 			<div sec:authorize="isAuthenticated()">
 				<div>
 					<form th:action="@{__${logoutpage}__}" method="post">
@@ -23,15 +29,44 @@
 				page.text.list.authenticated httpServletRequest.remoteUser
 				</p>
 			</div>
+			<!--/*
+			** END: logout elements **
+			*/-->
 
+			<!--/*
+			HTML element blocks when a user is not authenticated
+
+			** START: login elements **
+			*/-->
 			<div sec:authorize="isAnonymous()">
 			
 				<form th:action="@{__${loginpage}__}" method="post">
 				
-					<input type="text" id="b_username" name="b_username" placeholder="User name">
+					<!--/*
+					Keep normal id field as fallback (i.e. for defining plain HTML CSS styles)
+					*/-->
+					<input type="text"
+					id="b_username"
+					th:id="${@environment.getProperty('auth.field.username')}"
+					th:name="${@environment.getProperty('auth.field.username')}"
+					placeholder="User name"
+					th:placeholder="#{auth.field.placeholder.username}"
+					/>
 					
-					<input type="password" id="b_password" name="b_password" placeholder="Password">
+					<!--/*
+					Keep normal id field as fallback (i.e. for defining plain HTML CSS styles)
+					*/-->
+					<input type="password"
+					id="b_password"
+					th:id="${@environment.getProperty('auth.field.password')}"
+					th:name="${@environment.getProperty('auth.field.password')}"
+					placeholder="Password"
+					th:placeholder="#{auth.field.placeholder.password}"
+					/>
 
+					<!--/*
+					This element is filled only when authentication fails
+					*/-->
 					<p th:text="${authfailure}"></p>
 
 					<div class="mt-2">
@@ -44,6 +79,10 @@
 				</form>
 				<th:block th:replace="fragments/devusers :: devusers"/>
 			</div>
+			<!--/*
+			** END: login elements **
+			*/-->
+
 		</div>
 	</th:block>
 </body>
