@@ -101,7 +101,8 @@ public class BookBasePathAwareController {
 
 	//////////////////////////////
 	@RequestMapping(
-			value    = "${page.url.restapi.list}",
+			// TODO property definition ${page.url.restapi.books} does not work here
+			value    = "/booklist",
 			method   = RequestMethod.POST,
 			consumes = "application/json",
 			produces = "application/hal+json"
@@ -149,7 +150,8 @@ public class BookBasePathAwareController {
 	}
 
 	@RequestMapping(
-			value    = "${page.url.restapi.list}" + "/{id}",
+			// TODO property definition ${page.url.restapi.books} does not work here
+			value    = "/booklist" + "/{id}",
 			method   = RequestMethod.PUT,
 			consumes = "application/json",
 			produces = "application/hal+json"
