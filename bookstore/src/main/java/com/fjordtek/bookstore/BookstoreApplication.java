@@ -6,11 +6,13 @@ import java.math.BigDecimal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
@@ -50,6 +52,9 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
+	@Autowired
+	private Environment env;
+
 	@Bean
 	public UrlTemplateResolver urlTemplateResolver() {
 		UrlTemplateResolver urlTemplateResolver = new UrlTemplateResolver();
@@ -70,10 +75,10 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 			commonLogger.info("Add new roles to the database");
-			Role adminAR    = new Role("ADMIN");
-			Role helpdeskAR = new Role("HELPDESK");
-			Role userAR     = new Role("USER");
-			Role salesAR    = new Role("MARKETING");
+			Role adminAR    = new Role(env.getProperty("auth.authority.admin"));
+			Role helpdeskAR = new Role(env.getProperty("auth.authority.helpdesk"));
+			Role userAR     = new Role(env.getProperty("auth.authority.user"));
+			Role salesAR    = new Role(env.getProperty("auth.authority.sales"));
 
 			roleRepository.save(adminAR);
 			roleRepository.save(helpdeskAR);
@@ -114,7 +119,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			// Add example roles for admin user
 			userRoleRepository.save(new UserRole(adminAU, adminAR));
 			userRoleRepository.save(new UserRole(adminAU, salesAR));
-			userRoleRepository.save(new UserRole(adminAU, userAR));
+//			userRoleRepository.save(new UserRole(adminAU, userAR));
 
 			// Add an example role for helpdesk user
 			userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
@@ -153,9 +158,9 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 		return (args) -> {
 
 			commonLogger.info("Add new categories to the database");
-			categoryRepository.save(new Category("Horror"));
-			categoryRepository.save(new Category("Fantasy"));
-			categoryRepository.save(new Category("Sci-Fi"));
+			categoryRepository.save(new Category(env.getProperty("bookstore.category.horror")));
+			categoryRepository.save(new Category(env.getProperty("bookstore.category.fantasy")));
+			categoryRepository.save(new Category(env.getProperty("bookstore.category.scifi")));
 
 			commonLogger.info("Add new authors to the database");
 			authorRepository.save(new Author("Angela","Carter"));
@@ -169,7 +174,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					1979,
 					"1231231-12",
 					new BigDecimal("18.00"),
-					categoryRepository.findByName("Horror").get(0),
+					categoryRepository.findByName(env.getProperty("bookstore.category.horror")).get(0),
 					true
 					);
 
@@ -181,7 +186,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 					1999,
 					"3213221-3",
 					new BigDecimal("19.99"),
-					categoryRepository.findByName("Fantasy").get(0),
+					categoryRepository.findByName(env.getProperty("bookstore.category.fantasy")).get(0),
 					true
 					);
 
