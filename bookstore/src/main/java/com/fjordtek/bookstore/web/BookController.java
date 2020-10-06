@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,6 +59,9 @@ public class BookController {
 
 	@Autowired
 	private Environment env;
+
+	@Autowired
+	private MessageSource msg;
 
 	@Autowired
 	private CategoryRepository   categoryRepository;
@@ -194,7 +198,16 @@ public class BookController {
 
 		// TODO consider better solution. Add custom Hibernate annotation for Book class?
 		if (bookRepository.existsByIsbn(book.getIsbn())) {
-			bindingResult.rejectValue("isbn", "error.user", "ISBN code already exists");
+			bindingResult.rejectValue(
+					"isbn",
+					"error.user",
+					msg.getMessage(
+							"book.error.isbn.exists",
+							null,
+							"book.error.isbn.exists [placeholder]",
+							requestData.getLocale()
+						)
+					);
 		}
 
 		if (bindingResult.hasErrors()) {
@@ -355,13 +368,31 @@ public class BookController {
 		Long bookId = bookHash.getBookId();
 
 		if (bookId == null) {
-			bindingResultBook.rejectValue("name", "error.user", "Unknown book");
+			bindingResultBook.rejectValue(
+					"name",
+					"error.user",
+					msg.getMessage(
+							"book.error.unknownbook",
+							null,
+							"book.error.unknownbook [placeholder]",
+							requestData.getLocale()
+						)
+					);
 		} else {
 
 			// If existing ISBN value is not attached to the current book...
 			if (bookI != null) {
 				if (bookI.getId() != bookId) {
-					bindingResultBook.rejectValue("isbn", "error.user", "ISBN code already exists");
+					bindingResultBook.rejectValue(
+							"isbn",
+							"error.user",
+							msg.getMessage(
+									"book.error.isbn.exists",
+									null,
+									"book.error.isbn.exists [placeholder]",
+									requestData.getLocale()
+								)
+							);
 				}
 			}
 
