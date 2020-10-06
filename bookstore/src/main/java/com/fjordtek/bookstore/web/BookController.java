@@ -160,7 +160,7 @@ public class BookController {
 	//////////////////////////////
 	// ADD BOOK
 
-	@PreAuthorize("hasAuthority('MARKETING')")
+	@PreAuthorize("hasAuthority(@BookAuth.SALES)")
 	@RequestMapping(
 			value    = "${page.url.add}",
 			method   = { RequestMethod.GET, RequestMethod.PUT }
@@ -180,7 +180,7 @@ public class BookController {
 		return env.getProperty("page.url.add");
 	}
 
-	@PreAuthorize("hasAuthority('MARKETING')")
+	@PreAuthorize("hasAuthority(@BookAuth.SALES)")
 	@RequestMapping(
 			value    = "${page.url.add}",
 			method   = RequestMethod.POST
@@ -233,7 +233,7 @@ public class BookController {
 	// DELETE BOOK
 
 	@Transactional
-	@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority(@BookAuth.ADMIN)")
 	@RequestMapping(
 			value    = "${page.url.delete}" + "/{hash_id}",
 			method   = RequestMethod.GET
@@ -266,7 +266,7 @@ public class BookController {
 	//////////////////////////////
 	// UPDATE BOOK
 
-	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
+	@PreAuthorize("hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)")
 	@RequestMapping(
 			value    = "${page.url.edit}" + "/{hash_id}",
 			method   = RequestMethod.GET
@@ -291,7 +291,7 @@ public class BookController {
 			 * Prevent other than MARKETING users to access hidden book
 			 * data even if they knew hash id.
 			 */
-			if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+			if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 				//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return "redirect:" + env.getProperty("page.url.list");
 			}
@@ -313,7 +313,7 @@ public class BookController {
 	 * Internally, we never use URL id as a reference for user modifications,
 	 * but just as an URL end point.
 	*/
-	@PreAuthorize("hasAnyAuthority('MARKETING', 'HELPDESK')")
+	@PreAuthorize("hasAnyAuthority(@BookAuth.SALES, @BookAuth.HELPDESK)")
 	@RequestMapping(
 			value    = "${page.url.edit}" + "/{hash_id}",
 			method   = RequestMethod.POST
@@ -382,7 +382,7 @@ public class BookController {
 		 * Prevent other than MARKETING users to access hidden book
 		 * data even if they knew hash id.
 		 */
-		if (!book.getPublish() && !authorities.contains("MARKETING") ) {
+		if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 			//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "redirect:" + env.getProperty("page.url.list");
 		}
@@ -394,7 +394,7 @@ public class BookController {
 		//authorRepository.save(book.getAuthor());
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
-		if (authorities.contains("MARKETING") ) {
+		if (authorities.contains(env.getProperty("auth.authority.sales")) ) {
 			bookRepository.save(book);
 		} else {
 			bookRepository.updateWithoutPriceAndWithoutPublish(book);
