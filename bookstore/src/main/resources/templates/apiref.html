@@ -28,7 +28,7 @@ adminUser = 'admin:admin'
 */-->
 	<table class="table table-striped">
 		<tbody>
-			<!--/* ------------------------------  */-->
+			<!--/* START: endpoints ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.endpoints')} ?: 'page.text.apiref.endpoints'">
@@ -104,6 +104,66 @@ adminUser = 'admin:admin'
 				</td>
 			</tr>
 			<!--/* ------------------------------  */-->
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERS}__} + '/' +
+					' --user ' + ${adminUser}
+					">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERS}__} + '/'
+					">
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+			<!--/* ------------------------------  */-->
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTROLES}__} + '/' +
+					' --user ' + ${adminUser}
+					">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTROLES}__} + '/'
+					">
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+			<!--/* ------------------------------  */-->
+			<tr>
+				<td class="apiref-table-right">
+					<code th:text="
+					'curl --include --request GET ' +
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERROLES}__} + '/' +
+					' --user ' + ${adminUser}
+					">
+					code placeholder
+					</code>
+				</td>
+				<td>
+					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
+					th:href="
+					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERROLES}__} + '/'
+					">
+					page.text.apiref.link
+					</a>
+				</td>
+			</tr>
+			<!--/* START: examples ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.examples')} ?: 'page.text.apiref.examples'">
@@ -235,7 +295,7 @@ adminUser = 'admin:admin'
 					</a>
 				</td>
 			</tr>
-			<!--/* ------------------------------  */-->
+			<!--/* START: get ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.get')} ?: 'page.text.apiref.book.get'">
@@ -268,7 +328,7 @@ adminUser = 'admin:admin'
 					</a>
 				</td>
 			</tr>
-			<!--/* ------------------------------  */-->
+			<!--/* START: add ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.add')} ?: 'page.text.apiref.book.add'">
@@ -355,7 +415,7 @@ adminUser = 'admin:admin'
 					<small th:text="${#messages.msgOrNull('page.text.apiref.unix.info')} ?: 'page.text.apiref.unix.info'">page.text.apiref.unix.info</small>
 				</td>
 			</tr>
-			<!--/* ------------------------------  */-->
+			<!--/* START: edit ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.edit')} ?: 'page.text.apiref.book.edit'">
@@ -408,7 +468,7 @@ adminUser = 'admin:admin'
 					</small>
 				</td>
 			</tr>
-			<!--/* ------------------------------  */-->
+			<!--/* START: delete ------------------------------  */-->
 			<tr>
 				<th class="apiref-table-right apiref-table-title">
 					<h3 th:text="${#messages.msgOrNull('page.text.apiref.book.delete')} ?: 'page.text.apiref.book.delete'">
