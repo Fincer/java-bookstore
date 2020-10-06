@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 *
 * This class gets Spring Environment key property values from
 * Spring property sources and inserts them into publicly
-* accessible class attributes.
+* accessible class attributes. Attributes are related to
+* database authorities.
 * <p>
 * The attribute values of this class are primarily used,
-* for instance, within @PreAuthorize annotations.
+* for instance, within @PreAuthorize annotations and
+* in Thymeleaf HTML template files.
 *
 * @author Pekka Helenius
 */
@@ -26,7 +28,12 @@ public class BookStoreAuthorities {
 	@Autowired
 	private Environment env;
 
-	public String ADMIN, HELPDESK, SALES, USER;
+	public String
+	ADMIN,
+	HELPDESK,
+	SALES,
+	USER
+	;
 
 	@PostConstruct
 	private void constructAuthorities() {
