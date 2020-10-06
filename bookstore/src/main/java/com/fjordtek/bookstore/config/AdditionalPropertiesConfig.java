@@ -36,9 +36,10 @@ public class AdditionalPropertiesConfig implements EnvironmentPostProcessor {
 	private List<Resource> getAdditionalResources() {
 		List<Resource> resources = new ArrayList<Resource>();
 
-		// Add your additional properties files here
+		// Add your additional (classpath, filesystem, etc.) properties files here
 		resources.add(new ClassPathResource("website.properties"));
 		resources.add(new ClassPathResource("authentication.properties"));
+		resources.add(new ClassPathResource("categories.properties"));
 
 		return resources;
 	}
