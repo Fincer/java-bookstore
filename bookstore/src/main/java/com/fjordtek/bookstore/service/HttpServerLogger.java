@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
 *
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 * @author Pekka Helenius
 */
 
+@Service
 public class HttpServerLogger {
 
 	private static final Logger serverLogger = LoggerFactory.getLogger(HttpServerLogger.class);

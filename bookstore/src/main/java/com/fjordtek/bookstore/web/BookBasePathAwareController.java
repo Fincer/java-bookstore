@@ -47,23 +47,14 @@ public class BookBasePathAwareController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
+	@Autowired
 	private BookAuthorHelper bookAuthorHelper;
+
+	@Autowired
 	private BookEventHandler bookEventHandler;
 
-	private HttpServerLogger httpServerLogger = new HttpServerLogger();
-
-	/*
-	 * This method MUST exist with Autowired annotation. Handles autowiring of external classes.
-	 * If this method is not defined, they are not found by this controller class (are null).
-	 */
 	@Autowired
-	private void instanceAttributeController(
-			BookAuthorHelper bookAuthorHelper,
-			BookEventHandler bookEventHandler
-			) {
-		this.bookAuthorHelper = bookAuthorHelper;
-		this.bookEventHandler = bookEventHandler;
-	}
+	private HttpServerLogger httpServerLogger;
 
 	//////////////////////////////
 	private void bookGetAndSetNestedJSON(Book book, JsonNode bookNode) {

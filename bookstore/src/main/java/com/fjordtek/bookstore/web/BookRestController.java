@@ -49,7 +49,8 @@ public class BookRestController {
 	private CategoryRepository   categoryRepository;
 */
 
-	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
+	@Autowired
+	private HttpServerLogger     httpServerLogger;
 
 	@RequestMapping(
 			value  = "${page.url.json.list}",

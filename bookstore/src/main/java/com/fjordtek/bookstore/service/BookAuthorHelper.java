@@ -3,7 +3,7 @@
 package com.fjordtek.bookstore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fjordtek.bookstore.model.book.Author;
 import com.fjordtek.bookstore.model.book.AuthorRepository;
@@ -21,7 +21,7 @@ import com.fjordtek.bookstore.model.book.Book;
 * @author Pekka Helenius
 */
 
-@Component
+@Service
 public class BookAuthorHelper {
 
 	@Autowired

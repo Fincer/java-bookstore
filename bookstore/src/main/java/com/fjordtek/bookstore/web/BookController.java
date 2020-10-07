@@ -75,20 +75,11 @@ public class BookController {
 	@Autowired
 	private BookHashRepository   bookHashRepository;
 
-	private BookAuthorHelper     bookAuthorHelper;
-
-	/*
-	 * This method MUST exist with Autowired annotation. Handles autowiring of external classes.
-	 * If this method is not defined, they are not found by this controller class (are null).
-	 */
 	@Autowired
-	private void instanceAttributeController(
-			BookAuthorHelper bookAuthorHelper
-			) {
-		this.bookAuthorHelper = bookAuthorHelper;
-	}
+	private HttpServerLogger     httpServerLogger;
 
-	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
+	@Autowired
+	private BookAuthorHelper     bookAuthorHelper;
 
 /*
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
