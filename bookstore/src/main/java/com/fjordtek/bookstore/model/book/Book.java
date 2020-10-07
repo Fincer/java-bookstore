@@ -30,6 +30,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fjordtek.bookstore.annotation.CurrentYear;
@@ -239,7 +241,16 @@ public class Book {
 			nullable = false,
 			columnDefinition = "BIT"
 			)
-	@JsonIgnore
+	/*
+	 * We allow writing this attribute value as JSON data (POST/PUT requests)
+	 * while ignore outputting it in JSON output (GET requests)
+	 *
+	 * Basic scenario: allow updating via REST API while preventing to access
+	 * it, for instance, when requesting book JSON data for reading.
+	 */
+	@JsonProperty(
+			access = Access.WRITE_ONLY
+			)
 	private boolean publish;
 
 	////////////////////
