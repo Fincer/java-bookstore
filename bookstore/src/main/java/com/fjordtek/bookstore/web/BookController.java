@@ -87,6 +87,9 @@ public class BookController {
 			) {
 		this.bookAuthorHelper = bookAuthorHelper;
 	}
+
+	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
+
 /*
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
 		private static final long serialVersionUID = 1L;
@@ -95,7 +98,6 @@ public class BookController {
 		...
 	}};
 */
-	private HttpServerLogger     httpServerLogger     = new HttpServerLogger();
 
 	@ModelAttribute
 	public void globalAttributes(Model dataModel) {

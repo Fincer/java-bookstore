@@ -69,8 +69,11 @@ public class BookBasePathAwareController {
 	private void bookGetAndSetNestedJSON(Book book, JsonNode bookNode) {
 		// Nested data: Determine nested JSON keys & their values
 
-		String authorFirstName = null, authorLastName = null;
-		String categoryName = null;
+		String
+		authorFirstName = null,
+		authorLastName  = null,
+		categoryName    = null
+		;
 
 		// We keep going even if some of these are still null
 		try { authorFirstName = bookNode.get("author").get("firstname").textValue(); } catch (NullPointerException e) {};
