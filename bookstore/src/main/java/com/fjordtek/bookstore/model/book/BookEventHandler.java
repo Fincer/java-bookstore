@@ -31,6 +31,12 @@ public class BookEventHandler {
 	private BookHashRepository bookHashRepository;
 
 	/*
+	 * Generate hash id for the book. One-to-one unidirectional tables.
+	 * Associate generated book hash object information
+	 * to the book (table).
+	 * Associate new book object information
+	 * to the book hash (table).
+	 *
 	 * When using REST API to add a new book, we need to add a corresponding
 	 * book hash Id to BOOK_HASH table, as well.
 	 *
@@ -42,6 +48,23 @@ public class BookEventHandler {
 	@HandleAfterCreate
 	public void handleAfterCreate(Book book) {
 		BookHash bookHash = new BookHash();
+
+		/*
+		 * In a very unlikely scenario, we have hash collisions
+		 * (same hash values generated for two different book entity objects).
+		 * Therefore, we need to check that hash id is not already defined for
+		 * some other book.
+		 */
+		int i = 0;
+		while (i < 5) {
+			if (bookHashRepository.findByHashId(bookHash.getHashId()) != null) {
+				bookHash = new BookHash();
+			} else {
+				break;
+			}
+			i++;
+		}
+
 		book.setBookHash(bookHash);
 		bookHash.setBook(book);
 

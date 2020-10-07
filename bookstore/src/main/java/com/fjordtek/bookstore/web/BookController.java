@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fjordtek.bookstore.model.book.AuthorRepository;
 import com.fjordtek.bookstore.model.book.Book;
+import com.fjordtek.bookstore.model.book.BookEventHandler;
 import com.fjordtek.bookstore.model.book.BookHash;
 import com.fjordtek.bookstore.model.book.BookHashRepository;
 import com.fjordtek.bookstore.model.book.BookRepository;
@@ -80,6 +81,9 @@ public class BookController {
 
 	@Autowired
 	private BookAuthorHelper     bookAuthorHelper;
+
+	@Autowired
+	private BookEventHandler     bookEventHandler;
 
 /*
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
@@ -211,26 +215,12 @@ public class BookController {
 
 		httpServerLogger.log(requestData, responseData);
 
-		/*
-		 * Generate hash id for the book. One-to-one unidirectional tables.
-		 * Associate generated book hash object information
-		 * to the book (table).
-		 * Associate new book object information
-		 * to the book hash (table).
-		 */
-		BookHash bookHash = new BookHash();
-		book.setBookHash(bookHash);
-		bookHash.setBook(book);
-
-		/*
-		 * More sophisticated methods are required to handle
-		 * user input with random letter cases etc. considered
-		 */
-		//authorRepository.save(book.getAuthor());
 		bookAuthorHelper.detectAndSaveUpdateAuthorForBook(book);
 
 		bookRepository.save(book);
-		bookHashRepository.save(bookHash);
+
+		// Manually call a book event handler. Is there a better way to do this?
+		bookEventHandler.handleAfterCreate(book);
 
 		return "redirect:" + env.getProperty("page.url.list");
 	}
