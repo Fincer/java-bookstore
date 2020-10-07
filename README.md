@@ -32,7 +32,7 @@ _Normal user view for the bookstore: get basic information of published books._
 
 ![](images/page_helpdesk_front.png)
 
-_Help desk view for the bookstore: view and edit published books._
+_Help desk view for the bookstore: view and edit published books in a limited way. No edit access to price & publication information._
 
 ------------------------------
 
