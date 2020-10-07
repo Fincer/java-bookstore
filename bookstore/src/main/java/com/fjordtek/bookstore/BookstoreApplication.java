@@ -14,6 +14,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
@@ -78,7 +79,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 		return (args) -> {
 
-			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 			commonLogger.info("Add new roles to the database");
 			Role adminAR    = new Role(env.getProperty("auth.authority.admin"));
