@@ -345,7 +345,7 @@ adminUser = 'admin:admin'
 					</small>
 					<br>
 					<code th:text="
-					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49}\' ' +
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49,&quot;publish&quot;:true}\' ' +
 					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
@@ -377,7 +377,7 @@ adminUser = 'admin:admin'
 					</small>
 					<br>
 					<code th:text="
-					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;}}\' ' +
+					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;},&quot;publish&quot;:true}\' ' +
 					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
@@ -448,7 +448,7 @@ adminUser = 'admin:admin'
 					</small>
 					<br>
 					<code th:text="
-					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;}}\' ' +
+					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;},&quot;publish&quot;:false}\' ' +
 					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
 					' --user ' + ${adminUser}
 					">
