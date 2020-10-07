@@ -296,8 +296,12 @@ public class BookController {
 			/*
 			 * Prevent other than MARKETING users to access hidden book
 			 * data even if they knew hash id.
+			 *
+			 * In this scenario, a book is invisible but a user still knows book's hash id.
+			 * However, he/she has no proper MARKETING authorization
+			 * to access the URL so we force him/her out of the page.
 			 */
-			if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
+			if ( !book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 				//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return "redirect:" + env.getProperty("page.url.list");
 			}
@@ -405,8 +409,12 @@ public class BookController {
 		/*
 		 * Prevent other than MARKETING users to access hidden book
 		 * data even if they knew hash id.
+		 *
+		 * In this scenario, an authenticated user has manually injected publish value to
+		 * true but has no MARKETING authority. We force him/her out of the page to prevent
+		 * unauthorized data manipulation.
 		 */
-		if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
+		if ( book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 			//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "redirect:" + env.getProperty("page.url.list");
 		}

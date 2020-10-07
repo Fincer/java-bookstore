@@ -95,8 +95,12 @@ public class BookRestController {
 			/*
 			 * Prevent other than MARKETING users to access hidden book
 			 * data even if they knew hash id.
+			 *
+			 * In this scenario, a book is invisible but a user still knows book's hash id.
+			 * However, he/she has no proper MARKETING authorization
+			 * to access the URL so we force him/her out of the page.
 			 */
-			if (!book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
+			if ( !book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
 		    	responseData.setHeader("Location", env.getProperty("page.url.index"));
 		    	responseData.setStatus(302);
 		    	httpServerLogger.log(requestData, responseData);
