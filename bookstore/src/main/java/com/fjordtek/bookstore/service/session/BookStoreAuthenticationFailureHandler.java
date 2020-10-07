@@ -47,10 +47,12 @@ public class BookStoreAuthenticationFailureHandler implements AuthenticationFail
 		responseData.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		httpServerLogger.log(requestData, responseData);
 
-		requestData
-			.setAttribute("username", requestData.getParameter(
-					env.getProperty("auth.field.username")
-					));
+		String username = requestData.getParameter(env.getProperty("auth.field.username"));
+		if (username.length() > 50) {
+			username = username.substring(0, 50) + " ...";
+		}
+
+		requestData.setAttribute("username", username);
 
 		requestData
 			.setAttribute("authfailure", msg.getMessage(
