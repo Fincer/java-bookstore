@@ -400,11 +400,14 @@ public class BookController {
 		 * Prevent other than MARKETING users to access hidden book
 		 * data even if they knew hash id.
 		 *
-		 * In this scenario, an authenticated user has manually injected publish value to
+		 * In this scenario, an authenticated user has manually injected publish or price value to
 		 * true but has no MARKETING authority. We force him/her out of the page to prevent
 		 * unauthorized data manipulation.
 		 */
-		if ( book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) {
+		if (
+				( book.getPublish() && !authorities.contains(env.getProperty("auth.authority.sales")) ) ||
+				( book.getPrice() != null && !authorities.contains(env.getProperty("auth.authority.sales")) )
+				) {
 			//responseData.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "redirect:" + env.getProperty("page.url.list");
 		}
