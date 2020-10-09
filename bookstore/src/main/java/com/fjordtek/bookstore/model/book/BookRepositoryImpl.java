@@ -25,6 +25,15 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 	EntityManager entityManager;
 
 	/*
+	 * WARNING: Custom queries MAY BREAK in some SQL server implementations.
+	 * Basically, a custom query can work in MySQL server environment whereas it breaks
+	 * in PostgreSQL or Microsoft SQL server context.
+	 *
+	 * Make sure that any custom query you define is properly supported by your target
+	 * SQL server.
+	 */
+
+	/*
 	 * Selective update
 	 * Hibernate takes care of entityManager transactions (begin, commit, rollback, close, etc.)
 	 */
