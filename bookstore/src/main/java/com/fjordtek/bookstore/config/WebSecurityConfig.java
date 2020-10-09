@@ -2,6 +2,8 @@
 
 package com.fjordtek.bookstore.config;
 
+import java.security.SecureRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -62,7 +64,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+		/*
+		 * Set hash strength to 14 (2^14) + use RNG to randomize generated hash.
+		 * Default strength value is 10.
+		 */
+		return new BCryptPasswordEncoder(14, new SecureRandom());
     }
 
 

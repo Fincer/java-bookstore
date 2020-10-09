@@ -3,6 +3,7 @@
 package com.fjordtek.bookstore;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +79,11 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 		return (args) -> {
 
-			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			/*
+			 * Set hash strength to 14 (2^14) + use RNG to randomize generated hash.
+			 * Default strength value is 10.
+			 */
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(14, new SecureRandom());
 
 			commonLogger.info("Add new roles to the database");
 			Role adminAR    = new Role(env.getProperty("auth.authority.admin"));
@@ -140,7 +145,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 				commonLogger.info(role.toString());
 			}
 			commonLogger.info("Sample users in the database");
-			commonLogger.info("**ENCRYPTED PASSWORDS ARE PRINTED ONLY FOR DEMO PURPOSES**");
+			commonLogger.info("**HASHED PASSWORDS ARE PRINTED ONLY FOR DEMO PURPOSES**");
 			for (User user : userRepository.findAll()) {
 				commonLogger.info(user.toString());
 			}
