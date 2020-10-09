@@ -67,6 +67,7 @@ _[Bookstore database structure](db_plans/bookstore-model.mwb)_
 |----------|-------------------------|------------------------------|
 | `Folder` | [bookstore](bookstore)  |  Main project folder (Maven) |
 | `Folder` | [packaging](packaging)  |  OS-specific build scripts   |
+| `Folder` | [documents](documents)  |  External project documents  |
 | `Folder` |  [db_plans](db_plans)   |  SQL Database plans & drafts |
 | `Folder` |    [images](images)     | Various screenshots & images |
 
