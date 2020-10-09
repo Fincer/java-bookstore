@@ -80,6 +80,25 @@ public class BookHash {
 	////////////////////
 	// Attribute setters
 
+	/*
+	 * Ignore UPDATE queries in Jakarta Persistence API context.
+	 *
+	 * Security note:
+	 *
+	 * To actually prevent UPDATE queries, bookstore database user must have
+	 * permission denial for UPDATE queries for BOOK_HASH table in SQL database
+	 * internal security policy.
+	 *
+	 * SQL server admin // Remove UPDATE permission:
+	 *
+	 * REVOKE UPDATE on <database_name>.BOOK_HASH FROM '<bookstore_user>'@'sql-server_domain-name';
+	 *
+	 * SQL server admin // Confirm changes:
+	 *
+	 * SHOW GRANTS FOR '<bookstore_user>'@'sql-server_domain-name';
+
+	 * If needed, contact your SQL server admin to configure this policy.
+	 */
 	@Column(
 			name             = "hash_id",
 			unique           = true,
