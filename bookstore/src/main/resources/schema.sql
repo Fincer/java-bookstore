@@ -17,8 +17,8 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS AUTHOR (
   id        INT           NOT NULL AUTO_INCREMENT,
-  firstname NVARCHAR(100) NOT NULL,
-  lastname  NVARCHAR(100) NOT NULL,
+  firstname NVARCHAR(100) NULL,
+  lastname  NVARCHAR(100) NULL,
   PRIMARY KEY (id)
 );
 
