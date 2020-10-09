@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -44,6 +45,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 @Entity
+@Table(name = "BOOK_HASH")
 public class BookHash {
 
 	@Id

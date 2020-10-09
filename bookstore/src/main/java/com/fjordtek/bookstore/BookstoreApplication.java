@@ -69,7 +69,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	@Profile("dev")
+	@Profile({"dev", "prod"})
 	public CommandLineRunner userDatabaseRunner(
 			UserRepository userRepository,
 			RoleRepository roleRepository,
@@ -153,7 +153,7 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	@Profile("dev")
+	@Profile({"dev", "prod"})
 	public CommandLineRunner bookDatabaseRunner(
 			BookRepository bookRepository,
 			BookHashRepository bookHashRepository,

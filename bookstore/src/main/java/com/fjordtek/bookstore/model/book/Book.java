@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -47,6 +48,7 @@ import com.fjordtek.bookstore.annotation.CurrentYear;
  */
 
 @Entity
+@Table(name = "BOOK")
 public class Book {
 
 	private static final int strMin         = 2;

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 
 @Entity
+@Table(name = "USER")
 public class User {
 
 	// TODO define universally in a single place

@@ -6,6 +6,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 /**
  * This class implements UserRole entity which forms
@@ -29,6 +30,7 @@ import javax.persistence.MapsId;
  */
 
 @Entity
+@Table(name = "USER_ROLE")
 public class UserRole {
 
 	////////////////////
