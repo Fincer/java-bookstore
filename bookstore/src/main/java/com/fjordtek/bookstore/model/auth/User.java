@@ -53,6 +53,10 @@ public class User {
 
 	////////////////////
 
+	/*
+	 *  TODO: add regex validation and other constraints
+	 *  if sign up form is implemented.
+	 */
 	@Column(
 			unique   = true,
 			nullable = false,
@@ -60,6 +64,10 @@ public class User {
 			)
 	private String username;
 
+	/*
+	 *  TODO: add minimum length validation and other constraints
+	 *  if sign up form is implemented.
+	 */
 	@Column(
 			nullable = false,
 			columnDefinition = "NVARCHAR(" + strMaxPasswd + ")"
