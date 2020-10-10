@@ -37,7 +37,7 @@ public class Author {
 	private static final int strMax         = 100;
 
 	// We format length check in Size annotations, not here
-	private static final String regexCommon = "^[a-zA-Z0-9\\-:\\s]*$";
+	private static final String regexCommon = "^[a-zA-Z\\-:\\s]*$";
 
 	////////////////////
 	// Primary key value in database
