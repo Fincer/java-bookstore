@@ -26,6 +26,8 @@ public interface BookHashRepository extends CrudRepository<BookHash, String> {
 
 	BookHash findByHashId(String bookHashId);
 
+	BookHash findByBookId(@Param("bookid") Long bookId);
+
 	/*
 	 * We need to override native delete method.
 	 * This is a native query, do not unnecessarily validate it.
