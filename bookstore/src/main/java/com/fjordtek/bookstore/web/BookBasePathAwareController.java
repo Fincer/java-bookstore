@@ -88,7 +88,7 @@ public class BookBasePathAwareController {
 
 		if (categoryName != null) {
 			book.setCategory(
-					categoryRepository.findByNameIgnoreCaseContaining(categoryName).get(0)
+					categoryRepository.findByNameIgnoreCaseContaining(categoryName)
 					);
 		}
 	}
