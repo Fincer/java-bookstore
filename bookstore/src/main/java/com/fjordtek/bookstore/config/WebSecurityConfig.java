@@ -130,6 +130,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers(
 					env.getProperty("spring.h2.console.path")    + "/**",
+					env.getProperty("page.url.statsref")         + "/**",
 					env.getProperty("page.url.index"),
 					env.getProperty("page.url.list"),
 					env.getProperty("page.url.error"),
