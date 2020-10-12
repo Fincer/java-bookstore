@@ -89,7 +89,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity
-			.antMatcher(env.getProperty("spring.data.rest.base-path") + "/**")
+			.requestMatchers()
+				.antMatchers(
+						env.getProperty("spring.data.rest.base-path") + "/**",
+						env.getProperty("page.url.actuator")          + "/**"
+						)
+			.and()
 			.authorizeRequests(
 					authorize -> authorize
 					.anyRequest().hasAuthority(env.getProperty("auth.authority.admin"))
@@ -133,7 +138,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					env.getProperty("page.url.resources.images") + "/**"
 //					"/favicon.ico",
 					).permitAll()
-				.antMatchers(env.getProperty("page.url.apiref") + "/**")
+				.antMatchers(
+						env.getProperty("page.url.apiref")       + "/**"
+						)
 					.hasAuthority(env.getProperty("auth.authority.admin"))
 				.anyRequest()
 				.authenticated()
