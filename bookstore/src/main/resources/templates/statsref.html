@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link type="text/css" rel="stylesheet" href="../static/css/bookstore.css" th:href="@{../css/bookstore.css}" />
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}" />
+
+	<title th:text="${#messages.msgOrNull('page.title.browser.statsref')} ?: 'page.title.browser.statsref'">
+	page.title.browser.statsref
+	</title>
+
+</head>
+<body th:with="
+baseUrl   = (@{__${#httpServletRequest.scheme}__} + '://' +
+@{__${#httpServletRequest.serverName}__} + ':' +
+@{__${#httpServletRequest.serverPort}__}),
+adminUser = 'admin:admin'
+">
+
+	<h1 th:text="${#messages.msgOrNull('page.title.webform.statsref')} ?: 'page.title.webform.statsref'">
+	page.title.webform.statsref
+	</h1>
+
+	<div style="padding-bottom: 2em;">
+		<p
+		th:text="${#messages.msgOrNull('page.text.statsref.desca')} ?: 'page.text.statsref.desca'">
+		page.text.statsref.desca
+		</p>
+		<ul>
+			<li>
+				<a
+				href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html">
+				Spring Boot Actuator: Production-ready Features
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<table>
+		<tbody>
+			<tr>
+				<th
+				class="apiref-table-title"
+				th:text="${#messages.msgOrNull('page.text.statsref.commands')} ?: 'page.text.statsref.commands'"
+				>
+				page.text.statsref.commands
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<code th:text="
+					'curl --request GET ' +
+					${baseUrl} + @{__${@Pages.ACTUATOR}__} + '/configprops' +
+					' --user ' + ${adminUser} +
+					' | json_reformat'
+					">
+					code placeholder
+					</code>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<br>
+					<div th:remove="tag" th:utext="${#messages.msgOrNull('page.text.statsref.descb')} ?: 'page.text.statsref.descb'">
+					page.text.statsref.descb
+					</div>
+					<ul>
+						<li>
+							<a
+							href="http://lloyd.github.com/yajl/">
+							YAJL
+							</a>
+						</li>
+					</ul>	
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p
+					th:text="${#messages.msgOrNull('page.text.statsref.descc')} ?: 'page.text.statsref.descc'">
+					page.text.statsref.descc
+					</p>
+					<ul>
+					<li>
+						<a
+						href="https://packages.ubuntu.com/focal/yajl-tools">
+						Ubuntu packages (20.04 LTS): yajl-tools
+						</a>
+					</li>
+					<li>
+						<a
+						href="https://www.archlinux.org/packages/extra/x86_64/yajl/">
+						Arch Linux: yajl
+						</a>
+					</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a class="btn btn-success" th:href="@{__${@Pages.LIST}__}"
+					th:text="${#messages.msgOrNull('button.page.list.return')} ?: 'button.page.list.return'">
+					button.page.list.return
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

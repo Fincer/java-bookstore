@@ -79,13 +79,16 @@
 						</button>
 					</div>
 				</form>
-				<th:block th:replace="${@environment.getActiveProfiles()[0] == 'dev'} ? ~{fragments/devusers :: devusers} : _"/>
+				<div style="margin-top: 20px;">
+					<th:block th:replace="${@environment.getActiveProfiles()[0] == 'dev'} ? ~{fragments/devusers :: devusers} : _"/>
+				</div>
 			</div>
 			<!--/*
 			** END: login elements **
 			*/-->
 			<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}" style="margin: 10px 0;">
-				<a th:href="@{__${@Pages.H2CONSOLE}__}">H2 database console access</a>
+				<div><a th:href="@{__${@Pages.H2CONSOLE}__}">H2 database console access</a></div>
+				<div><a th:href="@{__${@Pages.DEV}__} + @{__${@Pages.DEVSTATSREF}__}">How to: Spring statistics data</a></div>
 			</div>
 		</div>
 	</th:block>
