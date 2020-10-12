@@ -43,6 +43,12 @@ public class HttpServerLogger {
 			while (requestParamNames.hasMoreElements()) {
 
 				String paramName     = requestParamNames.nextElement().toString();
+
+				/*
+				 * Do not log CSRF tokens
+				 */
+				if (paramName.contains("csrf")) continue;
+
 				String[] paramValues = request.getParameterValues(paramName);
 
 				requestParams.add(
