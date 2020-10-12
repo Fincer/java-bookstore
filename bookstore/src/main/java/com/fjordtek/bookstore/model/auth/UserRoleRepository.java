@@ -19,5 +19,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 		itemResourceRel = "userroles",
 		exported        = true
 		)
-public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
+public interface UserRoleRepository extends CrudRepository<UserRole, Long>, UserRoleRepositoryCustom {
 }
