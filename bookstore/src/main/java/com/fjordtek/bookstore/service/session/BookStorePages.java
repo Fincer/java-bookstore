@@ -41,6 +41,9 @@ public class BookStorePages {
 	JSON,
 	JSONBOOK,
 	JSONLIST,
+	ACTUATOR,
+	DEV,
+	DEVSTATSREF,
 	H2CONSOLE,
 	REST,
 	RESTAUTHORS,
@@ -70,6 +73,11 @@ public class BookStorePages {
 		this.JSON           = env.getProperty("page.url.json");
 		this.JSONBOOK       = env.getProperty("page.url.json.book");
 		this.JSONLIST       = env.getProperty("page.url.json.list");
+
+		this.ACTUATOR       = env.getProperty("page.url.actuator");
+
+		this.DEV            = env.getProperty("page.url.dev");
+		this.DEVSTATSREF    = env.getProperty("page.url.dev.statsref");
 
 		this.H2CONSOLE      = env.getProperty("spring.h2.console.path");
 
