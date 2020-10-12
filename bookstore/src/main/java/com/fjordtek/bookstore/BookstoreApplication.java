@@ -85,60 +85,131 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 			 */
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(14, new SecureRandom());
 
+			//////////////////////////////
 			commonLogger.info("Add new roles to the database");
+
+			/*
+			 * New and predefined roles.
+			 *
+			 * Role names are unique. We do not attempt to add duplicate entries
+			 * This is an issue with traditional SQL databases if existing entries
+			 * are present.
+			 */
+
 			Role adminAR    = new Role(env.getProperty("auth.authority.admin"));
+			if (roleRepository.findByName(adminAR.getName()) == null) {
+				roleRepository.save(adminAR);
+			}
 			Role helpdeskAR = new Role(env.getProperty("auth.authority.helpdesk"));
+			if (roleRepository.findByName(helpdeskAR.getName()) == null) {
+				roleRepository.save(helpdeskAR);
+			}
 			Role userAR     = new Role(env.getProperty("auth.authority.user"));
+			if (roleRepository.findByName(userAR.getName()) == null) {
+				roleRepository.save(userAR);
+			}
 			Role salesAR    = new Role(env.getProperty("auth.authority.sales"));
+			if (roleRepository.findByName(salesAR.getName()) == null) {
+				roleRepository.save(salesAR);
+			}
 
-			roleRepository.save(adminAR);
-			roleRepository.save(helpdeskAR);
-			roleRepository.save(userAR);
-			roleRepository.save(salesAR);
+			//////////////////////////////
+			commonLogger.info("Add new users to the database");
 
-			commonLogger.info("Add new users to database");
+			/*
+			 * New and predefined users.
+			 *
+			 * User names are unique. We do not attempt to add duplicate entries.
+			 * This is an issue with traditional SQL databases if existing entries
+			 * are present.
+			 */
 
-			User adminAU = new User(
+			User adminAU        = new User(
 					"admin",
 					passwordEncoder.encode("admin"),
 					"admin@fjordtek.com"
 					);
+			if (userRepository.findByUsername(adminAU.getUsername()) == null) {
+				userRepository.save(adminAU);
+			}
 
-			User helpdeskAU = new User(
+			User helpdeskAU     = new User(
 					"helpdesk",
 					passwordEncoder.encode("helpdesk"),
 					"helpdesk@fjordtek.com"
 					);
+			if (userRepository.findByUsername(helpdeskAU.getUsername()) == null) {
+				userRepository.save(helpdeskAU);
+			}
 
 			User salesManagerAU = new User(
 					"salesmanager",
 					passwordEncoder.encode("salesmanager"),
 					"salesmanager@fjordtek.com"
 					);
+			if (userRepository.findByUsername(salesManagerAU.getUsername()) == null) {
+				userRepository.save(salesManagerAU);
+			}
 
-			User userAU = new User(
+			User userAU         = new User(
 					"user",
 					passwordEncoder.encode("user"),
 					"user@fjordtek.com"
 					);
+			if (userRepository.findByUsername(userAU.getUsername()) == null) {
+				userRepository.save(userAU);
+			}
 
-			userRepository.save(adminAU);
-			userRepository.save(helpdeskAU);
-			userRepository.save(userAU);
-			userRepository.save(salesManagerAU);
+			//////////////////////////////
+
+			/*
+			 * New and predefined user roles
+			 *
+			 * We do not attempt to add duplicate entries.
+			 * This is an issue with traditional SQL databases if existing entries
+			 * are present.
+			 */
 
 			// Add example roles for admin user
-			userRoleRepository.save(new UserRole(adminAU, adminAR));
-			userRoleRepository.save(new UserRole(adminAU, salesAR));
+			if (userRoleRepository.findByCompositeId(
+					userRepository.findByUsername(adminAU.getUsername()).getId(),
+					roleRepository.findByName(adminAR.getName()).getId()
+					) == null) {
+				userRoleRepository.save(new UserRole(adminAU, adminAR));
+			}
+
+			if (userRoleRepository.findByCompositeId(
+					userRepository.findByUsername(adminAU.getUsername()).getId(),
+					roleRepository.findByName(salesAR.getName()).getId()
+					) == null) {
+				userRoleRepository.save(new UserRole(adminAU, salesAR));
+			}
 
 			// Add an example role for helpdesk user
-			userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
+			if (userRoleRepository.findByCompositeId(
+					userRepository.findByUsername(helpdeskAU.getUsername()).getId(),
+					roleRepository.findByName(helpdeskAR.getName()).getId()
+					) == null) {
+				userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
+			}
 
 			// Add an example role for sales manager
-			userRoleRepository.save(new UserRole(salesManagerAU, salesAR));
+			if (userRoleRepository.findByCompositeId(
+					userRepository.findByUsername(salesManagerAU.getUsername()).getId(),
+					roleRepository.findByName(salesAR.getName()).getId()
+					) == null) {
+				userRoleRepository.save(new UserRole(salesManagerAU, salesAR));
+			}
 
 			// Add an example role for user
-			userRoleRepository.save(new UserRole(userAU, userAR));
+			if (userRoleRepository.findByCompositeId(
+					userRepository.findByUsername(userAU.getUsername()).getId(),
+					roleRepository.findByName(userAR.getName()).getId()
+					) == null) {
+				userRoleRepository.save(new UserRole(userAU, userAR));
+			}
+
+			//////////////////////////////
 
 			commonLogger.info("Sample roles in the database");
 			for (Role role : roleRepository.findAll()) {
@@ -168,57 +239,133 @@ public class BookstoreApplication extends SpringBootServletInitializer {
 
 		return (args) -> {
 
+			//////////////////////////////
 			commonLogger.info("Add new categories to the database");
-			categoryRepository.save(new Category(env.getProperty("bookstore.category.horror")));
-			categoryRepository.save(new Category(env.getProperty("bookstore.category.fantasy")));
-			categoryRepository.save(new Category(env.getProperty("bookstore.category.scifi")));
 
+			/*
+			 * New and predefined categories.
+			 *
+			 * Categories are unique. We do not attempt to add duplicate entries.
+			 * This is an issue with traditional SQL databases if existing entries
+			 * are present.
+			 */
+
+			Category catHorror  = new Category(env.getProperty("bookstore.category.horror"));
+			if (categoryRepository.findByName(catHorror.getName()) == null) {
+				categoryRepository.save(catHorror);
+			}
+
+			Category catFantasy = new Category(env.getProperty("bookstore.category.fantasy"));
+			if (categoryRepository.findByName(catFantasy.getName()) == null) {
+				categoryRepository.save(catFantasy);
+			}
+			Category catScifi   = new Category(env.getProperty("bookstore.category.scifi"));
+			if (categoryRepository.findByName(catScifi.getName()) == null) {
+				categoryRepository.save(catScifi);
+			}
+
+			//////////////////////////////
 			commonLogger.info("Add new authors to the database");
-			authorRepository.save(new Author("Angela","Carter"));
-			authorRepository.save(new Author("Andrzej","Sapkowski"));
+
+			/*
+			 * New and predefined authors.
+			 *
+			 * Author names are unique. We do not attempt to add duplicate entries.
+			 * This is an issue with traditional SQL databases if existing entries
+			 * are present.
+			 */
+
+			Author authAngelaC  = new Author("Angela","Carter");
+			try {
+				authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+					authAngelaC.getFirstName(), authAngelaC.getLastName()
+					).get(0);
+			} catch (IndexOutOfBoundsException e) {
+				authorRepository.save(authAngelaC);
+			}
+
+			Author authAndrzejS = new Author("Andrzej","Sapkowski");
+			try {
+				authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
+					authAndrzejS.getFirstName(), authAndrzejS.getLastName()
+					).get(0);
+			} catch (IndexOutOfBoundsException e) {
+				authorRepository.save(authAndrzejS);
+			}
+
+			//////////////////////////////
+			commonLogger.info("Add new sample books to the database");
+
+			/*
+			 * New and predefined books + book hashes.
+			 */
 
 			Book bookA = new Book(
 					"Bloody Chamber",
 					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
-							"Angela","Carter"
+							authAngelaC.getFirstName(), authAngelaC.getLastName()
 							).get(0),
 					1979,
 					"1231231-12",
 					new BigDecimal("18.00"),
-					categoryRepository.findByName(env.getProperty("bookstore.category.horror")).get(0),
+					categoryRepository.findByName(catHorror.getName()),
 					true
 					);
 
 			Book bookB = new Book(
 					"The Witcher: The Lady of the Lake",
 					authorRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContaining(
-							"Andrzej","Sapkowski"
+							authAndrzejS.getFirstName(), authAndrzejS.getLastName()
 							).get(0),
 					1999,
 					"3213221-3",
 					new BigDecimal("19.99"),
-					categoryRepository.findByName(env.getProperty("bookstore.category.fantasy")).get(0),
+					categoryRepository.findByName(catFantasy.getName()),
 					true
 					);
 
-			commonLogger.info("Add new sample books to the database");
+			/*
+			 * At first, try to find a defined book by its unique ISBN code.
+			 * If not found in the database, save the book.
+			 * Otherwise, re-define the book object by fetching existing
+			 * book entry from the database, determined by its unique ISBN code.
+			 *
+			 * This processing is required since we set book hash by relying on
+			 * book ID information.
+			 */
 
-			bookRepository.save(bookA);
-			bookRepository.save(bookB);
+			if (bookRepository.findByIsbn(bookA.getIsbn()) == null) {
+				bookRepository.save(bookA);
+			} else {
+				bookA = bookRepository.findByIsbn(bookA.getIsbn());
+			}
+
+			if (bookRepository.findByIsbn(bookB.getIsbn()) == null) {
+				bookRepository.save(bookB);
+			} else {
+				bookB = bookRepository.findByIsbn(bookB.getIsbn());
+			}
+
+			/*
+			 *  One-to-one unidirectional relationship
+			 *  Both directions for table operations must be considered here.
+			 */
 
 			BookHash bookHashA = new BookHash();
+			if (bookHashRepository.findByBookId(bookA.getId() ) == null) {
+				bookA.setBookHash(bookHashA);
+				bookHashA.setBook(bookA);
+				bookHashRepository.save(bookHashA);
+			}
+
 			BookHash bookHashB = new BookHash();
+			if (bookHashRepository.findByBookId(bookB.getId() ) == null) {
+				bookB.setBookHash(bookHashB);
+				bookHashB.setBook(bookB);
+				bookHashRepository.save(bookHashB);
+			}
 
-			// One-to-one unidirectional relationship
-			// Both directions for table operations must be considered here.
-			bookA.setBookHash(bookHashA);
-			bookB.setBookHash(bookHashB);
-			bookHashA.setBook(bookA);
-			bookHashB.setBook(bookB);
-
-			bookHashRepository.save(bookHashA);
-			bookHashRepository.save(bookHashB);
-
+			//////////////////////////////
 			commonLogger.info("------------------------------");
 			commonLogger.info("Sample categories in the database");
 			for (Category category : categoryRepository.findAll()) {
