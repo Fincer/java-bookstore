@@ -70,7 +70,7 @@ Idea of the following syntax used in this and other HTML document:
 		For example syntax, see
 		https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#order-details
 		*/-->
-		<table class="table table-striped" sec:authorize="isAuthenticated()">
+		<table id="booklist" class="table table-striped" sec:authorize="isAuthenticated()">
 
 			<tr>
 				<th th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">book.author</th>
