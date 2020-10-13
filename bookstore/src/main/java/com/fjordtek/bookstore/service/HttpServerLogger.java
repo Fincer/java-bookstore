@@ -3,6 +3,7 @@
 package com.fjordtek.bookstore.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -42,12 +43,15 @@ public class HttpServerLogger {
 		if (requestParamNames != null) {
 			while (requestParamNames.hasMoreElements()) {
 
-				String paramName     = requestParamNames.nextElement().toString();
+				String paramName         = requestParamNames.nextElement().toString();
 
 				/*
-				 * Do not log CSRF tokens
+				 * Do not include specific keywords to log entries
+				 * (use method reference operator)
 				 */
-				if (paramName.contains("csrf")) continue;
+
+				String[] excludeKeywords = {"csrf", "password"};
+				if (Arrays.stream(excludeKeywords).anyMatch(paramName::contains)) continue;
 
 				String[] paramValues = request.getParameterValues(paramName);
 
