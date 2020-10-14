@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 /**
  * This class implements Role entity which forms
@@ -49,6 +50,7 @@ public class Role {
 			nullable = false,
 			columnDefinition = "VARCHAR(20)"
 			)
+	@NotBlank
 	private String name;
 
 	@OneToMany(
