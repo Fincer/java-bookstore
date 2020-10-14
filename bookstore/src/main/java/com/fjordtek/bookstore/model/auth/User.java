@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -62,6 +63,7 @@ public class User {
 			nullable = false,
 			columnDefinition = "NVARCHAR(" + strMax + ")"
 			)
+	@NotBlank
 	private String username;
 
 	/*
@@ -73,6 +75,7 @@ public class User {
 			columnDefinition = "NVARCHAR(" + strMaxPasswd + ")"
 			)
 	@JsonIgnore
+	@NotBlank
 	private String password;
 
 	@Email
