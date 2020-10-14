@@ -59,6 +59,8 @@ public class BookStoreTestWebContextBuilder {
 	protected String bookJsonListUrl;
 	protected String bookJsonUrl;
 
+	protected String statsRefUrl;
+
 	@Autowired
 	protected Environment env;
 
@@ -97,6 +99,9 @@ public class BookStoreTestWebContextBuilder {
 
 		bookJsonUrl =
 				env.getProperty("page.url.json") + env.getProperty("page.url.json.book") + "/" + hashId;
+
+		statsRefUrl =
+				env.getProperty("page.url.dev") + env.getProperty("page.url.dev.statsref");
 
 	}
 
