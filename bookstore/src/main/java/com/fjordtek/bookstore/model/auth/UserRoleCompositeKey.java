@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  * This class implements a composite primary key based on
@@ -21,8 +22,9 @@ public class UserRoleCompositeKey implements Serializable {
 
 	private static final long serialVersionUID = 2889337731246989510L;
 
+	@NotNull
 	private Long userId;
-
+	@NotNull
 	private Long roleId;
 
 	////////////////////
