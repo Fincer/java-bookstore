@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -52,6 +53,7 @@ public class Category {
 			unique   = true,
 			columnDefinition = "NVARCHAR(50)"
 			)
+	@NotNull
 	private String name;
 
 	// Omit from Jackson JSON serialization
