@@ -83,6 +83,7 @@ public class User {
 			nullable = false,
 			columnDefinition = "NVARCHAR(" + strMax + ")"
 			)
+	@NotBlank
 	private String email;
 
 	@OneToMany(
