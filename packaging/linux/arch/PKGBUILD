@@ -3,11 +3,30 @@
 pkgname=bookstore-project
 packagetype=war
 
+# Valid targets for Maven build: dev, prod
+#
+target='dev'
+
+# Sensitive database credentials file. Please provide separately.
+# NOTE: This file is bundled only when 'prod' profile is enabled
+#
+# Template file: bookstore/src/main/resources/database-prod.default.properties
+#
+prod_db_credentials_file="${PWD}/database-prod.properties"
+
+# Skip compile time unit tests? 1 = skip; other values = do not skip
+#
+maven_skip_tests=1
+
+# Compile unit test classes? 0 = do not compile; other values = compile
+#
+maven_tests_compile=0
+
 packagename=Bookstore.${packagetype}
 tomcat_ver=9
 java_ver=8
 
-pkgver=7.2af07c8
+pkgver=287.5d9097f
 pkgrel=1
 pkgdesc='Bookstore Java server example project'
 arch=('any')
@@ -37,13 +56,42 @@ pkgver() {
 
 }
 
-#prepare() {
-#  cd $pkgname
-#}
+prepare() {
+  cd $pkgname/bookstore
+
+  case ${target} in
+      dev|prod)
+          sed -r -i "s|^(.*spring\.profiles\.active[ ]*=[ ]*)(.*)$|\1$target|" src/main/resources/application.properties
+          ;;
+      *)
+          echo "Invalid profile configuration.\n"
+		  exit 1
+          ;;
+  esac
+
+  if [[ ${target} == "prod" ]] && [[ -f ${prod_db_credentials_file} ]]; then
+    cp ${prod_db_credentials_file} src/main/resources/
+  fi
+
+}
 
 build() {
+
+  MAVEN_PARAMS=()
+
+  if [[ ${maven_skip_tests} -eq 1 ]]; then
+      MAVEN_PARAMS+=("-DskipTests")
+  fi
+
+  if [[ ${maven_tests_compile} -eq 0 ]]; then
+      tests_compile_boolean="true"
+  else
+      tests_compile_boolean="false"
+  fi
+  MAVEN_PARAMS+=(-Dmaven.test.skip=${tests_compile_boolean})
+
   cd $pkgname/bookstore
-  mvn package
+  mvn package ${MAVEN_PARAMS[*]}
 }
 
 package() {
