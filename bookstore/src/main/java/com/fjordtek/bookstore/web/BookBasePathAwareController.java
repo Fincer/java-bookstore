@@ -24,6 +24,7 @@ import com.fjordtek.bookstore.model.book.BookRepository;
 import com.fjordtek.bookstore.model.book.CategoryRepository;
 import com.fjordtek.bookstore.service.BookAuthorHelper;
 import com.fjordtek.bookstore.service.HttpServerLogger;
+import com.fjordtek.bookstore.service.session.BookStoreWebRestrictions;
 
 /**
  *
@@ -55,6 +56,9 @@ public class BookBasePathAwareController {
 
 	@Autowired
 	private HttpServerLogger httpServerLogger;
+
+	@Autowired
+	private BookStoreWebRestrictions webRestrictions;
 
 	//////////////////////////////
 	private void bookGetAndSetNestedJSON(Book book, JsonNode bookNode) {
@@ -107,6 +111,22 @@ public class BookBasePathAwareController {
     		HttpServletRequest requestData,
 			HttpServletResponse responseData
 			) {
+
+		////////////
+		/*
+		 * Hard-coded book count limit.
+		 * Added as we expose all accounts to internet
+		 * due to course requirements & demo purposes.
+		 *
+		 * It is assumed that admin account is exposed, too.
+		 *
+		 * In real life, this must never be a case!
+		 * Instead, we should have a proper admin-only
+		 * configuration panel where to set these values.
+		 */
+		if (webRestrictions.limitBookMaxCount("prod")) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
 		try {
 

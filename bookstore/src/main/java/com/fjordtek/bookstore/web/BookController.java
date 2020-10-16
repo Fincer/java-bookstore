@@ -39,6 +39,7 @@ import com.fjordtek.bookstore.model.book.CategoryRepository;
 import com.fjordtek.bookstore.service.BigDecimalPropertyEditor;
 import com.fjordtek.bookstore.service.BookAuthorHelper;
 import com.fjordtek.bookstore.service.HttpServerLogger;
+import com.fjordtek.bookstore.service.session.BookStoreWebRestrictions;
 
 /**
 *
@@ -84,6 +85,9 @@ public class BookController {
 
 	@Autowired
 	private BookEventHandler     bookEventHandler;
+
+	@Autowired
+	private BookStoreWebRestrictions webRestrictions;
 
 /*
 	private Map<String,String> globalModelMap = new HashMap<String,String>() {
@@ -190,8 +194,37 @@ public class BookController {
 			@Valid @ModelAttribute("book") Book book,
 			BindingResult bindingResult,
 			HttpServletRequest requestData,
-			HttpServletResponse responseData
+			HttpServletResponse responseData,
+			RedirectAttributes redirectAttributes
 			) {
+
+		////////////
+		/*
+		 * Hard-coded book count limit.
+		 * Added as we expose all accounts to internet
+		 * due to course requirements & demo purposes.
+		 *
+		 * It is assumed that admin account is exposed, too.
+		 *
+		 * In real life, this must never be a case!
+		 * Instead, we should have a proper admin-only
+		 * configuration panel where to set these values.
+		 */
+		if (webRestrictions.limitBookMaxCount("prod")) {
+			redirectAttributes.addFlashAttribute(
+					"bookmaxcount",
+					msg.getMessage(
+							"security.book.count.max.msg",
+							null,
+							"security.book.count.max.msg [placeholder]",
+							requestData.getLocale()
+						)
+					+ " " + env.getProperty("security.book.count.max") + "."
+					);
+
+			return "redirect:" + env.getProperty("page.url.add");
+		}
+
 
 		// TODO consider better solution. Add custom Hibernate annotation for Book class?
 		if (bookRepository.existsByIsbn(book.getIsbn())) {
