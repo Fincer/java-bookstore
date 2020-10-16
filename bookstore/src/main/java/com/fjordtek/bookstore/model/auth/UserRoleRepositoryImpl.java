@@ -4,6 +4,7 @@ package com.fjordtek.bookstore.model.auth;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,19 @@ public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom {
 		} catch (IndexOutOfBoundsException ignored) {
 			return null;
 		}
+	}
+
+	@Override
+	public void deleteByCompositeId(Long userId, Long roleId) {
+
+		Query query = entityManager.createQuery(
+				"DELETE FROM UserRole" +
+				" WHERE user_id = :user_id" +
+				" AND role_id   = :role_id"
+				);
+		query.setParameter("user_id", userId);
+		query.setParameter("role_id", roleId);
+		query.executeUpdate();
 	}
 
 }
