@@ -3,7 +3,10 @@
 package com.fjordtek.bookstore.web;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,7 +32,7 @@ import com.fjordtek.bookstore.model.book.BookHashRepository;
 import com.fjordtek.bookstore.model.book.BookRepository;
 
 /**
- * Common web context builder for Bookstore end point tests
+ * Common web context builder for Bookstore end point tests.
  *
  * @author Pekka Helenius
  */
@@ -60,6 +64,7 @@ public class BookStoreTestWebContextBuilder {
 	protected String bookJsonUrl;
 
 	protected String statsRefUrl;
+	protected String restApiBaseUrl;
 
 	@Autowired
 	protected Environment env;
@@ -103,6 +108,9 @@ public class BookStoreTestWebContextBuilder {
 		statsRefUrl =
 				env.getProperty("page.url.dev") + env.getProperty("page.url.dev.statsref");
 
+		restApiBaseUrl =
+				env.getProperty("spring.data.rest.base-path");
+
 	}
 
 
@@ -110,6 +118,49 @@ public class BookStoreTestWebContextBuilder {
 		return mockMvc
 				.perform(
 						get(page)
+						)
+				.andExpect(
+						status().is(status)
+						)
+				;
+	}
+
+	protected ResultActions loadPagePost(
+			String page,
+			int status,
+			MediaType contentType,
+			String contentData
+			) throws Exception {
+		return mockMvc
+				.perform(
+						post(page).contentType(contentType).content(contentData)
+						)
+				.andExpect(
+						status().is(status)
+						)
+				;
+	}
+
+	protected ResultActions loadPagePut(
+			String page,
+			int status,
+			MediaType contentType,
+			String contentData
+			) throws Exception {
+		return mockMvc
+				.perform(
+						put(page).contentType(contentType).content(contentData)
+						)
+				.andExpect(
+						status().is(status)
+						)
+				;
+	}
+
+	protected ResultActions loadPageDelete(String page, int status) throws Exception {
+		return mockMvc
+				.perform(
+						delete(page)
 						)
 				.andExpect(
 						status().is(status)
