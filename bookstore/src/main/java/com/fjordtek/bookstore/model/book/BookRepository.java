@@ -57,7 +57,7 @@ public interface BookRepository extends CrudRepository<Book, Long>, BookReposito
 	@Override
 	@Modifying
 	@Query(
-			value = "DELETE FROM Book i WHERE i.id = :id",
+			value = "DELETE FROM BOOK WHERE id = :id",
 			nativeQuery = true
 			)
 	void deleteById(@Param("id") Long id);
