@@ -17,9 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.fjordtek.bookstore.service.session.BookSameSiteCookieFilter;
 import com.fjordtek.bookstore.service.session.BookStoreAccessDeniedHandler;
 import com.fjordtek.bookstore.service.session.BookStoreAuthenticationFailureHandler;
 import com.fjordtek.bookstore.service.session.BookStoreAuthenticationSuccessHandler;
@@ -126,7 +124,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			 *  public access to it is denied by default.
 			 */
 			httpSecurity
-			.addFilterAfter(new BookSameSiteCookieFilter(), BasicAuthenticationFilter.class)
+//			.addFilterAfter(new BookSameSiteCookieFilter(), BasicAuthenticationFilter.class)
 			.authorizeRequests()
 				.antMatchers(
 					env.getProperty("spring.h2.console.path")    + "/**",
@@ -171,12 +169,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-			.and()
+/*			.and()
 				.headers()
 					.frameOptions().sameOrigin()
 //					.contentTypeOptions().disable()
 					.contentSecurityPolicy("frame-ancestors 'self'")
-
+*/
 			;
 
 		}
