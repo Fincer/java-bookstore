@@ -88,7 +88,7 @@
 			*/-->
 			<div th:if="${@environment.getActiveProfiles()[0] == 'dev'}" style="margin: 10px 0;">
 				<div><a th:href="@{__${@Pages.H2CONSOLE}__}">H2 database console access</a></div>
-				<div><a th:href="@{__${@Pages.DEV}__} + @{__${@Pages.DEVSTATSREF}__}">How to: Spring statistics data</a></div>
+				<div><a th:href="@{__${@Pages.DEV}____${@Pages.DEVSTATSREF}__}">How to: Spring statistics data</a></div>
 			</div>
 		</div>
 	</th:block>
