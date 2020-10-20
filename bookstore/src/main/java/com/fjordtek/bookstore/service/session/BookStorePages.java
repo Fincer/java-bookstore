@@ -51,7 +51,10 @@ public class BookStorePages {
 	RESTCATEGORIES,
 	RESTUSERS,
 	RESTROLES,
-	RESTUSERROLES
+	RESTUSERROLES,
+	RESCSS,
+	RESJS,
+	RESIMAGES
 	;
 
 	@PostConstruct
@@ -88,6 +91,10 @@ public class BookStorePages {
 		this.RESTUSERS      = env.getProperty("page.url.restapi.users");
 		this.RESTROLES      = env.getProperty("page.url.restapi.roles");
 		this.RESTUSERROLES  = env.getProperty("page.url.restapi.userroles");
+
+		this.RESCSS         = env.getProperty("page.url.resources.css");
+		this.RESJS          = env.getProperty("page.url.resources.js");
+		this.RESIMAGES      = env.getProperty("page.url.resources.images");
 
 	}
 
