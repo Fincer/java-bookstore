@@ -193,7 +193,7 @@ Idea of the following syntax used in this and other HTML document:
 
 				<td>
 					<a class="btn btn-info"
-					th:href="@{__${@Pages.JSON}__} + @{__${@Pages.JSONBOOK}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
+					th:href="@{__${@Pages.JSON}____${@Pages.JSONBOOK}__/{hash_id}(hash_id=${book.bookHash.hashId})}"
 					th:text="${#messages.msgOrNull('page.text.book.json')} ?: 'page.text.book.json'">
 					page.text.book.json
 					</a>
@@ -218,7 +218,7 @@ Idea of the following syntax used in this and other HTML document:
 				<td></td>
 				<td></td>
 				<td>
-					<a class="btn btn-dark" th:href="@{__${@Pages.JSON}__} + @{__${@Pages.JSONLIST}__}"
+					<a class="btn btn-dark" th:href="@{__${@Pages.JSON}____${@Pages.JSONLIST}__}"
 					th:text="${#messages.msgOrNull('button.page.list.json')} ?: 'button.page.list.json'">
 					button.page.list.json
 					</a>
