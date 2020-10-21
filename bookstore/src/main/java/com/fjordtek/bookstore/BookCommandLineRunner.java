@@ -63,6 +63,15 @@ public class BookCommandLineRunner implements CommandLineRunner {
 
 	private static final Logger commonLogger = LoggerFactory.getLogger(BookstoreApplication.class);
 
+	private boolean setSamplesInProduction() {
+
+		if ( Arrays.stream(env.getActiveProfiles()).anyMatch(p -> p.contains("prod")) ) {
+			return Boolean.parseBoolean(env.getProperty("db.sample.data.enabled"));
+		}
+		return false;
+
+	}
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -109,7 +118,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 
 		//////////////////////////////
 
-		if ( Arrays.stream(env.getActiveProfiles()).anyMatch(p -> p.contains("dev")) ) {
+		if (
+				Arrays.stream(env.getActiveProfiles()).anyMatch(p -> p.contains("dev")) ||
+				setSamplesInProduction()
+				) {
 			/** USER **/
 			/*
 			 * New and predefined users.
@@ -190,7 +202,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 					userRepository.findByUsername(adminAU.getUsername()).getId(),
 					roleRepository.findByName(adminAR.getName()).getId()
 					) == null) {
-				userRoleRepository.save(new UserRole(adminAU, adminAR));
+				userRoleRepository.save(new UserRole(
+						userRepository.findByUsername(adminAU.getUsername()),
+						roleRepository.findByName(adminAR.getName())
+						));
 			} else {
 				commonLogger.info(
 						"Found existing role '" + adminAR.getName() + "' for user '" + adminAU.getUsername() + "'"
@@ -201,7 +216,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 					userRepository.findByUsername(adminAU.getUsername()).getId(),
 					roleRepository.findByName(salesAR.getName()).getId()
 					) == null) {
-				userRoleRepository.save(new UserRole(adminAU, salesAR));
+				userRoleRepository.save(new UserRole(
+						userRepository.findByUsername(adminAU.getUsername()),
+						roleRepository.findByName(salesAR.getName())
+						));
 			} else {
 				commonLogger.info(
 						"Found existing role '" + salesAR.getName() + "' for user '" + adminAU.getUsername() + "'"
@@ -213,7 +231,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 					userRepository.findByUsername(helpdeskAU.getUsername()).getId(),
 					roleRepository.findByName(helpdeskAR.getName()).getId()
 					) == null) {
-				userRoleRepository.save(new UserRole(helpdeskAU, helpdeskAR));
+				userRoleRepository.save(new UserRole(
+						userRepository.findByUsername(helpdeskAU.getUsername()),
+						roleRepository.findByName(helpdeskAR.getName())
+						));
 			} else {
 				commonLogger.info(
 						"Found existing role '" + helpdeskAR.getName() + "' for user '" + helpdeskAU.getUsername() + "'"
@@ -225,7 +246,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 					userRepository.findByUsername(salesManagerAU.getUsername()).getId(),
 					roleRepository.findByName(salesAR.getName()).getId()
 					) == null) {
-				userRoleRepository.save(new UserRole(salesManagerAU, salesAR));
+				userRoleRepository.save(new UserRole(
+						userRepository.findByUsername(salesManagerAU.getUsername()),
+						roleRepository.findByName(salesAR.getName())
+						));
 			} else {
 				commonLogger.info(
 						"Found existing role '" + salesAR.getName() + "' for user '" + salesManagerAU.getUsername() + "'"
@@ -237,7 +261,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 					userRepository.findByUsername(userAU.getUsername()).getId(),
 					roleRepository.findByName(userAR.getName()).getId()
 					) == null) {
-				userRoleRepository.save(new UserRole(userAU, userAR));
+				userRoleRepository.save(new UserRole(
+						userRepository.findByUsername(userAU.getUsername()),
+						roleRepository.findByName(userAR.getName())
+						));
 			} else {
 				commonLogger.info(
 						"Found existing role '" + userAR.getName() + "' for user '" + userAU.getUsername() + "'"
@@ -284,7 +311,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
 
 		//////////////////////////////
 
-		if ( Arrays.stream(env.getActiveProfiles()).anyMatch(p -> p.contains("dev")) ) {
+		if (
+				Arrays.stream(env.getActiveProfiles()).anyMatch(p -> p.contains("dev")) ||
+				setSamplesInProduction()
+				) {
 			/** AUTHOR **/
 			/*
 			 * New and predefined authors.
