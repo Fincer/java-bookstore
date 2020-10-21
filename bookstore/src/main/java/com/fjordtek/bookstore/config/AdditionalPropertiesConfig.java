@@ -69,7 +69,14 @@ public class AdditionalPropertiesConfig implements EnvironmentPostProcessor {
 			for (String prefix : resourceFilePrefixes) {
 				try {
 					ClassPathResource classPathResource = new ClassPathResource(prefix + "-" + profile + ".properties");
-					classPathResource.getFile().canRead();
+
+					/*
+					 * Do not use getFile() method.
+					 * Instead, use getInputStream(), required by Tomcat/WAR deployment
+					 */
+
+					classPathResource.getInputStream();
+
 					classPathResources.add(classPathResource);
 					System.out.printf(
 							"Profile properties file found: %s\n",
