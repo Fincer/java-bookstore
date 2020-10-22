@@ -12,9 +12,9 @@
 
 </head>
 <body th:with="
-baseUrl   = (@{__${#httpServletRequest.scheme}__} + '://' +
-@{__${#httpServletRequest.serverName}__} + ':' +
-@{__${#httpServletRequest.serverPort}__}),
+baseUrl   = (${#httpServletRequest.scheme} + '://' +
+${#httpServletRequest.serverName} + ':' +
+${#httpServletRequest.serverPort}),
 adminUser = 'admin:admin'
 ">
 
@@ -48,7 +48,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -57,7 +57,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -68,7 +68,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -77,7 +77,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -88,7 +88,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -97,7 +97,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -108,7 +108,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERS}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTUSERS}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -117,7 +117,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERS}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTUSERS}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -128,7 +128,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTROLES}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTROLES}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -137,7 +137,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTROLES}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTROLES}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -148,7 +148,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERROLES}__} + '/' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTUSERROLES}__} + '/' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -157,7 +157,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTUSERROLES}__} + '/'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTUSERROLES}__} + '/'
 					">
 					page.text.apiref.link
 					</a>
@@ -180,7 +180,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -189,7 +189,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/search/title?name=Bloody+Chamber'
 					">
 					page.text.apiref.link
 					</a>
@@ -200,7 +200,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -209,7 +209,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/search/category?name=Fantasy'
 					">
 					page.text.apiref.link
 					</a>
@@ -220,7 +220,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -229,7 +229,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTCATEGORIES}__} + '/search/category?name=horr'
 					">
 					page.text.apiref.link
 					</a>
@@ -240,7 +240,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET &quot;' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter&quot;' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter&quot;' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -249,7 +249,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/fullname?firstname=Angela&lastname=Carter'
 					">
 					page.text.apiref.link
 					</a>
@@ -260,7 +260,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -269,7 +269,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/firstname?firstname=anGel'
 					">
 					page.text.apiref.link
 					</a>
@@ -280,7 +280,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -289,7 +289,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/search/lastname?lastname=Sapkowski'
 					">
 					page.text.apiref.link
 					</a>
@@ -309,7 +309,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request GET ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/2' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -322,7 +322,7 @@ adminUser = 'admin:admin'
 				<td>
 					<a th:text="${#messages.msgOrNull('page.text.apiref.link')} ?: 'page.text.apiref.link'"
 					th:href="
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2'
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/2'
 					">
 					page.text.apiref.link
 					</a>
@@ -346,7 +346,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1994,&quot;isbn&quot;:&quot;5474512-543&quot;,&quot;price&quot;:22.49,&quot;publish&quot;:true}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -362,7 +362,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Retribution&quot;,&quot;year&quot;:2010,&quot;isbn&quot;:&quot;0345520-722&quot;,&quot;price&quot;:29.90,&quot;category&quot;:{&quot;name&quot;:&quot;Sci-Fi&quot;},&quot;author&quot;:{&quot;firstname&quot;:&quot;Drew&quot;,&quot;lastname&quot;:&quot;Karpyshyn&quot;}}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -378,7 +378,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Mass Effect: Deception&quot;,&quot;year&quot;:2012,&quot;isbn&quot;:&quot;0345520-739&quot;,&quot;price&quot;:34.65,&quot;category&quot;:{&quot;name&quot;:&quot;sci-fi&quot;},&quot;publish&quot;:true}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -398,7 +398,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request POST --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;Halo: The Flood&quot;,&quot;year&quot;:2003,&quot;isbn&quot;:&quot;0345459-210&quot;,&quot;price&quot;:24.99,&quot;category&quot;:{&quot;name&quot;:&quot;sCi-fI&quot;},&quot;author&quot;:{&quot;lastname&quot;:&quot;Dietz&quot;}}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -433,7 +433,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves&quot;,&quot;year&quot;:1999,&quot;isbn&quot;:&quot;3213221-3&quot;,&quot;price&quot;:22.49}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/2' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -449,7 +449,7 @@ adminUser = 'admin:admin'
 					<br>
 					<code th:text="
 					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;title&quot;:&quot;The Witcher: Blood of Elves - Enhanced Edition&quot;,&quot;year&quot;:2019,&quot;author&quot;:{&quot;firstname&quot;:&quot;Vitaly&quot;,&quot;lastname&quot;:&quot;Zarikov&quot;},&quot;category&quot;:{&quot;name&quot;:&quot;horror&quot;},&quot;publish&quot;:false}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/2' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -482,7 +482,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request DELETE ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTBOOKS}__} + '/2' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTBOOKS}__} + '/2' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
@@ -507,7 +507,7 @@ adminUser = 'admin:admin'
 				<td class="apiref-table-right">
 					<code th:text="
 					'curl --include --request PUT --header &quot;Content-Type: application/json&quot; --data \'{&quot;firstname&quot;:&quot;Tanya&quot;,&quot;lastname&quot;:&quot;Rose&quot;}\' ' +
-					${baseUrl} + @{__${@Pages.REST}__} + @{__${@Pages.RESTAUTHORS}__} + '/1' +
+					${baseUrl} + @{__${@Pages.REST}____${@Pages.RESTAUTHORS}__} + '/1' +
 					' --user ' + ${adminUser}
 					">
 					code placeholder
