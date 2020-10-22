@@ -48,6 +48,16 @@ public class AdditionalPropertiesConfig implements EnvironmentPostProcessor {
 		classPathResources.add(new ClassPathResource("authentication.properties"));
 		classPathResources.add(new ClassPathResource("categories.properties"));
 
+		for (Resource classPathResource : classPathResources) {
+			try {
+				classPathResource.getInputStream();
+			} catch (IOException e) {
+				System.err.println(
+						"Resource " + classPathResource.getFilename() + " not found!"
+						);
+			}
+		}
+
 		return classPathResources;
 	}
 
