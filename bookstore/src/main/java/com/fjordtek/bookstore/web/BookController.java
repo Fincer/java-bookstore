@@ -209,6 +209,13 @@ public class BookController {
 		 * In real life, this must never be a case!
 		 * Instead, we should have a proper admin-only
 		 * configuration panel where to set these values.
+		 *
+		 * On SQL server, consider adding the following
+		 * configuration:
+		 *
+		 * ALTER TABLE BOOK MAX_ROWS=<number>;
+		 *
+		 * See also: https://dev.mysql.com/doc/refman/5.7/en/table-size-limit.html
 		 */
 		if (webRestrictions.limitBookMaxCount("prod")) {
 			redirectAttributes.addFlashAttribute(
