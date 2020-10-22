@@ -245,7 +245,12 @@ Idea of the following syntax used in this and other HTML document:
 			</tr>
 
 		</table>
-		
+
+		<div class="alert alert-danger mt-2" th:if="${bookmaxcount != null}"
+			th:text="${bookmaxcount}">
+			Unable to add more books. Book count limit is X.
+		</div>
+
 		<div sec:authorize="isAnonymous()">
 			<p th:text="${#messages.msgOrNull('page.text.list.anon.info')} ?: 'page.text.list.anon.info'">
 			page.text.list.anon.info

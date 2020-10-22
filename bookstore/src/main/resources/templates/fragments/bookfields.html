@@ -11,12 +11,7 @@
 	<th:block th:fragment="bookfields">
 
 			<div class="bookform-section">
-			
-				<div class="alert alert-danger mt-2" th:if="${bookmaxcount != null}"
-				th:text="${bookmaxcount}">
-				Unable to add more books. Book count limit is X.
-				</div>
-			
+
 				<div>
 					<h3 th:text="${#messages.msgOrNull('book.author')} ?: 'book.author'">
 					book.author

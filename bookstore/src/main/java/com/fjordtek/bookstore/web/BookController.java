@@ -229,7 +229,7 @@ public class BookController {
 					+ " " + env.getProperty("security.book.count.max") + "."
 					);
 
-			return "redirect:" + env.getProperty("page.url.add");
+			return "redirect:" + env.getProperty("page.url.list");
 		}
 
 
