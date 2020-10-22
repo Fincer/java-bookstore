@@ -8,7 +8,11 @@
 
 - This repository is mirrored to [java-bookstore - Fjordtek Git/Fincer](https://fjordtek.com/git/Fincer/java-bookstore).
 
-- This repository, although it contains references to my website domain (`com.fjordtek`), is not in production use in my [public server environment](https://fjordtek.com).
+- this application has been deployed on [https://fjordtek.com/webapps/bookstore/booklist](https://fjordtek.com/webapps/bookstore/booklist). The following technical restrictions have been applied:
+
+  - Credentials this application use are not connected to the main site credentials
+
+  - Book list has maximum limit of `5` concurrent books
 
 ## Overview
 
