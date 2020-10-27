@@ -31,7 +31,7 @@ pkgrel=1
 pkgdesc='Bookstore Java server example project'
 arch=('any')
 url='https://github.com/Fincer/java-bookstore'
-license=('GPL')
+license=('Custom')
 depends=(
     "tomcat${tomcat_ver}"
     "mariadb"
