@@ -23,6 +23,7 @@ import com.fjordtek.bookstore.web.BookStoreTestWebContextBuilder;
 public class ApirefTest extends BookStoreTestWebContextBuilder {
 
 	@Test
+    @WithUserDetails("user")
 	public void testA_ApirefLinkNotPresentAsNormalUser() throws Exception {
 		assertThat(
 				pageContentsList().contains("href=\"" + env.getProperty("page.url.apiref") )
